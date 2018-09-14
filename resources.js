@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var resources={
 	version:'1.3.0',
 	image:[
@@ -576,5 +575,4 @@ var resources={
 		"die/d2_wraithKing.mp3",
 		"die/d2_zeus.mp3",
 	],
->>>>>>> 02c2c40fb0a30288e7447c42c986fe694a73f583
 },
