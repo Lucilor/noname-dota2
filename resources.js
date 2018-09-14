@@ -1,4 +1,4 @@
-var resources={
+window.resources={
 	version:'1.3.0',
 	image:[
 		"d2_abaddon.jpg",
