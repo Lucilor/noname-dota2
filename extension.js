@@ -63,15 +63,64 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             return lib.skill[name].level;
         }
         return undefined;
-    }
-},precontent:function (dota2){
-    if(dota2.enable){
+    };
+},precontent:function (Dota2){
+    if(Dota2.enable){
+        if(lib.config.noname_Dota2_version==undefined||lib.config.noname_Dota2_version=='1.0.0.0') game.saveConfig('noname_Dota2_version',"1.0.0");
+        var edit=lib.extensionMenu.extension_Dota2.edit;
+        var deletex=lib.extensionMenu.extension_Dota2.delete;
+        delete lib.extensionMenu.extension_Dota2.edit;
+        delete lib.extensionMenu.extension_Dota2.delete;
+        lib.extensionMenu.extension_Dota2.version={
+            "name":"拓展版本："+lib.config.noname_Dota2_version,
+            "clear":true,
+            "nopointer":true,
+        };
+        lib.extensionMenu.extension_Dota2.update={
+            "name":"更新此拓展",
+            "clear":true,
+            "onclick":function(){
+                if(lib.updates===undefined||lib.updates.length==0) {
+                    alert('读取update.js失败');
+                    return;
+                }
+                if(ui.noname_Dota2_update) {
+                    alert('正在更新...');
+                    return ;
+                }
+                var nextVersion=lib.nextVersion;
+                if(nextVersion===undefined) {
+                    alert('无可用更新。');
+                    return ;
+                }
+                var list=lib.updates[nextVersion].files;
+                var n1=0;n2=list.length;
+                var finish=false;
+                var tmp=lib.updates[nextVersion].next;
+                while(tmp) {
+                    list=list.concat(tmp.files);
+                    tmp=lib.updates[tmp].next;
+                } 
+                ui.noname_Dota2_update=ui.create.system('Dota2:'+n1+'/'+n2,function(){
+                    if(finish) window.location.reload();
+                },true);
+                multiDownload(list,function(){
+                    n1++;
+                    ui.noname_Dota2_update.innerHTML='Dota2:'+n1+'/'+n2;
+                },function(){alert('下载时发生错误。')},function(){
+                    ui.noname_Dota2_update.innerHTML='Dota2更新完成';
+                    finish=true;
+                    game.saveConfig('noname_Dota2_version',nextVersion);
+                })
+            },
+        };
+        lib.extensionMenu.extension_Dota2.edit=edit;
+        lib.extensionMenu.extension_Dota2.delete=deletex;
         var fs=require('fs');
-        var http=require('http');  
-        var site="https://coding.net/u/Lucilor/p/noname-dota2/git/raw/master";
+        var http=require('https');  
+        var site="https://raw.githubusercontent.com/Lucilor/noname-dota2/master/";
+        // site="http://candypurity.com/kodexplorer/data/User/admin/home/document";
         var extDir=__dirname+'/extension/Dota2';
-        // extDir="D:/noname/resources/app/extension/Dota2";
-        // alert(extDir);
         var downloadFile=function(url,folder,onsuccess,onerror){
             url=site+url;
             var dir=folder.split('/');
@@ -83,11 +132,8 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 catch(e){
                     onerror();
                 }
-                var request = http.get('http://candypurity.com/kodexplorer/data/User/admin/home/picture/50418538_p0.jpg', function(response) {
+                var request = http.get(url, function(response) {
                     var stream=response.pipe(file);
-                    stream.on("data",function(data){
-                        alert(2);
-                    });
                     stream.on('finish',onsuccess);
                     stream.on('error',onerror);
                 });
@@ -115,19 +161,72 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             }
             access();
         };
-        downloadFile('/resources.js','die/a.jpg',function(){
-            alert('success');
-        },function(){
-            alert(1);
+        var multiDownload=function(list,onsuccess,onerror,onfinish){
+            list=list.slice(0);
+            var download=function(){
+                if(list.length){
+                    var current=list.shift();
+                    downloadFile(current,current,function(){
+                        if(onsuccess) onsuccess();
+                        download();
+                    },function(){
+                        if(onerror) onerror();
+                        download();
+                    });
+                }
+                else{
+                    if(onfinish) onfinish();
+                }
+            }
+            download();
+        };
+        var needUpdate=function(){
+            ui.noname_Dota2_needUpdate=ui.create.system('Dota2拓展可更新',function(){
+            var dialog=ui.create.dialog('hidden');
+            dialog.style.height='calc(100%)';
+            dialog.style.width='calc(100%)';
+            dialog.style.left='0px';
+            dialog.style.top='0px';
+            dialog.classList.add('popped');
+            dialog.classList.add('static');
+            var div=ui.create.div('.menubutton.round','×',function(){
+                dialog.delete();
+            });
+            div.style.left='calc(50% - 35px)';
+            dialog.add(div);
+            for(var i in lib.updates){
+                var str=lib.config.noname_Dota2_version==i?'当前版本':lib.updates[i].date;
+                dialog.addText(i+'('+str+')'+'<br>',false);
+                if(lib.updates[i].desc) dialog.addText(lib.updates[i].desc,false);
+            };
+            ui.window.appendChild(dialog);
+        },true);
+        };
+        multiDownload(['updates.js'],null,null,function(){
+            lib.init.js(extDir,"updates",function(){
+                if(window.updates) lib.updates=window.updates;
+                else return;
+                delete window.updates;
+                lib.extensionMenu.extension_Dota2.version.name="拓展版本："+lib.config.noname_Dota2_version;
+                lib.nextVersion=lib.updates[lib.config.noname_Dota2_version].next;
+                if(lib.nextVersion!=undefined)  {
+                    needUpdate();
+                }
+            });
         });
-    }
+        lib.arenaReady.push(function(){
+            if(lib.nextVersion!=undefined&&!ui.noname_Dota2_needUpdate)  {
+                needUpdate();
+            }
+        });
+    };
 },help:{
     "Dota2":"<ul><li>阿哈利姆神杖<br>拥有神杖的英雄将领悟技能的奥义，技能描述中（奥义：...）的字段仅在装备神杖时生效。"+
                 "<li>联动技<br>某些角色之间的联动，只有联动角色在场上且你与联动角色都是主武将时联动技才会生效。"+
                 "<li>神符<br>新的一轮开始时，神符将刷新在场上一名随机角色（记为A）身上，其他角色可依次与A拼点，其中点数最大者获得神符。神符将在新的一轮开始时消失。发生以下情况时A直接获得神符：①A没有手牌；②没有角色与A拼点；③拼点点数最大者不止一名角色。"
 },config:{
-    "announcer":{"name":"连杀配音","init":"default","item":{"default":"默认","crystalMaiden":"水晶室女","monkeyKing":"齐天大圣","disable":"关闭"}},
-    "rune":{"name":"神符","init":"default","item":{"default":"开启","disable":"关闭"}}
+    "announcer":{"name":"连杀配音","init":"default","item":{"default":"默认","crystalMaiden":"水晶室女","monkeyKing":"齐天大圣","disable":"关闭"},"intro":"选择连杀配音"},
+    "rune":{"name":"神符","init":true,"intro":"开启或关闭神符玩法"}
 },package:{
     character:{
         character:{
@@ -1027,7 +1126,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 forced:true,
                 popup:false,
                 filter:function(event,player){
-                    if(lib.config.rune=='disable') return false;
+                    if(!lib.config.rune) return false;
                     if(!game.hasPlayer(function(current){
                         return current.storage._d2_rune;
                     })) {
@@ -1111,21 +1210,16 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 callback:function(){
                     var winningNum=event.parent.parent.winningNum;
-                    game.log('步骤0winningNum='+winningNum);
                     if(winningNum==event.card2.number) {
-                        game.log('步骤1winningNum='+winningNum);
                         event.parent.parent.myRune=true;
                         return;
                     }
                     if(event.card1.number>=event.card2.number&&(event.card1.number>=winningNum||winningNum==undefined)){
-                        game.log('步骤2winningNum='+winningNum);
                         event.parent.parent.winningNum=event.card1.number;
                         event.parent.parent.winningPlayer=player;
                     } else {
-                        game.log('步骤3winningNum='+winningNum);
                         event.parent.parent.myRune=false;
                         if(winningNum<event.card2.number||winningNum==undefined){
-                            game.log('步骤4winningNum='+winningNum);
                             event.parent.parent.winningNum=event.card2.number;
                             event.parent.parent.winningPlayer=target;
                         }
@@ -7873,5 +7967,5 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     author:"Lucilor",
     diskURL:"https://pan.baidu.com/s/1C6kuKNGnYuVOfmvtu19zIw",
     forumURL:"",
-    version:"1.3.0",
+    version:"",
 },files:{"character":["d2_pudge.jpg","d2_phoenix.jpg","d2_phantomAssassin.jpg","d2_skywrathMage.jpg","d2_legionCommander.jpg","d2_earthSpirit.jpg","d2_stormSpirit.jpg","d2_vengefulSpirit.jpg","d2_emberSpirit.jpg","d2_terrorBlade.jpg","d2_shadowDance.jpg","d2_abaddon.jpg","d2_blessingAngel.jpg","d2_sniper.jpg","d2_wraithKing.jpg","d2_oracle.jpg","d2_megaCreep.jpg","d2_supernova.jpg","d2_dualSoul.jpg","d2_zeus.jpg","d2_rubick.jpg","d2_monkeyKing.jpg","d2_crystalMaiden.jpg","d2_invoker.jpg","d2_drowRanger.jpg","d2_lina.jpg","d2_boss_mage.jpg","d2_mage.jpg"],"card":["d2_sentry.jpg","d2_observer.jpg","d2_monkeyKingBar.jpg","d2_aghanims.jpg","d2_shivasGuard.jpg","d2_bloodStone.jpg","d2_forgedSpirit.jpg","d2_houzihousun.jpg"],"skill":[]}}})
