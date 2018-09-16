@@ -1,5 +1,11 @@
 window.updates={
+	"1.3.1":{
+		date:"2018.9.16",
+		desc:"<li>bug修复",
+		files:['extension.js','CHANGELOG.MD'],
+	},
 	"1.3.0":{
+		next:"1.3.1",
 		date:"2018.9.15",
 		desc:"<li>新增武将：幽鬼，殁境神蚀者，食人魔魔法师<br><li>新增装备：恐鳌之心，回音战刃，达贡之神力<br><li>新增玩法：神符（详情请看README.MD或游戏内帮助）<br><li>体验优化，现在你可以在游戏内更新此拓展了",
 		files:[
