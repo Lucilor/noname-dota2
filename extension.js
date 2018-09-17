@@ -107,7 +107,9 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 var list=lib.updates[nextVersion].files;
                 var tmp=lib.updates[nextVersion].next;
                 while(tmp) {
-                    list=list.concat(tmp.files);
+                    for(var i=0;i<temp.files.length;i++) {
+                        if(!list.contains(tmp.files[i])) list.push(tmp.files[i]);
+                    }
                     tmp=lib.updates[tmp].next;
                 }
                 var n1=0;n2=list.length;
@@ -6806,8 +6808,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                             if(get.attitude(player,trigger.player)>0) return 0;
                             return 7-get.value(card);
                         });
-                    } else {
-                        
                     }
                     'step 1'
                     if(result.bool){
@@ -7616,13 +7616,9 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     },
                 },
             },
-            // "d2_baiban1":{
-            //     init:function(){
-            //         player.storage.
-            //     },
-            // },
             "d2_baiban":{
                 gainnable:false,
+                unique:true,
                 enable:'phaseUse',
                 usable:1,
                 content:function(){
