@@ -103,12 +103,13 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 var list=lib.updates[nextVersion].files;
                 var tmp=lib.updates[nextVersion].next;
                 while(tmp) {
-                    for(var i=0;i<temp.files.length;i++) {
-                        if(!list.contains(tmp.files[i])) list.push(tmp.files[i]);
+                    var list2=lib.updates[tmp].files;
+                    for(var i=0;i<list2.length;i++) {
+                        if(!list.contains(list2[i])) list.push(list2[i]);
                     }
                     tmp=lib.updates[tmp].next;
                 }
-                var n1=0;n2=list.length;
+                var n1=0,n2=list.length;
                 var finish=false;
                 ui.noname_Dota2_update=ui.create.system('Dota2:'+n1+'/'+n2,function(){
                     if(finish) window.location.reload();
@@ -7615,7 +7616,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             },
             "d2_baiban":{
                 gainnable:false,
-                unique:true,
                 enable:'phaseUse',
                 usable:1,
                 content:function(){
@@ -7973,4 +7973,4 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     diskURL:"https://pan.baidu.com/s/1C6kuKNGnYuVOfmvtu19zIw",
     forumURL:"",
     version:"",
-},files:{"character":["d2_pudge.jpg","d2_phoenix.jpg","d2_phantomAssassin.jpg","d2_skywrathMage.jpg","d2_legionCommander.jpg","d2_earthSpirit.jpg","d2_stormSpirit.jpg","d2_vengefulSpirit.jpg","d2_emberSpirit.jpg","d2_terrorBlade.jpg","d2_shadowDance.jpg","d2_abaddon.jpg","d2_blessingAngel.jpg","d2_sniper.jpg","d2_wraithKing.jpg","d2_oracle.jpg","d2_megaCreep.jpg","d2_supernova.jpg","d2_dualSoul.jpg","d2_zeus.jpg","d2_rubick.jpg","d2_monkeyKing.jpg","d2_crystalMaiden.jpg","d2_invoker.jpg","d2_drowRanger.jpg","d2_lina.jpg","d2_boss_mage.jpg","d2_mage.jpg"],"card":["d2_sentry.jpg","d2_observer.jpg","d2_monkeyKingBar.jpg","d2_aghanims.jpg","d2_shivasGuard.jpg","d2_bloodStone.jpg","d2_forgedSpirit.jpg","d2_houzihousun.jpg"],"skill":[]}}})
+},files:{"character":[],"card":[],"skill":[]}}})
