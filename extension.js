@@ -102,11 +102,13 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 }
                 var list=lib.updates[nextVersion].files;
                 var tmp=lib.updates[nextVersion].next;
+                var lastestVersion=nextVersion;
                 while(tmp) {
                     var list2=lib.updates[tmp].files;
                     for(var i=0;i<list2.length;i++) {
                         if(!list.contains(list2[i])) list.push(list2[i]);
                     }
+                    lastestVersion=tmp;
                     tmp=lib.updates[tmp].next;
                 }
                 var n1=0,n2=list.length;
@@ -120,7 +122,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },function(){alert('下载时发生错误。')},function(){
                     ui.noname_Dota2_update.innerHTML='Dota2更新完成';
                     finish=true;
-                    game.saveConfig('noname_Dota2_version',nextVersion);
+                    game.saveConfig('noname_Dota2_version',lastestVersion);
                 })
             },
         };
