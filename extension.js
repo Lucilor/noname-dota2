@@ -193,27 +193,28 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             }
             download();
         };
+        var changeLog=function(){
+            var dialog=ui.create.dialog('hidden');
+            dialog.style.height='calc(100%)';
+            dialog.style.width='calc(100%)';
+            dialog.style.left='0px';
+            dialog.style.top='0px';
+            dialog.classList.add('popped');
+            dialog.classList.add('static');
+            var div=ui.create.div('.menubutton.round','×',function(){
+                dialog.delete();
+            });
+            div.style.left='calc(50% - 35px)';
+            dialog.add(div);
+            for(var i in lib.updates){
+                var str=lib.config.noname_Dota2_version==i?'当前版本':lib.updates[i].date;
+                dialog.addText(i+'('+str+')'+'<br>',false);
+                if(lib.updates[i].desc) dialog.addText(lib.updates[i].desc,false);
+            };
+            ui.window.appendChild(dialog);
+        };
         var needUpdate=function(){
-            ui.noname_Dota2_needUpdate=ui.create.system('Dota2拓展可更新',function(){
-                var dialog=ui.create.dialog('hidden');
-                dialog.style.height='calc(100%)';
-                dialog.style.width='calc(100%)';
-                dialog.style.left='0px';
-                dialog.style.top='0px';
-                dialog.classList.add('popped');
-                dialog.classList.add('static');
-                var div=ui.create.div('.menubutton.round','×',function(){
-                    dialog.delete();
-                });
-                div.style.left='calc(50% - 35px)';
-                dialog.add(div);
-                for(var i in lib.updates){
-                    var str=lib.config.noname_Dota2_version==i?'当前版本':lib.updates[i].date;
-                    dialog.addText(i+'('+str+')'+'<br>',false);
-                    if(lib.updates[i].desc) dialog.addText(lib.updates[i].desc,false);
-                };
-                ui.window.appendChild(dialog);
-            },true);
+            ui.noname_Dota2_needUpdate=ui.create.system('Dota2拓展可更新',changeLog(),true);
         };
         multiDownload(['updates.js'],null,null,function(){
             lib.init.js(extDir,"updates",function(){
@@ -221,6 +222,8 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 else return;
                 delete window.updates;
                 lib.extensionMenu.extension_Dota2.version.name="拓展版本："+lib.config.noname_Dota2_version;
+                lib.extensionMenu.extension_Dota2.version.nopointer=false;
+                lib.extensionMenu.extension_Dota2.version.onclick=changeLog();
                 lib.nextVersion=lib.updates[lib.config.noname_Dota2_version].next;
                 if(lib.nextVersion!=undefined)  {
                     needUpdate();
