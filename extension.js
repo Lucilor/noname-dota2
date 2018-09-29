@@ -76,7 +76,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "clear":true,
             "onclick":function(){
                 if(lib.updates===undefined||lib.updates.length==0) {
-                    alert('读取update.js失败');
+                    alert('读取updates.js失败');
                     return;
                 }
                 ui.click.configMenu();
@@ -88,7 +88,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "clear":true,
             "onclick":function(){
                 if(lib.updates===undefined||lib.updates.length==0) {
-                    alert('读取update.js失败');
+                    alert('读取updates.js失败');
                     return;
                 }
                 if(ui.noname_Dota2_update) {
@@ -119,7 +119,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 multiDownload(list,function(){
                     n1++;
                     ui.noname_Dota2_update.innerHTML='Dota2:'+n1+'/'+n2;
-                },function(){alert('下载时发生错误。')},function(){
+                },null,function(){
                     ui.noname_Dota2_update.innerHTML='Dota2更新完成';
                     finish=true;
                     game.saveConfig('noname_Dota2_version',lastestVersion);
@@ -128,51 +128,75 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
         };
         lib.extensionMenu.extension_Dota2.edit=edit;
         lib.extensionMenu.extension_Dota2.delete=deletex;
-        var fs=require('fs');
-        var http=require('https');  
+
+        var dir;
+        var extDir;
+        var ua=navigator.userAgent.toLowerCase();
+        if(ua.indexOf('android')!=-1){
+            dir=cordova.file.externalApplicationStorageDirectory;
+        }
+        else if(ua.indexOf('iphone')!=-1||ua.indexOf('ipad')!=-1){
+            dir=cordova.file.documentsDirectory;
+        }
+        if(window.require&&window.__dirname){
+            extDir=__dirname+'/extension/Dota2/';
+        } else {
+            extDir=dir+'/extension/Dota2/';
+        }
         var site="https://raw.githubusercontent.com/Lucilor/noname-dota2/master/";
         // site="http://candypurity.com/kodexplorer/data/User/admin/home/document";
-        var extDir=__dirname+'/extension/Dota2';
-        var downloadFile=function(url,folder,onsuccess,onerror){
-            url=site+url;
-            var dir=folder.split('/');
-            var str='';
-            var download=function(){
-                try{
-                    var file = fs.createWriteStream(extDir+'/'+folder);
-                }
-                catch(e){
-                    onerror();
-                }
-                var request = http.get(url, function(response) {
-                    var stream=response.pipe(file);
-                    stream.on('finish',onsuccess);
-                    stream.on('error',onerror);
-                });
-            }
-            var access=function(){
-                if(dir.length<=1){
-                    download();
-                }
-                else{
-                    str+='/'+dir.shift();
-                    fs.access(extDir+str,function(e){
-                        if(e){
-                            try{
-                                fs.mkdir(extDir+str,access);
-                            }
-                            catch(e){
-                                onerror();
-                            }
-                        }
-                        else{
-                            access();
-                        }
+        var downloadFile;
+        if(window.FileTransfer){
+            downloadFile=function(url,folder,onsuccess,onerror){
+                var fileTransfer = new FileTransfer();
+                url=site+url;
+                folder=extDir+folder;
+                fileTransfer.download(encodeURI(url),folder,onsuccess,onerror);
+            };
+        } else {
+            var fs=require('fs');
+            var http=require('https');  
+            var downloadFile=function(url,folder,onsuccess,onerror){
+                url=site+url;
+                var dir=folder.split('/');
+                var str='';
+                var download=function(){
+                    try{
+                        var file = fs.createWriteStream(extDir+'/'+folder);
+                    }
+                    catch(e){
+                        onerror();
+                    }
+                    var request = http.get(url, function(response) {
+                        var stream=response.pipe(file);
+                        stream.on('finish',onsuccess);
+                        stream.on('error',onerror);
                     });
                 }
-            }
-            access();
-        };
+                var access=function(){
+                    if(dir.length<=1){
+                        download();
+                    }
+                    else{
+                        str+='/'+dir.shift();
+                        fs.access(extDir+str,function(e){
+                            if(e){
+                                try{
+                                    fs.mkdir(extDir+str,access);
+                                }
+                                catch(e){
+                                    onerror();
+                                }
+                            }
+                            else{
+                                access();
+                            }
+                        });
+                    }
+                }
+                access();
+            };
+        }
         var multiDownload=function(list,onsuccess,onerror,onfinish){
             list=list.slice(0);
             var download=function(){
@@ -215,15 +239,17 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
         var needUpdate=function(){
             ui.noname_Dota2_needUpdate=ui.create.system('Dota2拓展可更新',changeLog,true);
         };
+
         multiDownload(['updates.js'],null,null,function(){
             lib.init.js(extDir,"updates",function(){
-                if(window.updates) lib.updates=window.updates;
-                else return;
-                delete window.updates;
-                lib.extensionMenu.extension_Dota2.version.name="拓展版本："+lib.config.noname_Dota2_version;
-                lib.nextVersion=lib.updates[lib.config.noname_Dota2_version].next;
-                if(lib.nextVersion!=undefined)  {
-                    needUpdate();
+                if(window.updates) {
+                    lib.updates=window.updates;
+                    delete window.updates;
+                    lib.extensionMenu.extension_Dota2.version.name="拓展版本："+lib.config.noname_Dota2_version;
+                    lib.nextVersion=lib.updates[lib.config.noname_Dota2_version].next;
+                    if(lib.nextVersion!=undefined)  {
+                        needUpdate();
+                    }
                 }
             });
         });
@@ -7975,4 +8001,4 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     diskURL:"https://pan.baidu.com/s/1C6kuKNGnYuVOfmvtu19zIw",
     forumURL:"",
     version:"",
-},files:{"character":[],"card":[],"skill":[]}}})
+},files:{"character":['d2_abaddon.jpg'],"card":[],"skill":[]}}})
