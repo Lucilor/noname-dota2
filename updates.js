@@ -1,5 +1,11 @@
 window.updates={
+	"1.3.2":{
+		date:"2018.9.29",
+		desc:"修复了手机端不能正常运行的问题",
+		files:['extension.js','CHANGELOG.MD'],
+	},
 	"1.3.1":{
+		next:"1.3.2",
 		date:"2018.9.16",
 		desc:"<li>bug修复",
 		files:['extension.js','CHANGELOG.MD'],
