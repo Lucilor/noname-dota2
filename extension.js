@@ -7277,17 +7277,19 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         return get.attitude(_status.event.player,target);
                     });
                     'step 1' 
-                    var target;
-                    if(event.onlytarget){
-                        target=event.onlytarget;
+                    if (result.bool) {
+                        var target;
+                        if(event.onlytarget){
+                            target=event.onlytarget;
+                        }
+                        else if(result.targets&&result.targets.length){
+                            target=result.targets[0];
+                        }
+                        player.line(target,'green');
+                        player.storage.d2_jiban_link=target;
+                        player.removeSkill('d2_jiban_link');
+                        player.addSkill('d2_jiban_link');
                     }
-                    else if(result.targets&&result.targets.length){
-                        target=result.targets[0];
-                    }
-                    player.line(target,'green');
-                    player.storage.d2_jiban_link=target;
-                    player.removeSkill('d2_jiban_link');
-                    player.addSkill('d2_jiban_link');
                 },
                 subSkill:{
                     link:{
@@ -7305,9 +7307,13 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                             delete player.storage.d2_jiban_link;
                             player.removeSkill('d2_jiban_link');
                         },
+                        sub:true,
                     },
                 },
-                sub:true,
+                ai:{
+                    threaten:1.1,
+                    expose:0.6
+                },
                 group:'d2_jiban2',
             },
             "d2_jiban2":{
