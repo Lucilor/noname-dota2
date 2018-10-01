@@ -7360,6 +7360,19 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         }
                     },
                 },
+                subSkill:{
+                    'lose':{
+                        trigger:{player:'phaseBegin'},
+                        forced:true,
+                        popup:false,
+                        content:function(){
+                            player.removeSkill('d2_guozai2');
+                            if(player.storage.d2_jiban_link) player.storage.d2_jiban_link.removeSkill('d2_guozai2');
+                        },
+                        sub:true,
+                    }
+                },
+                group:'d2_guozai_lose'
             },
             "d2_guozai2":{
                 mark:true,
@@ -7389,6 +7402,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                             trigger.num--;
                             player.removeSkill('d2_guozai2_damage');
                         },
+                        sub:true,
                     },
                 },
             },
@@ -8606,6 +8620,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "d2_lianji":'连击',
             "d2_lianji_info":"锁定技，每回合限一次，你的【杀】额外结算一次。",
             "d2_huisu":"回溯",
+            "d2_huisu2":"回溯",
             "d2_huisu_info":"每两轮限一次，一名角色的回合开始时，你可以回到上一轮开始时的状态。",
             "d2_chaofeng":"嘲讽",
             "d2_chaofeng_info":"锁定技，其他角色若能对你使用【杀】或【决斗】，则只能对你使用之。",
