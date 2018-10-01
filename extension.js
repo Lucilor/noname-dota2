@@ -66,7 +66,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     };
 },precontent:function (Dota2){
     if(Dota2.enable){
-        game.saveConfig('noname_Dota2_version',"1.3.2");
+        game.saveConfig('noname_Dota2_version',"1.4.0");
         var edit=lib.extensionMenu.extension_Dota2.edit;
         var deletex=lib.extensionMenu.extension_Dota2.delete;
         delete lib.extensionMenu.extension_Dota2.edit;
@@ -230,8 +230,8 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             div.style.left='calc(50% - 35px)';
             dialog.add(div);
             for(var i in lib.updates){
-                var str=lib.config.noname_Dota2_version==i?'当前版本':lib.updates[i].date;
-                dialog.addText(i+'('+str+')'+'<br>',false);
+                var str=lib.config.noname_Dota2_version==i?'--当前版本':'';
+                dialog.addText(i+'('+lib.updates[i].date+')'+str+'<br>',false);
                 if(lib.updates[i].desc) dialog.addText(lib.updates[i].desc,false);
             };
             ui.window.appendChild(dialog);
@@ -301,6 +301,10 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "d2_spectre":["female","wei",4,["d2_huangwu","d2_zheshe"],["des:和所有强大的能量都喜欢欺凌弱小一样，被称为墨丘利的幽鬼也是一个拥有着强横能量的存在，同样的，她对现实世界中的冲突和纷争无比着迷。然而她平时的幽鬼形态超越了常人的感知范围，因此每当她以实体形态出现时，她不得不损失一部分自我能量——尽管她也不愿意。在战斗中，她的自我意识逐渐散落并重新聚合，她也开始有了意识。她意识到了自己是幽鬼墨丘利——其他所有的鬼影都只是她自我的阴影。出于重新凝聚的打算，她开始专注，她的心智也在不断的成熟。只有等到她取得胜利或者彻底失败时，她那超物质的形态才会得以重聚。"]],
             "d2_ogreMagi":["male","qun",4,["d2_yanshu","d2_jingtong"],["des:普通食人魔的愚蠢正是一句俗话“蠢的像一袋石头一样”所形容的。在自然状况下，一只食人魔完全没有能力做任何事或下决定。他们不仅邋遢至极，有时一只食人魔还会发现自己吃完一头动物后居然被困在它的皮囊里。食人魔并非社会性生物，经常有人发现他们大岩石或者树桩亲昵的依偎在一起，显然是将这些东西错认成了他们的同类（这也许可以解释食人魔的低繁殖率）。然而，每一世代的食人魔中，都会诞生一只双头的食人魔魔法师，一出生就会立刻被授予传统名字：阿格隆·碎石者，这个名字属于它们种族历史上第一个以及或许是每一世代中唯一有智慧的食人魔。有两个脑袋的食人魔魔法师发现他可以比其他只有一个脑袋的生物更高效的行事。尽管食人魔魔法师无法赢得任何辩论（即使和它自己），但它天生就属于傻人有傻福，这命运中的意外收获让这个无法供养自己的种族在敌人的威胁和恶劣的天气下能繁荣起来。就好像是幸运女神对这个平均智商低下的种族的特别眷顾一样，她赐予了他们食人魔法师。她还能怎样呢？真是可怜的家伙们。"]],
             "d2_outworldDevourer":["male","wei",3,["d2_tianqiu","d2_jingqi","d2_shizhi"],["des:一个高傲且强横的种族中的一员，先兆者，徘徊于虚空裂隙，他是整个世界与创世深渊之间唯一的卫士。在这充斥着星体残片的殁境中，他凝视着天穹，警觉的提防着繁星之外那无底深渊中的任何骚动。在他非凡的智慧中，深藏着对先兆的敏锐洞察力和强烈共鸣，他心中那曲黑暗的协奏曲暗示着：总有一天，在这深渊之中，在那造化之外，会有某种东西醒来，并且注意到我们的世界。由于太专注于监视星体，殁境神蚀者对太阳附近的事件并不关心。然而，随着遗迹发出战争的召唤，随着心中那潜在的危机感不断扩大，殁境神蚀者展开双翼，向着我们的世界飞来。在预言中，先兆者的地位不言而喻：他的出现即是灾厄的征兆。何况，他已然亲临。"]],
+            "d2_shadowFiend":["male","shu",3,["d2_souhun","d2_mowang","d2_wange"],["des:据说影魔奈文摩尔有着一个诗人的灵魂，事实上，他吞噬的诗人灵魂早已成千上万。千百年来，他收集了各式各样的灵魂，包括诗人，牧师，帝王，乞丐，奴隶，哲人，罪犯，当然，还有英雄。他拥有着世间所有种类的灵魂。然而没人知道他收集这些灵魂作何之用。从来没有人得以窥视影魔的魂渊之秘，他从魂渊中伸出灵魂触须，蔓延在精神位面。他是把灵魂一个个吞噬了？还是把灵魂堆积在他的影惧神殿里？又或是将灵魂浸在死灵之池中？难道他仅仅是一个被恶魔傀儡大师操纵着，通过位面裂口进入世界的傀儡？尽管众说纷纭，但根本没有人能看透他那黑暗光环下的层层邪恶。然而，如果你实在是很想知道那些灵魂的归宿，有个办法能帮你达成心愿：凡人，将你的灵魂奉献给影魔，或者等待魔王的收割！"]],
+            "d2_io":["female","wei",3,["d2_jiban","d2_guozai","d2_jianglin"],["des:艾欧存在于所有地方和世间万物之内。敌人们诋毁它为灭绝者，学者们则尊崇它为闪动的神圣之眼，艾欧同时在所有位面存在着，它们可以在任何时候将自己身体的一小部分转化为物理存在。 就像伟大的双子骑士“暗”与“光”，还有一位来历已淹没在时间中的远古旅者一样，精灵守卫艾欧也是宇宙的基本法则，比时间还要古老，来自凡人无法理解的领域。艾欧不仅仅是物质内部的吸引力和排斥力的结合，它是将实体连接在一起的电荷的直观体现。只有将这些力量进行可控的扭曲，艾欧才能在物理位面被人感受到。作为一股善意、乐于合作的力量，艾欧将它的力量与其它人绑在一起，让盟友的力量得到强化。它的心思深不可测，它的力量无法想象，艾欧在物理位面穿梭着，是神秘宇宙的完美体现。"]],
+            // "d2_grimStroke":["male","shu",3,["d2_shenbi","d2_moyong","d2_fuhun"],["des:雅致而老道，狡猾而残忍，天涯墨客挥出束缚着符文之力的毛笔，利用亵渎之墨引导邪恶的力量。从小被培养成族人的卫士，天涯墨客的成神之路反而是建立在他极其乐意的献祭之上。被原为保护之用的魔法吞噬后，天涯墨客的同胞们现在作为墨魂被永久束缚在他的毛笔中—他们痛苦的尖叫和恶毒的形态在他笔下每一幅画中呼之欲出。"]],
+            "d2_weaver":["male","wei",3,["d2_suodi","d2_lianji","d2_huisu"],["des:创世之纱需要长期细心的照料，以防止其变得残破；因为一旦它散开了，整个世界就将毁于一旦。编织者的工作就是保持创世之纱的紧密，用现实之网修补它的破损。他们同样要防止那些在创世之纱的缺口上产卵或者侵蚀创世之纱的虫子，只要编织者稍微分心，这些家伙的幼虫就能吞噬掉整个宇宙。斯吉茨格尔是一名大师级的编织者，负责维护一块小补丁的紧密。然而这项任务并不能满足他，他经常唠叨过去那些原始的创造工作，对干完活就走人的世界纺织者也是颇有微词。他想创造，不想只是维护——他想按自己的设计编织出自己的世界。他开始在他负责的区域上做手脚，逐渐不能自拔，他的胆子也愈发的大，甚至私自改动了世界纺织者编织的图案。最后，守卫者来了，毁掉了编织者所作的一切，直接从创世之纱上去除了这一块，然后重新编织，却不让他参与其中。斯吉茨格尔现在孤身一人，被种群所弃，换做任何其他编织者，都会备受折磨。然而斯吉茨格尔却无比愉悦，因为他终于自由了，能够自由的创造，重头开始。他创造新世界所需的所有材料都触手可及。他只需要从缺口处将现在的世界撕裂。"]],
             
         },
         translate:{
@@ -336,6 +340,10 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "d2_spectre":"幽鬼",
             "d2_ogreMagi":"食人魔魔法师",
             "d2_outworldDevourer":"殁境神蚀者",
+            "d2_shadowFiend":"影魔",
+            "d2_io":"艾欧",
+            "d2_grimStroke":"天涯墨客",
+            "d2_weaver":"编织者",
         },
     },
     card:{
@@ -375,8 +383,8 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 ai:{
                     order:2,
-                    value:3,
-                    useful:1,
+                    value:2,
+                    useful:2,
                     result:{
                         target:function (player,target){
                             return -target.num('h');
@@ -392,9 +400,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 selectTarget:1,
                 type:"basic",
-                filterTarget:function (card,player,target){
-                    return true;
-                },
+                filterTarget:true,
                 content:function (){
                     if (target.hasSkill('d2_sentry')) {
                         target.removeSkill('d2_sentry');
@@ -406,7 +412,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 ai:{
                     order:2,
                     value:2,
-                    useful:1,
+                    useful:2,
                     result:{
                         target:function (player,target){
                             if(target.hasSkill('d2_sentry')) return -1;
@@ -583,6 +589,88 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 ai:{
                     equipValue:10
                 }
+            },
+            "d2_linkensSphere":{
+                fullimage:true,
+                type:'trick',
+                global:'d2_linkensSphere',
+                ai:{
+                    value:6,
+                    useful:3,
+                },
+            },
+            "d2_bladeMail":{
+                fullimage:true,
+                type:'trick',
+                global:'d2_bladeMail',
+                ai:{
+                    value:6,
+                    useful:3,
+                },
+            },
+            "d2_smokeOfDeceit":{
+                fullimage:true,
+                type:'trick',
+                enable:true,
+                selectTarget:[1,Infinity],
+                filterTarget:true,
+                content:function(){
+                    target.draw();
+                    target.addTempSkill('qianxing',{player:'phaseBegin'});
+                },
+                ai:{
+                    order:1,
+                    value:2,
+                    useful:7,
+                    result:{
+                        target:1
+                    }
+                },
+            },
+            "d2_dust":{
+                fullimage:true,
+                type:'trick',
+                enable:function(card,player){
+                    return game.hasPlayer(function(current){
+                        return current!=player&&current.hasSkill('qianxing');
+                    });
+                },
+                selectTarget:-1,
+                filterTarget:function(card,player,target){
+                    return target==player;
+                },
+                modTarget:true,
+                toself:true,
+                chongzhu:function(card,player){
+                    return !game.hasPlayer(function(current){
+                        return current!=player&&current.hasSkill('qianxing');
+                    });
+                },
+                content:function(){
+                    var players=game.filterPlayer(function(current){
+                        return current!=player&&current.hasSkill('qianxing');
+                    });
+                    player.line(players);
+                    for(var i=0;i<players.length;i++){
+                        players[i].removeSkill('qianxing');
+                        players[i].randomDiscard();
+                    }
+                },
+                ai:{
+                    order:10,
+                    value:2,
+                    useful:4,
+                    result:{
+                        player:function(player,target){
+                            if (game.hasPlayer(function(current){
+                                return current!=player&&current.hasSkill('qianxing');
+                            })) {
+                                return 1;
+                            }
+                            return 0;
+                        }
+                    }
+                },
             },
             "d2_forgedSpirit":{
                 enable:true,
@@ -1001,6 +1089,38 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 group:'d2_dagon',
                 level:5,
             },
+            "d2_linkensSphere":{
+                trigger:{
+                    target:'useCardToBefore'
+                },
+                forced:true,
+                filter:function(event,player){
+                    if(event.targets.length!=1||event.card==undefined) return false;
+                    var card=event.card;
+                    return player.countCards('h','d2_linkensSphere')>0&&(get.type(card)=='trick'||get.type(card)=='delay')&&event.player!=player;
+                },
+                content:function(){
+                    var cards=player.getCards('h',{name:'d2_linkensSphere'});
+                    player.discard(cards.randomGet());
+                    trigger.cancel();
+                    player.draw();
+                },
+            },
+            "d2_bladeMail":{
+                trigger:{
+                    player:'damageEnd'
+                },
+                forced:true,
+                filter:function(event,player){
+                    return player.countCards('h','d2_bladeMail')>0&&event.parent.name!='d2_bladeMail'&&event.num>0&&event.source&&event.source!=player&&event.source.isAlive();
+                },
+                content:function(){
+                    var cards=player.getCards('h',{name:'d2_bladeMail'});
+                    player.discard(cards.randomGet());
+                    player.line(trigger.source);
+                    trigger.source.damage(player,trigger.nature);
+                },
+            },
         },
         translate:{
             "d2_aghanims":"阿哈利姆神杖",
@@ -1035,11 +1155,19 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "d2_dagon4_info":"出牌阶段限一次，你可以进行一次判定并令一名其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你对其造成一点伤害并弃置其一张牌。升级达贡之神力。",
             "d2_dagon5":"达贡之神力五",
             "d2_dagon5_info":"出牌阶段限一次，你可以进行一次判定并令一名其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你对其造成一点伤害并获得其一张牌。",
+            "d2_linkensSphere":"林肯法球",
+            "d2_linkensSphere_info":"其他角色使用锦囊牌指定你为唯一目标时，弃置手牌中的林肯法球，取消该牌并摸一张牌。",
+            "d2_bladeMail":"刃甲",
+            "d2_bladeMail_info":"其他角色对你造成伤害后，弃置手牌中的刃甲，对该角色造成一点伤害（此伤害不触发刃甲）。",
+            "d2_smokeOfDeceit":'诡计之雾',
+            "d2_smokeOfDeceit_info":"出牌阶段对任意名角色使用，这些角色摸一张牌并获得【潜行】直到其回合开始。",
+            "d2_dust":"显影之尘",
+            "d2_dust_info":"出牌阶段对自己使用，场上所有拥有【潜行】的其他角色失去潜行并随机弃置一张牌。场上没有拥有【潜行】的其他角色不能使用但能重铸。",
         },
         list:[["spade","13","d2_aghanims"],["diamond","5","d2_observer"],["diamond","6","d2_observer"],["diamond","7","d2_observer"],["club","5","d2_sentry"],["club","6","d2_sentry"],
              ["club","7","d2_sentry"],["diamond","5","d2_observer"],["diamond","6","d2_observer"],["diamond","7","d2_observer"],["club","5","d2_sentry"],["club","6","d2_sentry"],
              ["club","7","d2_sentry"],["club","6","d2_monkeyKingBar"],["diamond","13","d2_bloodStone"],["spade","9","d2_shivasGuard"],["spade","6","d2_echoSabre"],["heart","13","d2_heartOfTarrasque"],
-             ["spade","6","d2_dagon1"]],
+             ["spade","6","d2_dagon1"],["diamond","1","d2_linkensSphere"],["diamond","1","d2_linkensSphere"],["spade","2","d2_bladeMail"],["spade","2","d2_bladeMail"]],
     },
     skill:{
         skill:{
@@ -1097,7 +1225,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 content:function (){
                     lib.storage.firstBlood=true;
-                    game.log(get.translation(player)+'拿下了第一滴血！');
+                    game.log(player,'拿下了第一滴血！');
                     game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_firstBlood");
                     player.$damagepop('一血','unknownx');
                 },
@@ -1111,7 +1239,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 priority:100,
                 forced:true,
                 content:function (){
-                    game.log(get.translation(player)+'拿下了双杀！')
+                    game.log(player,'拿下了双杀！')
                     game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_doubleKill");
                     player.$damagepop('双杀','unknownx');
                 },
@@ -1125,7 +1253,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 priority:100,
                 forced:true,
                 content:function (){
-                    game.log(get.translation(player)+'拿下了三杀！')
+                    game.log(player,'拿下了三杀！')
                     game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_tripleKill");
                     player.$damagepop('三杀','unknownx');
                 },
@@ -1139,7 +1267,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 priority:100,
                 forced:true,
                 content:function (){
-                    game.log(get.translation(player)+'正在疯狂杀戮！')
+                    game.log(player,'正在疯狂杀戮！')
                     game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_ultraKill");
                     player.$damagepop('疯狂杀戮','unknownx');
                 },
@@ -1153,7 +1281,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 priority:100,
                 forced:true,
                 content:function (){
-                    game.log(get.translation(player)+'已经暴走啦！')
+                    game.log(player,+'已经暴走啦！')
                     game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_rampage");
                     player.$damagepop('暴走','unknownx');
                 },
@@ -1374,7 +1502,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         if(player.storage.d2_rune_haste_lose.length) dialog.addSmall(player.storage.d2_rune_haste_lose);
                         else dialog.addText('（无）');
                     },
-                    content:function(content,player){
+                    content:function(storage,player){
                         return '新的一轮开始时你失去这些牌：'+get.translation(player.storage.d2_rune_haste_equip);
                     }
                 },
@@ -1466,7 +1594,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     player.chooseTarget('均衡',true,function(card,player,target){
                         return true;
                     }).set('ai',function(target){
-                        var attitude=ai.get.attitude(_status.event.player,target);
+                        var attitude=get.attitude(_status.event.player,target);
                         if(attitude<0) return attitude;
                         var hp=target.hp;
                         var card=target.get('h').length;
@@ -1497,7 +1625,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         target.recover(card-hp);
                     }
                     player.line(target,'green');
-                    game.log(get.translation(target)+'被均衡了。');
+                    game.log(target,'被均衡了。');
                 },
                 ai:{
                     expose:0.4,
@@ -1518,7 +1646,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 selectCard:1,
                 check:function (card){
-                    return 6-ai.get.value(card);
+                    return 6-get.value(card);
                 },
                 content:function (){
                     target.discard(target.get('j'));
@@ -1565,7 +1693,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     return player.maxHp>1;
                 },
                 check:function (event,player){
-                    if(ai.get.attitude(player,event.player)<=0) return false;
+                    if(get.attitude(player,event.player)<=0) return false;
                     if(event.player==player&&player.maxHp==1) return false;
                     if(event.player.hp+player.get('h','tao').length>0) return false;
                     return true;
@@ -1600,7 +1728,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     return num>2;
                 },
                 check:function (event,player){
-                    return ai.get.attitude(player,event.player)<0;
+                    return get.attitude(player,event.player)<0;
                 },
                 init:function (player){
                     player.storage.d2_souhun=0;
@@ -1622,6 +1750,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     player.storage.d2_souhun-=num;
                     player.syncStorage('d2_souhun');
                     if(player.storage.d2_souhun<=0) player.unmarkSkill('d2_souhun');
+                    if(player.name!='d2_shadowDance'&&player.gender!='female') game.playAudio("../extension/Dota2","d2_souhun"+[3,4].randomGet());
                 },
                 ai:{
                     threaten:1.6,
@@ -1637,6 +1766,8 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 content:function (){
                     player.storage.d2_souhun++;
                     player.markSkill('d2_souhun');
+                    if(player.hasSkill('d2_wange')) player.storage.d2_wange_souls++;
+                    if(player.name!='d2_shadowDance'&&player.gender!='female') game.playAudio("../extension/Dota2","d2_souhun"+[1,2].randomGet());
                 },
             },
             "d2_qianren":{
@@ -2419,7 +2550,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 selectCard:[1,Infinity],
                 check:function (card){
-                    return 8-ai.get.value(card);
+                    return 8-get.value(card);
                 },
                 content:function (){
                     var hp=target.hp;
@@ -2427,7 +2558,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     player.hp=Math.min(hp,player.maxHp);
                     player.update();
                     target.update();
-                    game.log(get.translation(player)+'与'+get.translation(target)+'的体力值交换了。');
+                    game.log(player,'与',target,'的体力值交换了。');
                     if(player.getEquip('d2_aghanims')){
                         if(hp>target.hp){
                             target.chooseToDiscard('魂断弃牌',event.cards.length,'he',true);
@@ -3780,7 +3911,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 filterCard:true,
                 check:function (card){
-                    return 6-ai.get.value(card);
+                    return 6-get.value(card);
                 },
                 content:function (){
                     player.addTempSkill('d2_kuangfeng2',{player:'phaseBegin'});
@@ -4227,7 +4358,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     return target!=player&&!player.storage.d2_ansha.contains(target.name);
                 },
                 check:function (card){
-                    return 7-ai.get.value(card);
+                    return 7-get.value(card);
                 },
                 contentBefore:function (){
                     player.storage.d2_ansha_damage=player.getEquip('d2_aghanims')?false:true;
@@ -4470,9 +4601,10 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 filter:function (event,player){
                     return event.nature=='thunder';
                 },
-                mark:"character",
+                mark:true,
+                marktext:'云',
                 intro:{
-                    content:"雷云",
+                    content:"下一次受到的雷属性伤害+1",
                 },
                 content:function (){
                     trigger.num++;
@@ -4959,21 +5091,21 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                                 respond:1,
                                 respondShan:1,
                                 damage:function (card){
-                            if(card.nature=='poison') return;
-                            return 1;
-                        },
+                                    if(card.nature=='poison') return;
+                                    return 1;
+                                },
                                 natureDamage:function (card){
-                            if(card.nature) return 1;
-                        },
+                                    if(card.nature) return 1;
+                                },
                                 fireDamage:function (card,nature){
-                            if(card.nature=='fire') return 1;
-                        },
+                                    if(card.nature=='fire') return 1;
+                                },
                                 thunderDamage:function (card,nature){
-                            if(card.nature=='thunder') return 1;
-                        },
+                                    if(card.nature=='thunder') return 1;
+                                },
                                 poisonDamage:function (card,nature){
-                            if(card.nature=='poison') return 1;
-                        },
+                                    if(card.nature=='poison') return 1;
+                                },
                             },
                         },
                         sub:true,
@@ -6228,7 +6360,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     return player.countCards('h',{name:'sha',nature:'fire'});
                 },
                 check:function (card){
-                    return 7-ai.get.value(card);
+                    return 7-get.value(card);
                 },
                 content:function (){
                     'step 0'
@@ -6299,7 +6431,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     return player.storage.d2_huoling.length<3&&player.countCards('h');
                 },
                 check:function (card){
-                    return 8-ai.get.value(card);
+                    return 8-get.value(card);
                 },
                 init:function (player){
                     player.storage.d2_huoling=[];
@@ -6713,7 +6845,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     }
                     if (result.control=='反弹') {
                         if(player.getEquip('d2_aghanims')) {
-                            game.log(trigger.num);
                             trigger.source.damage(player,trigger.nature,trigger.num);
                             trigger.num=0;
                             trigger.cancel();
@@ -6741,7 +6872,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     return player!=target;
                 },
                 check:function (card){
-                    return 5-ai.get.value(card);
+                    return 5-get.value(card);
                 },
                 content:function (){
                     'step 0'
@@ -6910,7 +7041,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     player.storage.d2_shizhi_damage=false;
                 },
                 intro:{
-                    content:function(content,player) {
+                    content:function(storage,player) {
                         var num=player.countCards('h')+player.storage.d2_tianqiu;
                         var d=player.storage.d2_shizhi_damage?'已':'未';
                         var str='手牌数+天球标记数：'+num+'；'+d+'发动过【天球】伤害+1效果';
@@ -6964,6 +7095,512 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         player.draw();
                     }
                 }
+            },
+            "d2_mowang":{
+                trigger:{
+                    player:'shaBegin',
+                },
+                forced:true,
+                filter:function(event,player){
+                    return event.player;
+                },
+                content:function(){
+                    var target=trigger.target;
+                    if(target.storage.d2_mowang_ying>0) {
+                        target.storage.d2_mowang_ying--;
+                        if(target.storage.d2_mowang_ying<1) target.unmarkSkill('d2_mowang_ying');
+                        target.updateMarks();
+                        game.playAudio("../extension/Dota2","d2_mowang"+[1,2].randomGet());
+                    } else {
+                        player.draw();
+                    }
+                },
+                subSkill:{
+                    "ying":{
+                        mark:true,
+                        intro:{
+                            content:'共有#枚“影”标记'
+                        },
+                        sub:true,
+                    },
+                },
+                group:['d2_mowang2','d2_mowang3'],
+            },
+            "d2_mowang2":{
+                audio:"ext:Dota2:2",
+                trigger:{
+                    player:'phaseUseBegin'
+                },
+                forced:true,
+                filter:function(event,player){
+                    return game.hasPlayer(function(current){
+                        return current!=player&&current.hujia>0;
+                    });
+                },
+                content:function(){
+                    var players=game.filterPlayer(function(current){
+                        return current!=player&&current.hujia>0;
+                    });
+                    player.line(players);
+                    for(var i=0;i<players.length;i++){
+                        var num=players[i].hujia;
+                        players[i].changeHujia(-num);
+                        players[i].addSkill('d2_mowang_ying');
+                        players[i].storage.d2_mowang_ying=num;
+                    }
+                },
+            },
+            "d2_mowang3":{
+                trigger:{
+                    player:'phaseUseEnd'
+                },
+                forced:true,
+                content:function(){
+                    var players=game.filterPlayer(function(current){
+                        return current!=player&&current.storage.d2_mowang_ying>0;
+                    });
+                    player.line(players);
+                    for(var i=0;i<players.length;i++){
+                        var num=players[i].storage.d2_mowang_ying;
+                        players[i].changeHujia(num);
+                        delete players[i].storage.d2_mowang_ying;
+                        players[i].removeSkill('d2_mowang_ying');
+                    }
+                },
+            },
+            "d2_wange":{
+                audio:"ext:Dota2:2",
+                enable:'phaseUse',
+                forced:true,
+                unique:true,
+                mark:true,
+                init:function (player){
+                    player.storage.d2_wange=false;
+                    player.storage.d2_wange_souls=0;
+                },
+                intro:{
+                    content:function(storage,player) {
+                        var num=Math.min(8,player.storage.d2_wange_souls);
+                        return '尚未发动，发动时展示的牌数：'+num;
+                    },
+                },
+                filter:function (event,player){
+                    return !player.storage.d2_wange&&player.storage.d2_wange_souls;
+                },
+                skillAnimation:true,
+                animationStr:"魂之挽歌",
+                animationColor:"thunder",
+                content:function (){
+                    'step 0'
+                    var num=Math.min(8,player.storage.d2_wange_souls);
+                    var cards=get.cards(num);
+                    var list=[0,0,0,0];
+                    for(var i=0;i<cards.length;i++){
+                        switch(get.suit(cards[i])) {
+                            case 'spade':list[0]++;break;
+                            case 'club':list[1]++;break;
+                            case 'heart':list[2]++;break;
+                            case 'diamond':list[3]++;break;
+                            default:
+                        }
+                        cards[i].discard();
+                    }
+                    if(player.getEnemies.length<list[0]) {
+                        list[1]+=list[0]-player.getEnemies.length;
+                        list[0]=player.getEnemies.length;
+                    }
+                    if(player.maxHp-player.hp<list[2]) {
+                        list[3]+=list[2]-player.maxHp+player.hp;
+                        list[2]=player.maxHp-player.hp;
+                    }
+                    event.list=list;
+                    var str='展示了牌堆顶的'+num+'张牌';
+                    event.dialog=ui.create.dialog(player,str,cards);
+                    event.videoId=lib.status.videoId++;
+                    game.broadcast('createDialog',event.videoId,str,cards);
+                    game.addVideo('cardDialog',null,[player,str,get.cardsInfo(cards),event.videoId]);
+                    game.delay(2);
+                    'step 1'
+                    event.dialog.close();
+                    game.addVideo('cardDialog',null,event.videoId);
+                    game.broadcast('closeDialog',event.videoId);
+                    'step 2'
+                    var list=event.list;
+                    if(list[0]) {
+                        var enemies=player.getEnemies().randomGets(list[0]);
+                        player.line(enemies);
+                        for(var i=0;i<enemies.length;i++) enemies[i].damage(player);
+                    }
+                    if(list[1]) {
+                        var enemies=game.filterPlayer(function(current){
+                            return player.getEnemies().contains(current)&&current.countCards('he');
+                        });
+                        for(var i=0;i<list[1];i++) {
+                            var enemy=enemies.randomGet();
+                            enemy.randomDiscard();
+                            player.line(enemy);
+                            if(enemy.countCards('he')<1) enemies.remove(enemy);
+                        }
+                    }
+                    if(list[2]) {
+                        player.recover(list[2]);
+                    }
+                    if(list[3]) {
+                        player.draw(list[3]);
+                    }
+                    delete player.storage.d2_wange_souls;
+                    player.storage.d2_wange=true;
+                    player.awakenSkill('d2_wange');
+                },
+                ai:{
+                    result:{
+                        player:function(player,target){
+                            var num=player.storage.d2_wange_souls;
+                            if(num>=8) return 1;
+                            if(player.hp<2&&num>=4) return 1;
+                            return 0;
+                        }
+                    },
+                },
+            },
+            "d2_jiban":{
+                trigger:{
+                    player:'phaseBegin',
+                },
+                direct:true,
+                content:function(){
+                    'step 0'
+                    player.chooseTarget(get.prompt('d2_jiban'),function(card,player,target){
+                        return player!=target&&player.storage.d2_jiban_link!=target;
+                    }).set('ai',function(target){
+                        return get.attitude(_status.event.player,target);
+                    });
+                    'step 1' 
+                    var target;
+                    if(event.onlytarget){
+                        target=event.onlytarget;
+                    }
+                    else if(result.targets&&result.targets.length){
+                        target=result.targets[0];
+                    }
+                    player.line(target,'green');
+                    player.storage.d2_jiban_link=target;
+                    player.removeSkill('d2_jiban_link');
+                    player.addSkill('d2_jiban_link');
+                },
+                subSkill:{
+                    link:{
+                        trigger:{global:'dieBefore'},
+                        mark:'character',
+                        intro:{
+                            content:'与$连接'
+                        },
+                        forced:true,
+                        popup:false,
+                        filter:function(event,player){
+                            return event.player==player.storage.d2_jiban_link;
+                        },
+                        content:function(){
+                            delete player.storage.d2_jiban_link;
+                            player.removeSkill('d2_jiban_link');
+                        },
+                    },
+                },
+                sub:true,
+                group:'d2_jiban2',
+            },
+            "d2_jiban2":{
+                trigger:{
+                    player:['drawEnd','recoverEnd'],
+                },
+                forced:true,
+                filter:function(event,player){
+                    return player.storage.d2_jiban_link;
+                },
+                content:function(){
+                    var target=player.storage.d2_jiban_link;
+                    player.line(target);
+                    var num=player.getEquip('d2_aghanims')?trigger.num:1;
+                    if(trigger.name=='draw') target.draw(num);
+                    if(trigger.name=='recover') target.recover(num);
+                },
+            },
+            "d2_guozai":{
+                enable:'phaseUse',
+                usable:1,
+                position:'he',
+                selectCard:[0,1],
+                filterCard:function(card){
+                    return get.type(card)=='equip';
+                },
+                check:function(card){
+                    return 20-get.value(card);
+                },
+                content:function(){
+                    'step 0'
+                    if(cards.length==0) player.loseHp();
+                    'step 1'
+                    player.addSkill('d2_guozai2');
+                    var target=player.storage.d2_jiban_link;
+                    if(target) {
+                        player.line(target);
+                        target.addSkill('d2_guozai2');
+                    }
+                },
+                ai:{
+                    order:function (){
+                        return get.order({name:'sha'})+0.1;
+                    },
+                    result:{
+                        player:function(player,target){
+                            if(player.countCards('he',{type:'equip'})) return 2;
+                            if(player.hp>1) return 1;
+                            return 0;
+                        }
+                    },
+                },
+            },
+            "d2_guozai2":{
+                mark:true,
+                intro:{
+                    content:function(storage,player){
+                        var str='';
+                        if(player.hasSkill('d2_guozai2_damage')) str='下一次受到的伤害-1；';
+                        return str+'出牌阶段出【杀】次数+1';
+                    }
+                },
+                init:function(player){
+                    player.addSkill('d2_guozai2_damage');
+                },
+                mod:{
+                    cardUsable:function (card,player,num){
+                        if(card.name=='sha') return num+1;
+                    },
+                },
+                subSkill:{
+                    damage:{
+                        trigger:{player:'damageBegin'},
+                        forced:true,
+                        filter:function(event,player){
+                            return event.num>0;
+                        },
+                        content:function(){
+                            trigger.num--;
+                            player.removeSkill('d2_guozai2_damage');
+                        },
+                    },
+                },
+            },
+            "d2_jianglin":{
+                trigger:{
+                    global:'damageBefore'
+                },
+                round:2,
+                filter:function(event,player){
+                    return (event.player==player&&event.num>=player.hp)||(event.player==player.storage.d2_jiban_link&&event.num>=player.storage.d2_jiban_link.hp);
+                },
+                content:function(){
+                    player.storage.d2_jianglin2={
+                        num:trigger.num,
+                        nature:trigger.nature,
+                        source:trigger.source,
+                    },
+                    player.line(trigger.player);
+                    player.addSkill('d2_jianglin2');
+                    trigger.cancel();
+                },
+            },
+            "d2_jianglin2":{
+                trigger:{
+                    player:'phaseEnd'
+                },
+                forced:true,
+                mark:true,
+                intro:{
+                    content:function(storage,player){
+                        var nature=player.storage.d2_jianglin2.nature?get.translation(player.storage.d2_jianglin2.nature):'无';
+                        var source=player.storage.d2_jianglin2.source?get.translation(player.storage.d2_jianglin2.source.name)+'造成':'无来源';
+                        return '回合结束时受到'+source+'的'+player.storage.d2_jianglin2.num+'点'+nature+'属性伤害';
+                    }
+                },
+                content:function(){
+                    var damage=player.storage.d2_jianglin2;
+                    player.damage(damage.num,damage.nature,damage.source);
+                    player.removeSkill('d2_jianglin2');
+                },
+            },
+            "d2_suodi":{
+                audio:"ext:Dota2:2",
+                trigger:{
+                    global:'phaseBegin',
+                },
+                round:1,
+                filter:function(event,player){
+                    if(event.player==player.storage.d2_suodi_target) {
+                        delete player.storage.d2_suodi_target;
+                        player.removeSkill('d2_suodi_target');
+                        return false;
+                    }
+                    return event.player!=player;
+                },
+                check:function(event,player){
+                    if(player.hasSkill('qianxing')) return false;
+                    if(!player.getEnemies().contains(event.player)) return false;
+                    if(player.hp>2) return false;
+                    if(event.player.getCards('h')>3) return true;
+                    if(player.hp<2) return true;
+                },
+                content:function(){
+                    var target=_status.currentPhase;
+                    player.addTempSkill('qianxing');
+                    player.storage.d2_suodi_target=target;
+                    player.line(target);
+                    player.addSkill('d2_suodi_target');
+                },
+                subSkill:{
+                    target:{
+                        mark:'character',
+                        intro:{
+                            content:'不能对$发动【缩地】'
+                        },
+                        sub:true,
+                    },
+                },
+            },
+            "d2_lianji":{
+                audio:"ext:Dota2:2",
+                trigger:{
+                    player:'shaAfter'
+                },
+                usable:1,
+                forced:true,
+                filter:function(event,player){
+                    return event.target.isAlive();
+                },
+                content:function(){
+                    player.useCard(trigger.card,trigger.target);
+                },
+            },
+            "d2_huisu":{
+                audio:"ext:Dota2:2",
+                trigger:{
+                    global:'phaseBegin',
+                },
+                round:2,
+                check:function(event,player){
+                    var num1=player.hp+player.maxHp+player.getCards('he')-2*player.getCards('j');
+                    var mark=player.storage.d2_huisu;
+                    var num2=mark.hp+mark.maxHp+mark.hand.length+mark.equip.length-2*mark.judge.length;
+                    return num2>num1;
+                },
+                intro:{
+                    content:function(storage,player){
+                        var str='';
+                        str+='体力：'+player.storage.d2_huisu.hp+'、体力上限：'+player.storage.d2_huisu.maxHp;
+                        if(player.storage.d2_huisu.hand.length){
+                            if(player.isUnderControl(true)){
+                                str+='手牌区：'+get.translation(player.storage.d2_huisu.hand);
+                            }
+                            else{
+                                str+='手牌区：'+(player.storage.d2_huisu.hand.length)+'张牌';
+                            }
+                        }
+                        if(player.storage.d2_huisu.equip.length){
+                            if(str.length) str+='、';
+                            if(player.isUnderControl(true)){
+                                str+='装备区：'+get.translation(player.storage.d2_huisu.equip);
+                            }
+                            else{
+                                str+='装备区：'+(player.storage.d2_huisu.equip.length)+'张牌';
+                            }
+                        }
+                        if(player.storage.d2_huisu.judge.length){
+                            if(str.length) str+='、';
+                            if(player.isUnderControl(true)){
+                                str+='判定区：'+get.translation(player.storage.d2_huisu.judge);
+                            }
+                            else{
+                                str+='判定区：'+(player.storage.d2_huisu.judge.length)+'张牌';
+                            }
+                        }
+                        return str;
+                    },
+                    mark:function(dialog,content,player){
+                        dialog.addText('体力：'+player.storage.d2_huisu.hp+'、体力上限：'+player.storage.d2_huisu.maxHp);
+                        if(player.storage.d2_huisu.hand.length){
+                            if(player.isUnderControl(true)){
+                                dialog.add('<div class="text center">手牌区</div>');
+                                dialog.addSmall(player.storage.d2_huisu.hand);
+                            }
+                            else{
+                                dialog.add('<div class="text center">手牌区：'+player.storage.d2_huisu.hand.length+'张牌</div>');
+                            }
+                        }
+                        if(player.storage.d2_huisu.equip.length){
+                            if(player.isUnderControl(true)){
+                                dialog.add('<div class="text center">装备区</div>');
+                                dialog.addSmall(player.storage.d2_huisu.equip);
+                            }
+                            else{
+                                dialog.add('<div class="text center">装备区：'+player.storage.d2_huisu.equip.length+'张牌</div>');
+                            }
+                        }
+                        if(player.storage.d2_huisu.judge.length){
+                            if(player.isUnderControl(true)){
+                                dialog.add('<div class="text center">判定区</div>');
+                                dialog.addSmall(player.storage.d2_huisu.judge);
+                            }
+                            else{
+                                dialog.add('<div class="text center">判定区：'+player.storage.d2_huisu.judge.length+'张牌</div>');
+                            }
+                        }
+                    },
+                },
+                content:function(){
+                    game.addVideo('skill',player,'d2_huisu');
+                    player.hp=player.storage.d2_huisu.hp;
+                    player.maxHp=player.storage.d2_huisu.maxHp;
+                    player.update();
+                    for(var i=0;i<player.storage.d2_huisu.hand.length;i++){
+                        player.storage.d2_huisu.hand[i]=game.createCard(player.storage.d2_huisu.hand[i]);
+                    }
+                    for(var i=0;i<player.storage.d2_huisu.equip.length;i++){
+                        player.storage.d2_huisu.equip[i]=game.createCard(player.storage.d2_huisu.equip[i]);
+                    }
+                    for(var i=0;i<player.storage.d2_huisu.judge.length;i++){
+                        player.storage.d2_huisu.judge[i]=game.createCard(player.storage.d2_huisu.judge[i]);
+                    }
+                    player.removeEquipTrigger();
+                    var cards=player.getCards('hej');
+                    for(var i=0;i<cards.length;i++){
+                        cards[i].discard();
+                    }
+                    player.directgain(player.storage.d2_huisu.hand);
+                    for(var i=0;i<player.storage.d2_huisu.equip.length;i++){
+                        player.$equip(player.storage.d2_huisu.equip[i]);
+                    }
+                    for(var i=0;i<player.storage.d2_huisu.judge.length;i++){
+                        player.addJudge(player.storage.d2_huisu.judge[i]);
+                    }
+                },
+                group:'d2_huisu2'
+            },
+            "d2_huisu2":{
+                trigger:{
+                    global:'roundStart'
+                },
+                forced:true,
+                popup:false,
+                content:function(){
+                    player.storage.d2_huisu={
+                        hp:player.hp,
+                        maxHp:player.maxHp,
+                        hand:player.getCards('h'),
+                        equip:player.getCards('e'),
+                        judge:player.getCards('j')
+                    };
+                    player.markSkill('d2_huisu');
+                },
             },
             "d2_chaofeng":{
                 global:"d2_chaofeng_disable",
@@ -7309,7 +7946,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     }
                     player.removeSkill(link,true);
                     player.popup(link);
-                    game.log(player,'失去了技能','【'+get.translation(link)+'】');
+                    game.log(player,'失去了技能','【',link,'】');
                     player.recover();
                     game.delay();
                 },
@@ -7405,7 +8042,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     var link=result;
                     player.addSkill(link,true);
                     player.popup(link);
-                    game.log(player,'获得了技能','【'+get.translation(link)+'】');
+                    game.log(player,'获得了技能','【',link,'】');
                     game.delay();
                 },
                 ai:{
@@ -7543,7 +8180,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     var link=result;
                     player.removeSkill(link,true);
                     player.popup(link);
-                    game.log(player,'失去了技能','【'+get.translation(link)+'】');
+                    game.log(player,'失去了技能','【',link,'】');
                     game.delay();
                 },
                 ai:{
@@ -7620,7 +8257,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     }
                     player.removeSkill(link,true);
                     player.popup(link);
-                    game.log(player,'失去了技能','【'+get.translation(link)+'】');
+                    game.log(player,'失去了技能','【',link,'】');
                     player.recover();
                     game.delay();
                 },
@@ -7644,54 +8281,29 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             },
             "d2_baiban":{
                 gainnable:false,
-                enable:'phaseUse',
-                usable:1,
+                trigger:{
+                    global:'useCardToBefore',
+                },
+                // usable:1,
+                forced:true,
+                filter:function(event,player){
+                    return event.card&&(get.type(event.card)=='trick'||get.type(event.card)=='delay');
+                },
                 content:function(){
-                    'step 0'
-                    event.toRespond=game.filterPlayer(function(current){
-                        return get.distance(player,current)<=1&&current.countCards('h');
-                    });
-                    event.cards=[];
-                    'step 1'
-                    if(event.toRespond.length){
-                        var current=event.toRespond.shift();
-                        event.current=current;
-                        current.chooseCard('h',true);
-                    } else {
-                        event.goto(3);
+                    game.log(player);
+                },
+                group:'d2_baiban_t',
+                subSkill:{
+                    t:{
+                        mark:true,
+                        intro:{
+                            content:'123'
+                        },
+                        init:function(player){
+                            player.markSkill('d2_baiban_t')
+                        },
+                        sub:true,
                     }
-                    'step 2'
-                    if(result.cards){
-                        var card=result.cards[0];
-                        event.current.showCards(card);
-                        event.cards.push(card);;
-                    }
-                    event.goto(1);
-                    'step 3'
-                    game.log(event.cards);
-                    var list=new Object();
-                    for(var i=0;i<event.cards.length;i++){
-                        var t=get.type(event.cards[i]);
-                        if(list[t]==undefined) list[t]=1;
-                        else list[t]++;
-                    }
-                    var max=0,maxType='';
-                    for(t in list){
-                        if(list[t]>max) {
-                            max=list[t];
-                            maxType=t;
-                        }
-                    }
-                    event.num=0;
-                    for(var i=0;i<event.cards.length;i++){
-                        var card=event.cards[i];
-                        if(get.type(card)==maxType) {
-                            player.gain(card,'gain2');
-                            event.num++;
-                        }
-                    }
-                    'step 4'
-                    if(event.num>1) player.loseHp();
                 },
             },
         },
@@ -7974,6 +8586,25 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "d2_shizhi":"蚀智",
             "d2_shizhi2":"神智之蚀",
             "d2_shizhi_info":"觉醒技，准备阶段，若你的手牌数（加上天球标记）为全场最多且已使用过【天球】的伤害+1效果，你获得以下效果：①准备阶段你获得一枚天球标记；②你使用【杀】指定目标后，若对方的手牌比你多，你弃置其一张牌，否则摸一张牌。",
+            "d2_mowang":"魔王",
+            "d2_mowang_info":"锁定技，①出牌阶段开始时，其他角色失去所有护甲并获得等量“影”标记；出牌阶段结束时，其他角色失去所有“影”标记并获得等量护甲；②你使用【杀】指定目标时，若对方有“影”标记则失去一枚“影”标记，否则你摸一张牌。",
+            "d2_wange":"挽歌",
+            "d2_wange_info":"限定技，出牌阶段，你可以展示牌堆顶的X张牌并将它们置于弃牌堆，其中每有一张：♠随机对一名不同的敌方角色造成一点伤害；♣随机弃置一名敌方角色的一张牌；♥回复一点体力；♦摸一张牌（X为你使用【搜魂】获得过的“魂”标记，多余的♠/♥视为♣/♦）。",
+            "d2_jiban":"羁绊",
+            "d2_jiban2":"羁绊",
+            "d2_jiban_info":"准备阶段，你可以连接一名其他角色直到其死亡或更换连接目标。你摸牌/回复体力时连接目标摸一张牌/回复一点体力（奥义：改为摸等量牌/回复等量体力）。",
+            "d2_guozai":"过载",
+            "d2_guozai2":"过载",
+            "d2_guozai_info":"出牌阶段限一次，你可以失去一点体力或弃置一张装备牌，使你下一次受到的伤害-1且出牌阶段出【杀】次数+1直到你的下个准备阶段。若你有连接目标，该角色也获得这些效果。",
+            "d2_jianglin":"降临",
+            "d2_jianglin2":"降临",
+            "d2_jianglin_info":"每两轮限一次，当你或连接目标将受到大于体力值的伤害时，你可以防止之；若如此做，你于下个结束阶段受到该伤害。",
+            "d2_suodi":"缩地",
+            "d2_suodi_info":"每轮限一次，一名其他角色的回合开始时，你可以获得【潜行】直到该回合结束。你不能连续在同一角色的回合发动此技能。",
+            "d2_lianji":'连击',
+            "d2_lianji_info":"锁定技，每回合限一次，你的【杀】额外结算一次。",
+            "d2_huisu":"回溯",
+            "d2_huisu_info":"每两轮限一次，一名角色的回合开始时，你可以回到上一轮开始时的状态。",
             "d2_chaofeng":"嘲讽",
             "d2_chaofeng_info":"锁定技，其他角色若能对你使用【杀】或【决斗】，则只能对你使用之。",
             "d2_gongsheng":"共生",
@@ -8001,4 +8632,4 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     diskURL:"https://pan.baidu.com/s/1C6kuKNGnYuVOfmvtu19zIw",
     forumURL:"",
     version:"",
-},files:{"character":['d2_abaddon.jpg'],"card":[],"skill":[]}}})
+},files:{"character":[],"card":[],"skill":[]}}})
