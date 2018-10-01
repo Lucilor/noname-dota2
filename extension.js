@@ -66,7 +66,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     };
 },precontent:function (Dota2){
     if(Dota2.enable){
-        game.saveConfig('noname_Dota2_version',"1.4.0");
+        game.saveConfig('noname_Dota2_version',"1.4.1");
         var edit=lib.extensionMenu.extension_Dota2.edit;
         var deletex=lib.extensionMenu.extension_Dota2.delete;
         delete lib.extensionMenu.extension_Dota2.edit;

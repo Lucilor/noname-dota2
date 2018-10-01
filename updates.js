@@ -1,5 +1,11 @@
 window.updates={
+	"1.4.1":{
+		date:"2018.10.1",
+		desc:"<li>bug修复",
+		files:["extension.js","CHANGELOG.MD"],
+	},
 	"1.4.0":{
+		next:"1.4.1",
 		date:"2018.10.1",
 		desc:"<li>新增武将：影魔，艾欧，编织者<br><li>新增锦囊：林肯法球，刃甲，诡计之雾，显影之尘<br><li>艾欧目前没有配音，反正你们也听不懂（其实是艾欧的配音提取出来居然是加密的）",
 		files:[
