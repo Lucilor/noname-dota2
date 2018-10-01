@@ -663,7 +663,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     result:{
                         player:function(player,target){
                             if (game.hasPlayer(function(current){
-                                return current!=player&&current.hasSkill('qianxing');
+                                return current!=player&&current.hasSkill('qianxing')&&get.attitude(player,current)<=0;
                             })) {
                                 return 1;
                             }
