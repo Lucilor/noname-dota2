@@ -7456,6 +7456,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     player.addTempSkill('qianxing');
                     player.storage.d2_suodi_target=target;
                     player.line(target);
+                    player.removeSkill('d2_suodi_target');
                     player.addSkill('d2_suodi_target');
                 },
                 subSkill:{
