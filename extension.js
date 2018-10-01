@@ -1167,7 +1167,8 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
         list:[["spade","13","d2_aghanims"],["diamond","5","d2_observer"],["diamond","6","d2_observer"],["diamond","7","d2_observer"],["club","5","d2_sentry"],["club","6","d2_sentry"],
              ["club","7","d2_sentry"],["diamond","5","d2_observer"],["diamond","6","d2_observer"],["diamond","7","d2_observer"],["club","5","d2_sentry"],["club","6","d2_sentry"],
              ["club","7","d2_sentry"],["club","6","d2_monkeyKingBar"],["diamond","13","d2_bloodStone"],["spade","9","d2_shivasGuard"],["spade","6","d2_echoSabre"],["heart","13","d2_heartOfTarrasque"],
-             ["spade","6","d2_dagon1"],["diamond","1","d2_linkensSphere"],["diamond","1","d2_linkensSphere"],["spade","2","d2_bladeMail"],["spade","2","d2_bladeMail"]],
+             ["spade","6","d2_dagon1"],["diamond","1","d2_linkensSphere"],["diamond","1","d2_linkensSphere"],["spade","2","d2_bladeMail"],["spade","2","d2_bladeMail"],
+             ["diamond","8","d2_smokeOfDeceit"],["diamond","9","d2_smokeOfDeceit"],["diamond","10","d2_smokeOfDeceit"],["club","8","d2_smokeOfDeceit"],["club","9","d2_smokeOfDeceit"],["club","10","d2_smokeOfDeceit"]],
     },
     skill:{
         skill:{
