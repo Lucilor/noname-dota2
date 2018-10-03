@@ -1,5 +1,11 @@
 window.updates={
+	"1.4.2":{
+		date:"2018.10.3",
+		desc:"<li>食人魔魔法师【炎术】描述修正",
+		files:["extension.js","CHANGELOG.MD"],
+	},
 	"1.4.1":{
+		next:"1.4.2",
 		date:"2018.10.1",
 		desc:"<li>bug修复",
 		files:["extension.js","CHANGELOG.MD"],

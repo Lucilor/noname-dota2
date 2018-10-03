@@ -66,7 +66,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     };
 },precontent:function (Dota2){
     if(Dota2.enable){
-        game.saveConfig('noname_Dota2_version',"1.4.1");
+        game.saveConfig('noname_Dota2_version',"1.4.2");
         var edit=lib.extensionMenu.extension_Dota2.edit;
         var deletex=lib.extensionMenu.extension_Dota2.delete;
         delete lib.extensionMenu.extension_Dota2.edit;
@@ -7315,6 +7315,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     expose:0.6
                 },
                 group:'d2_jiban2',
+
             },
             "d2_jiban2":{
                 trigger:{
@@ -8596,7 +8597,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "d2_zheshe":"折射",
             "d2_zheshe_info":"锁定技，你即将受到伤害时进行一次判定，若结果为♠你防止其中一点伤害，然后你可以对伤害来源造成以此法所防止的伤害，若结果为♣你防止其中一点伤害（奥义：“其中一点”改为“全部”）。",
             "d2_yanshu":"炎术",
-            "d2_yanshu_info":"出牌阶段限一次，你可以指定一名角色并进行一次判定，若结果为红色，你对其造成1点火属性伤害；若结果为偶数，你获得一张随机单体锦囊牌。",
+            "d2_yanshu_info":"出牌阶段限一次，你可以令一名其他角色进行一次判定，若结果为红色，你对其造成1点火属性伤害；若结果为偶数，你获得一张随机单体锦囊牌。",
             "d2_jingtong":"精通",
             "d2_jingtong_info":"锁定技，你使用的单体锦囊牌有50%/25%/12.5%的概率额外结算1/2/3次（奥义：概率改为60%/30%/15%）。",
             "d2_tianqiu":"天球",
