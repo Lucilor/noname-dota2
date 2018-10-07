@@ -64,9 +64,18 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
         }
         return undefined;
     };
+    get.discardedInPhase=function(before){
+        var after=ui.discardPile.childNodes;
+        var result=[];
+        for(var i=before.length;i<after.length;i++){
+            if(get.position(after[i])=='d') result.push(after[i]);
+        }
+        if(result.length<1) return undefined;
+        return result;
+    };
 },precontent:function (Dota2){
     if(Dota2.enable){
-        game.saveConfig('noname_Dota2_version',"1.4.2");
+        game.saveConfig('noname_Dota2_version',"1.4.3");
         var edit=lib.extensionMenu.extension_Dota2.edit;
         var deletex=lib.extensionMenu.extension_Dota2.delete;
         delete lib.extensionMenu.extension_Dota2.edit;
@@ -482,7 +491,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         return;
                     }
                     if(enemies2.length==1) {
-                        enemies2[0].discard(enemies2[0].getCards('h',{name:'sha'}).randomGet());
+                        enemies2[0].discard(enemies2[0].getCards('h',{name:'sha'}).randomGets(2));
                         return;
                     }
                     for(var i=2;i>0;){
@@ -783,9 +792,10 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 intro:{
                     mark:function (dialog,content,player){
                         dialog.addText('手牌对所有人可见，剩余'+player.storage.d2_observer+'回合');
-                        dialog.addSmall(player.storage.d2_observer_cards);
+                        if(player.storage.d2_observer_cards) dialog.addSmall(player.storage.d2_observer_cards);
+                        else dialog.addText('（无）');
                     },
-                    content:function (content,player){
+                    content:function (storage,player){
                         return player.storage.d2_observer_cards;
                     },
                 },
@@ -1309,7 +1319,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     game.runeNumber++;
                     var list=['damage','illusion','arcane','haste','regeneration','invisibility','bounty'];
                     var rune='d2_rune_'+list.randomGet();
-                    // rune='d2_rune_invisibility';
+                    // rune='d2_rune_haste';
                     // player.popup(rune);  
                     player.chat('本次神符：'+get.translation(rune));
                     event.rune=rune;
@@ -3786,6 +3796,9 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 round:5,
                 forced:true,
                 priority:15,
+                filter:function(event,player){
+                    return player.hp<1;
+                },
                 content:function (){
                     trigger.cancel();
                     if (player.maxHp<=0) player.maxHp=1;
@@ -6131,7 +6144,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                             return '已成为【残影】目标';
                         }
                     },
-                    content:function (content,player){
+                    content:function (storage,player){
                         var ss=player.storage.d2_canying;
                         if(ss.isUnderControl(true)){
                             return get.translation(player.storage.d2_canying2);
@@ -6622,7 +6635,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         var att1=get.attitude(player,targets[0]);
                         var att2=get.attitude(player,targets[1]);
                         if (att2>0&&targets[1].countCards('j')) return list[1];
-                        if (att2<0&&countCards('he')<1) return list[1];
+                        if (att2<0&&player.countCards('he')<1) return list[1];
                         if (att1>0) return list[0];
                         return list[1];
                     });
@@ -7458,16 +7471,14 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 round:1,
                 filter:function(event,player){
-                    if(event.player==player.storage.d2_suodi_target) {
-                        delete player.storage.d2_suodi_target;
-                        player.removeSkill('d2_suodi_target');
-                        return false;
-                    }
+                    if(event.player==player.storage.d2_suodi_target) return false;
                     return event.player!=player;
                 },
                 check:function(event,player){
                     if(player.hasSkill('qianxing')) return false;
-                    if(!player.getEnemies().contains(event.player)) return false;
+                    var enemies=player.getEnemies();
+                    if(!enemies.contains(event.player)) return false;
+                    if(enemies.length==1&&enemies[0]==event.player) return true;
                     if(player.hp>2) return false;
                     if(event.player.getCards('h')>3) return true;
                     if(player.hp<2) return true;
@@ -7476,6 +7487,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     var target=_status.currentPhase;
                     player.addTempSkill('qianxing');
                     player.storage.d2_suodi_target=target;
+                    player.storage.d2_suodi_lock=true;
                     player.line(target);
                     player.removeSkill('d2_suodi_target');
                     player.addSkill('d2_suodi_target');
@@ -7488,6 +7500,25 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         },
                         sub:true,
                     },
+                },
+                group:'d2_suodi2'
+            },
+            "d2_suodi2":{
+                trigger:{
+                    global:'phaseAfter'
+                },
+                forced:true,
+                popup:false,
+                filter:function(event,player){
+                    return player.storage.d2_suodi_target==event.player;
+                },
+                content:function(){
+                    if(player.storage.d2_suodi_lock){
+                        player.storage.d2_suodi_lock=false;
+                    } else {
+                        delete player.storage.d2_suodi_target;
+                        player.removeSkill('d2_suodi_target');
+                    }
                 },
             },
             "d2_lianji":{
@@ -7507,122 +7538,87 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "d2_huisu":{
                 audio:"ext:Dota2:2",
                 trigger:{
-                    global:'phaseBegin',
+                    global:'phaseEnd',
                 },
                 round:2,
                 check:function(event,player){
-                    var num1=player.hp+player.maxHp+player.getCards('he')-2*player.getCards('j');
-                    var mark=player.storage.d2_huisu;
-                    var num2=mark.hp+mark.maxHp+mark.hand.length+mark.equip.length-2*mark.judge.length;
-                    return num2>num1;
+                    var cards=get.discardedInPhase(player.storage.d2_huisu_before);
+                    if(!cards||cards.length<2) return false;
+                    for(var i=0;i<cards.length;i++){
+                        for(var j=0;i<cards.length;j++){
+                            if(get.value(cards[j].name)>get.value(cards[j+1].name)){
+                                var tmp=cards[j];
+                                cards[j]=cards[j+1];
+                                cards[j+1]=tmp;
+                            }
+                        }
+                    }
+                    var max=get.value(cards[cards.length-1].name)+get.value(cards[cards.length-2].name);
+                    var min=get.value(cards[0].name)+get.value(cards[1].name);
+                    return min>3&&max>6;
                 },
+                filter:function(event,player){
+                    return get.discardedInPhase(player.storage.d2_huisu_before);
+                },
+                mark:true,
                 intro:{
                     content:function(storage,player){
-                        var str='';
-                        str+='体力：'+player.storage.d2_huisu.hp+'、体力上限：'+player.storage.d2_huisu.maxHp;
-                        if(player.storage.d2_huisu.hand.length){
-                            if(player.isUnderControl(true)){
-                                str+='手牌区：'+get.translation(player.storage.d2_huisu.hand);
-                            }
-                            else{
-                                str+='手牌区：'+(player.storage.d2_huisu.hand.length)+'张牌';
-                            }
-                        }
-                        if(player.storage.d2_huisu.equip.length){
-                            if(str.length) str+='、';
-                            if(player.isUnderControl(true)){
-                                str+='装备区：'+get.translation(player.storage.d2_huisu.equip);
-                            }
-                            else{
-                                str+='装备区：'+(player.storage.d2_huisu.equip.length)+'张牌';
-                            }
-                        }
-                        if(player.storage.d2_huisu.judge.length){
-                            if(str.length) str+='、';
-                            if(player.isUnderControl(true)){
-                                str+='判定区：'+get.translation(player.storage.d2_huisu.judge);
-                            }
-                            else{
-                                str+='判定区：'+(player.storage.d2_huisu.judge.length)+'张牌';
-                            }
-                        }
+                        var str='可能获得的牌：';
+                        var cards=get.discardedInPhase(player.storage.d2_huisu_before);
+                        if(cards) str+=getcards;
                         return str;
                     },
                     mark:function(dialog,content,player){
-                        dialog.addText('体力：'+player.storage.d2_huisu.hp+'、体力上限：'+player.storage.d2_huisu.maxHp);
-                        if(player.storage.d2_huisu.hand.length){
-                            if(player.isUnderControl(true)){
-                                dialog.add('<div class="text center">手牌区</div>');
-                                dialog.addSmall(player.storage.d2_huisu.hand);
-                            }
-                            else{
-                                dialog.add('<div class="text center">手牌区：'+player.storage.d2_huisu.hand.length+'张牌</div>');
-                            }
-                        }
-                        if(player.storage.d2_huisu.equip.length){
-                            if(player.isUnderControl(true)){
-                                dialog.add('<div class="text center">装备区</div>');
-                                dialog.addSmall(player.storage.d2_huisu.equip);
-                            }
-                            else{
-                                dialog.add('<div class="text center">装备区：'+player.storage.d2_huisu.equip.length+'张牌</div>');
-                            }
-                        }
-                        if(player.storage.d2_huisu.judge.length){
-                            if(player.isUnderControl(true)){
-                                dialog.add('<div class="text center">判定区</div>');
-                                dialog.addSmall(player.storage.d2_huisu.judge);
-                            }
-                            else{
-                                dialog.add('<div class="text center">判定区：'+player.storage.d2_huisu.judge.length+'张牌</div>');
-                            }
-                        }
+                        dialog.addText('可能获得的牌：');
+                        var cards=get.discardedInPhase(player.storage.d2_huisu_before);
+                        if(cards) dialog.addSmall(cards);
+                        else dialog.addText('（无）');
                     },
                 },
                 content:function(){
-                    game.addVideo('skill',player,'d2_huisu');
-                    player.hp=player.storage.d2_huisu.hp;
-                    player.maxHp=player.storage.d2_huisu.maxHp;
-                    player.update();
-                    for(var i=0;i<player.storage.d2_huisu.hand.length;i++){
-                        player.storage.d2_huisu.hand[i]=game.createCard(player.storage.d2_huisu.hand[i]);
-                    }
-                    for(var i=0;i<player.storage.d2_huisu.equip.length;i++){
-                        player.storage.d2_huisu.equip[i]=game.createCard(player.storage.d2_huisu.equip[i]);
-                    }
-                    for(var i=0;i<player.storage.d2_huisu.judge.length;i++){
-                        player.storage.d2_huisu.judge[i]=game.createCard(player.storage.d2_huisu.judge[i]);
-                    }
-                    player.removeEquipTrigger();
-                    var cards=player.getCards('hej');
-                    for(var i=0;i<cards.length;i++){
-                        cards[i].discard();
-                    }
-                    player.directgain(player.storage.d2_huisu.hand);
-                    for(var i=0;i<player.storage.d2_huisu.equip.length;i++){
-                        player.$equip(player.storage.d2_huisu.equip[i]);
-                    }
-                    for(var i=0;i<player.storage.d2_huisu.judge.length;i++){
-                        player.addJudge(player.storage.d2_huisu.judge[i]);
+                    'step 0'
+                    var cards=get.discardedInPhase(player.storage.d2_huisu_before);
+                    var cards2=cards.randomGets(2);
+                    player.gain(cards2,'gain2','log');
+                    if(player.getEquip('d2_aghanims')) {
+                        event.cards=cards2;
+                        player.chooseTarget('令一名其他角色获得'+get.translation(cards2)+'的复制',function(card,player,target){
+                            return player!=target;
+                        }).set('ai',function(target){
+                            return get.attitude(_status.event.player,target);
+                        });
+                    } else {event.finish();}
+                    'step 1'
+                    if(result.bool) {
+                        var target;
+                        if(event.onlytarget){
+                            target=event.onlytarget;
+                        }
+                        else if(result.targets&&result.targets.length){
+                            target=result.targets[0];
+                        }
+                        player.line(target,'green');
+                        var cards3=[];
+                        for(var i=0;i<event.cards.length;i++){
+                            cards3.push(game.createCard(event.cards[i]));
+                        }
+                        target.gain(cards3,'gain2','log');
                     }
                 },
-                group:'d2_huisu2'
-            },
-            "d2_huisu2":{
-                trigger:{
-                    global:'roundStart'
-                },
-                forced:true,
-                popup:false,
-                content:function(){
-                    player.storage.d2_huisu={
-                        hp:player.hp,
-                        maxHp:player.maxHp,
-                        hand:player.getCards('h'),
-                        equip:player.getCards('e'),
-                        judge:player.getCards('j')
-                    };
-                    player.markSkill('d2_huisu');
+                group:'d2_huisu_before',
+                subSkill:{
+                    "before":{
+                        trigger:{global:'phaseBegin'},
+                        forced:true,
+                        popup:false,
+                        content:function(){
+                            player.storage.d2_huisu_before=[];
+                            for(var i=0;i<ui.discardPile.childElementCount;i++) {
+                                player.storage.d2_huisu_before.push(ui.discardPile.childNodes[i]);
+                            }
+                        },
+                        sub:true,
+                    },
                 },
             },
             "d2_chaofeng":{
@@ -8086,7 +8082,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                             skills.push(list[i]);
                         }
                     }
-                    return skills.length<=4;
+                    return skills.length<=4&&event.num>0;
                 },
                 content:function (){
                     player.addTempSkill('d2_boss_aomi4');
@@ -8141,8 +8137,13 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 unique:true,
                 forced:true,
-                alter:true,
                 priority:1,
+                init:function(player){
+                    player.addSkill('d2_boss_yongheng3');
+                },
+                filter:function(event,player){
+                    return player.hp<1;
+                },
                 content:function (){
                     'step 0'
                     trigger.cancel();
@@ -8302,32 +8303,32 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     },
                 },
             },
-            "d2_baiban":{
-                gainnable:false,
+            "d2_boss_yongheng3":{
                 trigger:{
-                    global:'useCardToBefore',
+                    global:'roundStart'
                 },
-                // usable:1,
                 forced:true,
-                filter:function(event,player){
-                    return event.card&&(get.type(event.card)=='trick'||get.type(event.card)=='delay');
-                },
+                popup:false,
                 content:function(){
-                    game.log(player);
+                    game.bossinfo.chongzheng=3;
+                    player.removeSkill('d2_boss_yongheng3');
                 },
-                group:'d2_baiban_t',
-                subSkill:{
-                    t:{
-                        mark:true,
-                        intro:{
-                            content:'123'
-                        },
-                        init:function(player){
-                            player.markSkill('d2_baiban_t')
-                        },
-                        sub:true,
-                    }
-                },
+            },
+            "d2_baiban":{
+                // gainnable:false,
+                // unique:true,
+                // trigger:{
+                //     global:'roundStart',
+                // },
+                // forced:true,
+                // filter:function(event,player){
+                //     return true;
+                // },
+                // content:function(){
+                //     for(var i=0;i<game.players.length;i++){
+                //         if(game.players[i]!=player) game.players[i].turnOver();
+                //     }
+                // },
             },
         },
         translate:{
@@ -8623,12 +8624,12 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "d2_jianglin2":"降临",
             "d2_jianglin_info":"每两轮限一次，当你或连接目标将受到大于体力值的伤害时，你可以防止之；若如此做，你于下个结束阶段受到该伤害。",
             "d2_suodi":"缩地",
+            "d2_suodi2":"缩地",
             "d2_suodi_info":"每轮限一次，一名其他角色的回合开始时，你可以获得【潜行】直到该回合结束。你不能连续在同一角色的回合发动此技能。",
             "d2_lianji":'连击',
             "d2_lianji_info":"锁定技，每回合限一次，你的【杀】额外结算一次。",
             "d2_huisu":"回溯",
-            "d2_huisu2":"回溯",
-            "d2_huisu_info":"每两轮限一次，一名角色的回合开始时，你可以回到上一轮开始时的状态。",
+            "d2_huisu_info":"每两轮限一次，一名角色的回合结束时，你可以从在本回合中进入弃牌堆的牌中随机获得两张牌（奥义：你可以令一名其他角色获得这两张牌的复制）。",
             "d2_chaofeng":"嘲讽",
             "d2_chaofeng_info":"锁定技，其他角色若能对你使用【杀】或【决斗】，则只能对你使用之。",
             "d2_gongsheng":"共生",
@@ -8647,7 +8648,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "d2_boss_yongheng2":"永恒",
             "d2_boss_yongheng_info":"①锁定技，在你即将死亡时防止死亡，并将其体力回复至1，然后选择一个技能失去之（【永恒】只能在最后失去，【奥秘】次之）。②出牌阶段出牌阶段限一次，你可以失去一个技能回复一点体力。",
             "d2_baiban":"白板",
-            "d2_baiban_info":"你是一个超级兵。",
+            "d2_baiban_info":"测试专用技能。",
             "d2_summonedUnit":"召唤生物",
         },
     },

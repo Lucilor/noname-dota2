@@ -1,5 +1,11 @@
 window.updates={
+	"1.4.3":{
+		date:"2018.10.7",
+		desc:"<li>编织者【回溯】重做<li>bug修复",
+		files:["extension.js","CHANGELOG.MD"],
+	},
 	"1.4.2":{
+		next:"1.4.3",
 		date:"2018.10.3",
 		desc:"<li>食人魔魔法师【炎术】描述修正",
 		files:["extension.js","CHANGELOG.MD"],
