@@ -75,7 +75,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     };
 },precontent:function (Dota2){
     if(Dota2.enable){
-        game.saveConfig('noname_Dota2_version',"1.4.3");
+        game.saveConfig('noname_Dota2_version',"1.4.4");
         var edit=lib.extensionMenu.extension_Dota2.edit;
         var deletex=lib.extensionMenu.extension_Dota2.delete;
         delete lib.extensionMenu.extension_Dota2.edit;
@@ -792,7 +792,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 intro:{
                     mark:function (dialog,content,player){
                         dialog.addText('手牌对所有人可见，剩余'+player.storage.d2_observer+'回合');
-                        if(player.storage.d2_observer_cards) dialog.addSmall(player.storage.d2_observer_cards);
+                        if(player.storage.d2_observer_cards.length) dialog.addSmall(player.storage.d2_observer_cards);
                         else dialog.addText('（无）');
                     },
                     content:function (storage,player){
@@ -6250,6 +6250,13 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 },
                 init:function (player){
                     player.storage.d2_leiling4=0;
+                    player.storage.d2_leiling_lose=0;
+                    player.storage.d2_leiling_count=2;
+                },
+                onremove:function(player){
+                    delete player.storage.d2_leiling4;
+                    delete player.storage.d2_leiling_lose;
+                    delete player.storage.d2_leiling_count;
                 },
                 content:function (){
                     player.storage.d2_leiling4++;
@@ -6935,22 +6942,23 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     return event.parent.name!='d2_jingtong'&&event.targets&&event.targets.length==1&&event.card&&!get.tag(event.card,'multitarget')&&get.type(event.card)=='trick';
                 },
                 content:function (){
-                    var card=game.createCard(trigger.card.name,trigger.card.suit,trigger.card.number,trigger.card.nature);
-                    var target=(trigger._targets||trigger.targets).slice(0);
-                    var list=['2x!','3x!!','4x!!!'];
-                    var i=0,j=0;
-                    var num=player.getEquip('d2_aghanims')?60:50;
-                    var check=Math.floor(Math.random()*100)<num?true:false;
-                    while(check&&i<3){
-                        if(check&&player.canUse({name:card.name},target[0])&&target[0].isAlive()) {
-                            j++;
-                            player.useCard(card,target); 
-                            player.popup(list[i]);
-                        }
-                        check=Math.floor(Math.random()*2);
-                        i++;
+                    'step 0'
+                    event.card=game.createCard(trigger.card.name,trigger.card.suit,trigger.card.number,trigger.card.nature);
+                    event.target=(trigger._targets||trigger.targets).slice(0)[0];
+                    event.list=['2x!','3x!!','4x!!!'];
+                    event.i=0,event.j=0;
+                    event.check=Math.floor(Math.random()*100)<(player.getEquip('d2_aghanims')?60:50)?true:false;
+                    'step 1'
+                    if(event.check&&player.canUse(event.card,event.target)&&event.target.isAlive()) {
+                        player.useCard(event.card,event.target); 
+                        player.popup(event.list[event.j],'unknownx');
+                        event.j++;
                     }
-                    game.playAudio("../extension/Dota2","d2_jingtong"+j);
+                    event.check=Math.floor(Math.random()*2);
+                    event.i++;
+                    'step 2'
+                    if(event.check&&event.i<3) event.goto(1);
+                    else game.playAudio("../extension/Dota2","d2_jingtong"+event.j);
                 },
             },
             "d2_tianqiu":{

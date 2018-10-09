@@ -1,5 +1,11 @@
 window.updates={
+	"1.4.4":{
+		date:"2018.10.9",
+		desc:"<li>bug修复",
+		files:["extension.js","CHANGELOG.MD"],
+	},
 	"1.4.3":{
+		next:"1.4.4",
 		date:"2018.10.7",
 		desc:"<li>编织者【回溯】重做<li>bug修复",
 		files:["extension.js","CHANGELOG.MD"],
