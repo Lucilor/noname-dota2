@@ -22,3 +22,4 @@ Dota2的英雄们因为一次意外，打破了次元壁穿越到了三国杀的
 感谢以下小伙伴提供的帮助：  
 [@v505985755](http://tieba.baidu.com/home/main?un=v505985755&ie=utf-8&fr=pb&red_tag=i1380362953) [dota杀拓展](https://tieba.baidu.com/p/5438971304)的作者  
 [@荒w城余笙](http://tieba.baidu.com/home/main?un=%E8%8D%92w%E5%9F%8E%E4%BD%99%E7%AC%99&ie=utf-8&fr=pb&red_tag=m1741443292) 测试君
+[@小月纸](http://tieba.baidu.com/home/main?un=%E8%A5%BF%E8%BE%9E%E9%9B%A8%E5%AE%89&ie=utf-8&fr=pb&red_tag=s1116808254) 首席设计师
