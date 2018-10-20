@@ -7388,20 +7388,23 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                                 sub:true,
                             },
                         },
+                        ai:{
+                            combo:'d2_shibian',
+                        },
                     },
                     "d2_shibian":{
                         audio:"ext:Dota2:2",
                         enable:'phaseUse',
                         round:3,
                         filter:function(event,player){
-                            return player.countCards('h')<player.hp&&player.countCards('h')>1;
+                            return player.countCards('h')<player.hp;
                         },
                         intro:{
                             content:"不朽尸王的真正面目。每当你造成伤害弃置已被感染尸毒的角色的一张牌；每当你受到伤害横置一名未横置的其他角色。"
                         },
                         content:function(){
-                            player.addTempSkill('d2_shibian_1',{player:'phaseBegin'});
-                            player.addTempSkill('d2_shibian_2',{player:'phaseBegin'});
+                            player.addSkill('d2_shibian_1','d2_shibian_2','d2_shibian_remove');
+                            player.markSkill('d2_shibian');
                         },
                         subSkill:{
                             "1":{
@@ -7452,6 +7455,16 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                                     }
                                     player.line(target);
                                     target.link();
+                                },
+                                sub:true,
+                            },
+                            "remove":{
+                                trigger:{player:'phaseBegin'},
+                                forced:true,
+                                popup:false,
+                                content:function(){
+                                    player.removeSkill('d2_shibian_1','d2_shibian_2','d2_shibian_remove');
+                                    player.unmarkSkill('d2_shibian');
                                 },
                                 sub:true,
                             },
@@ -8524,10 +8537,10 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     "d2_buxi":"不息",
                     "d2_buxi_info":"锁定技，当你进入濒死状态时将牌堆顶的一张牌置于你的武将牌上，若此牌点数比你武将牌上的其他牌都大，你回复一点体力。",
                     "d2_ganran":"感染",
-                    "d2_ganran_info":"锁定技，你受到伤害后令场上已横置且为感染尸毒的角色感染尸毒。已感染尸毒的角色回复体力时你获得一个“感染”标记，若你有三个或更多“感染”标记，防止你受到的伤害。准备阶段，你弃置所有“感染”标记然后摸等量的牌（奥义：并回复等量体力）。",
+                    "d2_ganran_info":"锁定技，你受到伤害后令场上已横置且未感染尸毒的角色感染尸毒。已感染尸毒的角色回复体力时你获得一个“感染”标记，若你有三个或更多“感染”标记，防止你受到的伤害。准备阶段，你弃置所有“感染”标记然后摸等量的牌（奥义：并回复等量体力）。",
                     "d2_shibian":"尸变",
                     "d2_shibian_2":"尸变",
-                    "d2_shibian_info":"每三轮限一次，你可以获得以下效果直到你的下个回合：每当你造成伤害弃置已感染尸毒的角色的一张牌；每当你受到伤害横置一名未横置的其他角色。",
+                    "d2_shibian_info":"每三轮限一次，出牌阶段，若你的手牌数小于体力值，你可以获得以下效果直到你的下个回合：每当你造成伤害弃置已感染尸毒的角色的一张牌；每当你受到伤害横置一名未横置的其他角色。",
                     "d2_chaofeng":"嘲讽",
                     "d2_chaofeng_info":"锁定技，其他角色若能对你使用【杀】或【决斗】，则只能对你使用之。",
                     "d2_gongsheng":"共生",
