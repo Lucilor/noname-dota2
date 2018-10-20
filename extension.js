@@ -285,6 +285,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             div.style.left='calc(50% - 35px)';
             dialog.add(div);
             for(var i in lib.updates){
+                if (i=='trash') continue;
                 var str=lib.config.noname_Dota2_version==i?'--当前版本':'';
                 dialog.addText(i+'('+lib.updates[i].date+')'+str+'<br>',false);
                 if(lib.updates[i].desc) dialog.addText(lib.updates[i].desc,false);
