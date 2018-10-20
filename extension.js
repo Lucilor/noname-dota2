@@ -300,7 +300,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 if(window.updates) {
                     lib.updates=window.updates;
                     delete window.updates;
-                    lib.extensionMenu.extension_Dota2.version.name="拓展版本："+lib.config.noname_Dota2_version;
                     lib.nextVersion=lib.updates[lib.config.noname_Dota2_version].next;
                     if(lib.nextVersion!=undefined)  {
                         needUpdate();
