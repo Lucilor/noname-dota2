@@ -7160,7 +7160,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                             } else {
                                 target.gain(game.createCard('du'),'gain2','log');
                             }
-                            player.logSkill('d2_duci',target);
                         },
                         ai:{
                             threaten:1.6,
