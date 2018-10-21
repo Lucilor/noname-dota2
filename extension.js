@@ -7275,7 +7275,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                                         return current.hasSkill('d2_mubei_zombie');
                                     });
                                     for(var i=0;i<players.length;i++){
-                                        players[i].link();
+                                        players[i].link(true);
                                         players[i].changeHujia(-1);
                                         players[i].removeSkill('d2_mubei_zombie');
                                     }
