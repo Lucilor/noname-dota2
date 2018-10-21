@@ -8,6 +8,7 @@ window.updates={
 		files:["extension.js","CHANGELOG.MD"],
 	},
 	"1.5.1":{
+		next:"1.5.2",
 		date:"2018.10.21",
 		desc:"<li>bug修复",
 		files:["extension.js","CHANGELOG.MD","d2_mubei1","d2_mubei2","d2_mubei3"],
