@@ -145,7 +145,8 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     return;
                 }
 
-                var list=lib.updates.trash;
+                var list=lib.updates.others.trash;
+                alert(list);
                 if(list==undefined) alert('没有可清理的文件');
                 multiUnlink(list,null,null,function(){
                     alert('清理完成');
@@ -172,7 +173,33 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
         var site="https://raw.githubusercontent.com/Lucilor/noname-dota2/master/";
         // site="http://candypurity.com/kodexplorer/data/User/admin/home/document";
         var downloadFile;
-        var fs=require('fs');
+        var unlinkFile;
+        if (window.resolveLocalFileSystemURL) {
+            unlinkFile=function(path,onsuccess,onerror){
+                path=extDir+path;
+                window.resolveLocalFileSystemURL(path, function (fileEntry) {
+                    fileEntry.remove(function () {
+                        if(onsuccess) onsuccess();
+                    }, function (err) {
+                        if(err&&onerror) onerror();
+                    }, function () {
+                        // console.log('file not exist');
+                    });
+                })
+            };
+        } else {
+            var fs=require('fs');
+            unlinkFile=function(path,onsuccess,onerror){
+                path=extDir+path;
+                fs.unlink(path,function(err){
+                    if (err&&onerror) {
+                        onerror();
+                    } else {
+                        if(onsuccess) onsuccess();
+                    }
+                });
+            };
+        }
         if(window.FileTransfer){
             downloadFile=function(url,folder,onsuccess,onerror){
                 var fileTransfer = new FileTransfer();
@@ -181,8 +208,9 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 fileTransfer.download(encodeURI(url),folder,onsuccess,onerror);
             };
         } else {
+            var fs=require('fs');
             var http=require('https');  
-            var downloadFile=function(url,folder,onsuccess,onerror){
+            downloadFile=function(url,folder,onsuccess,onerror){
                 url=site+url;
                 var dir=folder.split('/');
                 var str='';
@@ -223,7 +251,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 access();
             };
         }
-        var multiDownload=function(list,onsuccess,onerror,onfinish){
+        multiDownload=function(list,onsuccess,onerror,onfinish){
             list=list.slice(0);
             var download=function(){
                 if(list.length){
@@ -241,16 +269,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                 }
             }
             download();
-        };
-        var unlinkFile=function(path,onsuccess,onerror){
-            path=extDir+path;
-            fs.unlink(path,function(err){
-                if (err&&onerror) {
-                    onerror();
-                } else {
-                    if(onsuccess) onsuccess();
-                }
-            });
         };
         var multiUnlink=function(list,onsuccess,onerror,onfinish){
             list=list.slice(0);
@@ -285,7 +303,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             div.style.left='calc(50% - 35px)';
             dialog.add(div);
             for(var i in lib.updates){
-                if (i=='trash') continue;
+                if (i=='others') continue;
                 var str=lib.config.noname_Dota2_version==i?'--当前版本':'';
                 dialog.addText(i+'('+lib.updates[i].date+')'+str+'<br>',false);
                 if(lib.updates[i].desc) dialog.addText(lib.updates[i].desc,false);
@@ -357,7 +375,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     "d2_weaver":["male","wei",3,["d2_suodi","d2_lianji","d2_huisu"],[]],
                     "d2_venomancer":["male","wu",3,["d2_zhangqi","d2_duci","d2_judu"],[]],
                     "d2_undying":["male","wu",4,["d2_mubei","d2_ganran","d2_shibian"],[]],
-                    "d2_zombie":["none","wu",1,["d2_buxi"],["unseen","forbidai"]],
                 },
                 characterIntro:{
                     "d2_blessingAngel":"人们的祈祷是有用的，赐福天使终临人世。只要有她在，就连最危险的绝境都依然充满希望。",
@@ -398,7 +415,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     "d2_weaver":"创世之纱需要长期细心的照料，以防止其变得残破；因为一旦它散开了，整个世界就将毁于一旦。编织者的工作就是保持创世之纱的紧密，用现实之网修补它的破损。他们同样要防止那些在创世之纱的缺口上产卵或者侵蚀创世之纱的虫子，只要编织者稍微分心，这些家伙的幼虫就能吞噬掉整个宇宙。斯吉茨格尔是一名大师级的编织者，负责维护一块小补丁的紧密。然而这项任务并不能满足他，他经常唠叨过去那些原始的创造工作，对干完活就走人的世界纺织者也是颇有微词。他想创造，不想只是维护——他想按自己的设计编织出自己的世界。他开始在他负责的区域上做手脚，逐渐不能自拔，他的胆子也愈发的大，甚至私自改动了世界纺织者编织的图案。最后，守卫者来了，毁掉了编织者所作的一切，直接从创世之纱上去除了这一块，然后重新编织，却不让他参与其中。斯吉茨格尔现在孤身一人，被种群所弃，换做任何其他编织者，都会备受折磨。然而斯吉茨格尔却无比愉悦，因为他终于自由了，能够自由的创造，重头开始。他创造新世界所需的所有材料都触手可及。他只需要从缺口处将现在的世界撕裂。",
                     "d2_venomancer":"在基迪岛上的浓酸密林中，在所有生物的体内，包括植物的根茎，动物的内脏中，都流淌着致命的腐蚀剧毒。然而，就算在这种毒巢里，剧毒术士也是公认的万毒之王。多年以前，一个叫做里瑟尔的植物学家乘坐小舟跨越弗拉基海湾，想要从植物的根须中提取出一种强力药剂，结果他却遭遇了噩梦一般的变故。在深入到基迪岛密林中数英里时，里瑟尔遇到了一种伪装成寄生植物的毒性爬虫，当他想把爬虫扯下来的时候，被爬虫狠狠的蛰了。绝望之际，他用他对丛林植物仅有的认知，飞快地掐住这只爬虫后，将它的毒液和一种带甲兰花的花蜜混合，合成了解毒剂。他用兰花的尖刺为自己注射了解毒剂，然后立即陷入昏迷，并且逐渐陷入了全身完全麻木的状态。十七年后，在他倒下的地方，从多年积累的腐土中钻出某个东西：剧毒术士。草药学家里瑟尔已经不复存在，现在他是死亡使者里瑟尔。他的记忆几乎都没有了，他原来的肉体已经毁灭，现在被一种新的物质所替代--融合了那只爬虫的毒液和兰花的毒性外皮。基迪岛的浓酸丛林现在有了新的主人，过去最剧毒的捕食者在他面前都只能逃走或臣服求饶。这个可怕的岛屿毕竟太有限了，里瑟尔受到内心深处残留的人类的饥渴驱使，离开了岛屿，去寻找新的毒物，以及带来新的死亡。",
                     "d2_undying":"他残破的心，已不再记得自己的名，已不再记得自己的命。<br>他还依稀记得的，是盔甲，是战旗，是身边死去的兄弟。他还记得那场战役：一双给他带去痛苦和恐惧的苍白的手，将他从马上扯下。他还记得自己和兄弟们一起被扔进死亡之神那漆黑的深坑，还记得他被虚无吞噬时耳畔的挽歌。在深渊下的黑暗中，他们被时间遗弃，抛弃了思想，抛弃了理智，唯一尚存的，只有饥饿。他们以彼此残留的指甲和牙齿为食，唤醒了身体。这时挽歌传来，一开始很遥远，只是最轻微的感官体验，然后声音逐渐汇集，似乎铺天盖地永无止境，歌声似乎形成了一堵音墙，将他意识中所有想法都清除。随着自己被挽歌吞噬，他也向死亡之神张开了双臂，迎接自己的陨灭。然而死亡之神并没有选择毁掉他，而是让他投入战争，在一片惨然的虚无中，他被赋予了新的使命：让世界遍地哀鸿，让死者吞噬生命。他成为了不朽尸王，死亡之神的先驱，他的躯体永生不灭。在你的往生路上，会奏响他永恒的挽歌。",
-                    "d2_zombie":"墓碑召唤的小僵尸",
+
                 },
                 characterTitle:{},
                 perfectPair:{
@@ -6666,7 +6683,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         },
                         round:2,
                         filter:function(event,player){
-                            return (event.player==player&&event.num>=player.hp)||(event.player==player.storage.d2_jiban_link&&event.num>=player.storage.d2_jiban_link.hp);
+                            return (event.player==player&&event.num>=(player.hp+player.hujia))||(event.player==player.storage.d2_jiban_link&&event.num>=player.storage.d2_jiban_link.hp);
                         },
                         content:function(){
                             player.storage.d2_jianglin2={
@@ -7202,46 +7219,67 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         },
                     },
                     "d2_mubei":{
-                        audio:"ext:Dota2:true",
+                        audio:"ext:Dota2:2",
                         enable:'phaseUse',
-                        position:'he',   
-                        usable:1,
+                        selectCard:[1,Infinity],
+                        filterCard:true,
+                        selectTarget:function (){
+                            return ui.selected.cards.length;
+                        },
+                        filterTarget:function (card,player,target){
+                            return player!=target;
+                        },
                         filter:function(event,player){
-                            return player.countCards('he',{suit:'spade'})>0&&!player.storage.d2_mubei;
-                        },
-                        filterCard:function(card){
-                            return get.suit(card)=='spade';
-                        },
-                        init:function(player){
-                            player.storage.d2_mubei=false;
-                        },
-                        intro:{
-                            content:'123',
-                        },
-                        check:function(card){
-                            return 8-get.value(card);
+                            return player.countCards('h')>0;
                         },
                         content:function(){
-                            'step 0'
-                            player.storage.d2_mubei=true;
-                            player.markSkill('d2_mubei');
+                            target.addSkill('d2_mubei_zombie');
                         },
-                        group:['d2_mubei_summon','d2_mubei2'],
+                        group:'d2_mubei_zombie',
                         subSkill:{
-                            "summon":{
-                                trigger:{global:'dieAfter'},
+                            "zombie":{
+                                trigger:{player:'damageBefore'},
                                 forced:true,
+                                mark:true,
+                                init:function(player){
+                                    player.storage.d2_mubei_zombie=true;
+                                },
+                                onremove:true,
+                                intro:{
+                                    content:function(storage,player){
+                                        var str='';
+                                        if(player.storage.d2_mubei_zombie) str='，下一次受到的致命伤害+1';
+                                        return '拥有“僵尸”标记'+str;
+                                    },
+                                },
                                 filter:function(event,player){
-                                    return !event.player.isMin()&&event.player!=player&&player.storage.d2_mubei;
+                                    return event.num>=player.hp+player.hujia;
                                 },
                                 content:function(){
-                                    var a=player.addSubPlayer({
-                                        name:'d2_zombie',
-                                        skills:lib.character.d2_zombie[3],
-                                        hs:get.cards(2),
-                                        intro:'出牌阶段，你可以调遣此随从（直到随从死亡不可再次切换）'
+                                    trigger.num++;
+                                    player.storage.d2_mubei_zombie=false;
+                                },
+                                sub:true,
+                            },
+                            "clear":{
+                                trigger:{player:'phaseBegin'},
+                                forced:true,
+                                filter:function(event,player){
+                                    return game.hasPlayer(function(current){
+                                        return current.hasSkill('d2_mubei_zombie');
                                     });
-                                }
+                                },
+                                content:function(){
+                                    var players=game.filterPlayer(function(current){
+                                        return current.hasSkill('d2_mubei_zombie');
+                                    });
+                                    for(var i=0;i<players.length;i++){
+                                        players[i].link();
+                                        players[i].changeHujia(-1);
+                                        players[i].removeSkill('d2_mubei_zombie');
+                                    }
+                                },
+                                sub:true,
                             },
                         },
                         ai:{
@@ -7249,52 +7287,6 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                             result:{
                                 player:1
                             },
-                        },
-                    },
-                    "d2_mubei2":{
-                        audio:"ext:Dota2:2",
-                        enable:'phaseUse',
-                        direct:true,
-                        delay:0,
-                        skillAnimation:true,
-                        animationColor:'thunder',
-                        filter:function(event,player){
-                            return !player.hasSkill('subplayer')&&player.getSubPlayers('d2_mubei_summon').length>0&&player.storage.d2_mubei;
-                        },
-                        content:function(){
-                            'step 0'
-                            if(player.getSubPlayers('d2_mubei_summon').length==1) player.storage.d2_mubei=false;
-                            player.callSubPlayer().set('tag','d2_mubei_summon');
-                            'step 1'
-                            player.setAvatar(player.name,'d2_zombie');
-                        },
-                        ai:{
-                            order:1,
-                            result:{
-                                player:1
-                            }
-                        },
-                    },
-                    "d2_buxi":{
-                        trigger:{                           
-                            player:'dying'
-                        },
-                        forced:true,
-                        intro:{
-                            content:'cards',
-                        },
-                        init:function(player){
-                            player.storage.d2_buxi=[];
-                        },
-                        content:function(){
-                            var card=get.cards()[0];
-                            var length=player.storage.d2_buxi.length;
-                            if(length<1||get.number(player.storage.d2_buxi[length-1])<get.number(card)){
-                                player.storage.d2_buxi.push(card);
-                                player.recover();
-                                player.markSkill('d2_buxi');
-                            }
-                            player.showCards([card]);
                         },
                     },
                     "d2_ganran":{
@@ -8510,7 +8502,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     "d2_guozai_info":"出牌阶段限一次，你可以失去一点体力或弃置一张装备牌，使你下一次受到的伤害-1且出牌阶段出【杀】次数+1直到你的下个准备阶段。若你有连接目标，该角色也获得这些效果。",
                     "d2_jianglin":"降临",
                     "d2_jianglin2":"降临",
-                    "d2_jianglin_info":"每两轮限一次，当你或连接目标将受到大于体力值的伤害时，你可以防止之；若如此做，你于下个结束阶段受到该伤害。",
+                    "d2_jianglin_info":"每两轮限一次，当你或连接目标将受到致命伤害时，你可以防止之；若如此做，你于下个结束阶段受到该伤害。",
                     "d2_suodi":"缩地",
                     "d2_suodi2":"缩地",
                     "d2_suodi_info":"每轮限一次，一名其他角色的回合开始时，你可以获得【潜行】直到该回合结束。你不能连续在同一角色的回合发动此技能。",
@@ -8532,8 +8524,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     "d2_judu":"剧毒",
                     "d2_judu_info":"限定技，出牌阶段，若当前游戏轮数大于你的体力值，你可以令至多三名其他角色将其两张（奥义：改为三张）非【毒】手牌转化成【毒】，若手牌不足则改为获得【毒】。",
                     "d2_mubei":"墓碑",
-                    "d2_mubei2":"墓碑",
-                    "d2_mubei_info":"出牌阶段限一次，你可以弃置一张♠牌获得“墓碑”标记。其他角色死亡后若你有“墓碑”，则获得随从小僵尸。出牌阶段，你可以召唤一个小僵尸，当最后一个小僵尸死亡后你失去“墓碑”。",
+                    "d2_mubei_info":"①出牌阶段限一次，你可以弃置任意张手牌令等量其他角色“僵尸”标记。若拥有“僵尸”标记的角色将受到致命伤害，该伤害+1（限一次）。②准备阶段，横置拥有“僵尸”标记的角色，这些角色弃置“僵尸”标记并失去一点护甲。",
                     "d2_buxi":"不息",
                     "d2_buxi_info":"锁定技，当你进入濒死状态时将牌堆顶的一张牌置于你的武将牌上，若此牌点数比你武将牌上的其他牌都大，你回复一点体力。",
                     "d2_ganran":"感染",
