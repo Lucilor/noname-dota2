@@ -2,7 +2,13 @@ window.updates={
 	"others":{
 		trash:["d2_mowang1.mp3","d2_mowang2.mp3","d2_mowang21.mp3","d2_mowang22.mp3"],
 	},
+	"1.5.1":{
+		date:"2018.10.21",
+		desc:"bug修复",
+		files:["extension.js","CHANGELOG.MD","d2_mubei1","d2_mubei2","d2_mubei3"],
+	},
 	"1.5.0":{
+		next:"1.5.1",
 		date:"2018.10.21",
 		desc:"<li>新增武将：天涯墨客，剧毒术士，不朽尸王<li>影魔【魔王】改为【影压】<br><li>本拓展现在可以联机开启（可能会有更多bug）<br><li>抢夺神符所用的拼点现在无需弃置，而是回到各自手中<br><li>bug修复，以及一些其他改进",
 		files:["extension.js","CHANGELOG.MD","README.MD",

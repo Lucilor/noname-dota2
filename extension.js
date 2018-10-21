@@ -75,7 +75,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     };
 },precontent:function (Dota2){
     if(Dota2.enable){
-        game.saveConfig('noname_Dota2_version',"1.5.0");
+        game.saveConfig('noname_Dota2_version',"1.5.1");
         var edit=lib.extensionMenu.extension_Dota2.edit;
         var deletex=lib.extensionMenu.extension_Dota2.delete;
         delete lib.extensionMenu.extension_Dota2.edit;
@@ -7223,11 +7223,12 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         enable:'phaseUse',
                         selectCard:[1,Infinity],
                         filterCard:true,
+                        usable:1,
                         selectTarget:function (){
                             return ui.selected.cards.length;
                         },
                         filterTarget:function (card,player,target){
-                            return player!=target;
+                            return player!=target&&!target.hasSkill('d2_mubei_zombie');
                         },
                         filter:function(event,player){
                             return player.countCards('h')>0;
@@ -7235,7 +7236,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         content:function(){
                             target.addSkill('d2_mubei_zombie');
                         },
-                        group:'d2_mubei_zombie',
+                        group:'d2_mubei_clear',
                         subSkill:{
                             "zombie":{
                                 trigger:{player:'damageBefore'},
@@ -7278,6 +7279,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                                         players[i].changeHujia(-1);
                                         players[i].removeSkill('d2_mubei_zombie');
                                     }
+                                    game.playAudio("../extension/Dota2","d2_mubei3");
                                 },
                                 sub:true,
                             },
