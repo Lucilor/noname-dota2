@@ -1,6 +1,4 @@
 game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2",content:function (config,pack){
-    lib.config.announcer=config.announcer;
-    lib.config.rune=config.rune;
     get.linkFrom=function(skill){return lib.skill[skill].linkCharacters[0]};
     get.linkTo=function(skill){return lib.skill[skill].linkCharacters.slice(1)};
     game.linkFilter=function(player,skill){
@@ -75,7 +73,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
     };
 },precontent:function (Dota2){
     if(Dota2.enable){
-        game.saveConfig('noname_Dota2_version',"1.5.2");
+        game.saveConfig('noname_Dota2_version',"1.5.3");
         var edit=lib.extensionMenu.extension_Dota2.edit;
         var deletex=lib.extensionMenu.extension_Dota2.delete;
         delete lib.extensionMenu.extension_Dota2.edit;
@@ -84,7 +82,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "name":"拓展版本："+lib.config.noname_Dota2_version,
             "clear":true,
             "onclick":function(){
-                if(lib.updates===undefined||lib.updates.length==0) {
+                if(lib.d2_updates===undefined||lib.d2_updates.length==0) {
                     alert('读取updates.js失败');
                     return;
                 }
@@ -96,7 +94,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "name":"更新此拓展",
             "clear":true,
             "onclick":function(){
-                if(lib.updates===undefined||lib.updates.length==0) {
+                if(lib.d2_updates===undefined||lib.d2_updates.length==0) {
                     alert('读取updates.js失败');
                     return;
                 }
@@ -110,16 +108,16 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     return ;
                 }
 
-                var list=lib.updates[nextVersion].files;
-                var tmp=lib.updates[nextVersion].next;
+                var list=lib.d2_updates[nextVersion].files;
+                var tmp=lib.d2_updates[nextVersion].next;
                 var lastestVersion=nextVersion;
                 while(tmp) {
-                    var list2=lib.updates[tmp].files;
+                    var list2=lib.d2_updates[tmp].files;
                     for(var i=0;i<list2.length;i++) {
                         if(!list.contains(list2[i])) list.push(list2[i]);
                     }
                     lastestVersion=tmp;
-                    tmp=lib.updates[tmp].next;
+                    tmp=lib.d2_updates[tmp].next;
                 }
                 var n1=0,n2=list.length;
                 var finish=false;
@@ -140,12 +138,12 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             "name":"清理多余文件",
             "clear":true,
             "onclick":function(){
-                if(lib.updates===undefined||lib.updates.length==0) {
+                if(lib.d2_updates===undefined||lib.d2_updates.length==0) {
                     alert('读取updates.js失败');
                     return;
                 }
 
-                var list=lib.updates.others.trash;
+                var list=lib.d2_updates.others.trash;
                 alert(list);
                 if(list==undefined) alert('没有可清理的文件');
                 multiUnlink(list,null,null,function(){
@@ -302,24 +300,23 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
             });
             div.style.left='calc(50% - 35px)';
             dialog.add(div);
-            for(var i in lib.updates){
+            for(var i in lib.d2_updates){
                 if (i=='others') continue;
                 var str=lib.config.noname_Dota2_version==i?'--当前版本':'';
-                dialog.addText(i+'('+lib.updates[i].date+')'+str+'<br>',false);
-                if(lib.updates[i].desc) dialog.addText(lib.updates[i].desc,false);
+                dialog.addText(i+'('+lib.d2_updates[i].date+')'+str+'<br>',false);
+                if(lib.d2_updates[i].desc) dialog.addText(lib.d2_updates[i].desc,false);
             };
             ui.window.appendChild(dialog);
         };
         var needUpdate=function(){
             ui.noname_Dota2_needUpdate=ui.create.system('Dota2拓展可更新',changeLog,true);
         };
-
         multiDownload(['updates.js'],null,null,function(){
             lib.init.js(extDir,"updates",function(){
                 if(window.updates) {
-                    lib.updates=window.updates;
+                    lib.d2_updates=window.updates;
                     delete window.updates;
-                    lib.nextVersion=lib.updates[lib.config.noname_Dota2_version].next;
+                    lib.nextVersion=lib.d2_updates[lib.config.noname_Dota2_version].next;
                     if(lib.nextVersion!=undefined)  {
                         needUpdate();
                     }
@@ -449,7 +446,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         },
                         filter:function (event,player){
                             if(get.mode()=='stone') return false;
-                            return lib.config.announcer!='disable';
+                            return lib.config.extension_Dota2_announcer!='disable';
                         },
                         content:function (){
                             var myTrigger = '';
@@ -478,7 +475,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         content:function (){
                             lib.storage.firstBlood=true;
                             game.log(player,'拿下了第一滴血！');
-                            game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_firstBlood");
+                            game.playAudio("../extension/Dota2/announcer/"+lib.config.extension_Dota2_announcer,"_d2_firstBlood");
                             player.$damagepop('一血','unknownx');
                         },
                     },
@@ -492,7 +489,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         forced:true,
                         content:function (){
                             game.log(player,'拿下了双杀！')
-                            game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_doubleKill");
+                            game.playAudio("../extension/Dota2/announcer/"+lib.config.extension_Dota2_announcer,"_d2_doubleKill");
                             player.$damagepop('双杀','unknownx');
                         },
                     },
@@ -506,7 +503,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         forced:true,
                         content:function (){
                             game.log(player,'拿下了三杀！')
-                            game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_tripleKill");
+                            game.playAudio("../extension/Dota2/announcer/"+lib.config.extension_Dota2_announcer,"_d2_tripleKill");
                             player.$damagepop('三杀','unknownx');
                         },
                     },
@@ -520,7 +517,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         forced:true,
                         content:function (){
                             game.log(player,'正在疯狂杀戮！')
-                            game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_ultraKill");
+                            game.playAudio("../extension/Dota2/announcer/"+lib.config.extension_Dota2_announcer,"_d2_ultraKill");
                             player.$damagepop('疯狂杀戮','unknownx');
                         },
                     },
@@ -534,7 +531,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         forced:true,
                         content:function (){
                             game.log(player,+'已经暴走啦！')
-                            game.playAudio("../extension/Dota2/announcer/"+lib.config.announcer,"_d2_rampage");
+                            game.playAudio("../extension/Dota2/announcer/"+lib.config.extension_Dota2_announcer,"_d2_rampage");
                             player.$damagepop('暴走','unknownx');
                         },
                     },
@@ -545,7 +542,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         forced:true,
                         popup:false,
                         filter:function(event,player){
-                            if(!lib.config.rune) return false;
+                            if(!lib.config.extension_Dota2_rune) return false;
                             if(!game.hasPlayer(function(current){
                                 return current.storage._d2_rune;
                             })) {
@@ -3497,7 +3494,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                                 game.playAudio("../extension/Dota2","d2_xunuo31");
                             }
                             if(num<0) {
-                                player.damage(-num,player.storage.d2_xunuo2);
+                                player.damage(-num,player.storage.d2_xunuo2,'nosource');
                                 game.playAudio("../extension/Dota2","d2_xunuo32");
                             }
                             player.removeSkill(['d2_xunuo2','d2_xunuo3']);
@@ -8354,7 +8351,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     "d2_xunuo":"虚诺",
                     "d2_xunuo2":"虚诺",
                     "d2_xunuo3":"虚诺",
-                    "d2_xunuo_info":"每三轮限一次，出牌阶段，你可以令一名角色受到的伤害和回复均延迟至你的下个准备阶段结算，其中回复量翻倍。",
+                    "d2_xunuo_info":"每三轮限一次，出牌阶段，你可以令一名角色受到的伤害和回复均延迟至你的下个准备阶段结算，其中回复量翻倍，伤害无伤害来源。",
                     "d2_juji":"狙击",
                     "d2_juji_info":"锁定技，你的攻击范围+2，防御距离+1；你使用杀造成伤害后对方有40％的几率随机弃一张牌。",
                     "d2_xiandan":"霰弹",
@@ -8514,7 +8511,7 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     "d2_moyong2":"墨涌",
                     "d2_moyong_info":"出牌阶段限一次，你可以弃置至少一张花色各不相同的牌并令一名其他角色选择一项：①弃置与这些牌花色相同的牌各一张；②下个出牌阶段不能使用花色与这些牌相同的牌。",
                     "d2_fuhun":"缚魂",
-                    "d2_fuhun_info":"出牌阶段，你可以弃置两张牌令两名角色的灵魂紧密相连直到其中一名角色进入濒死状态。每当其中一名角色成为除这两名角色外的角色的牌的唯一目标时，将另外一名角色追加为该牌的额外目标。在这两名角色解除缚魂之前你不能使用此技能。",
+                    "d2_fuhun_info":"出牌阶段，你可以弃置两张牌令两名角色的灵魂紧密相连直到其中一名角色进入濒死状态。每当其中一名角色成为除这两名角色外的角色的牌的唯一目标时，将另外一名角色追加为该牌的额外目标（需为合法目标）。在这两名角色解除缚魂之前你不能使用此技能。",
                     "d2_zhangqi":"瘴气",
                     "d2_zhangqi_info":"出牌阶段限一次，你可以弃置至多两张牌指定等量其他角色，其中前X名角色获得一张【毒】，其余角色随机弃置一张牌（X为你弃置的牌中♠牌的数量）。",
                     "d2_duci":"毒刺",
