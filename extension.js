@@ -7209,12 +7209,12 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                         },
                         filter:function(event,player){
                             return game.hasPlayer(function(current){
-                                return current!=player&&current.isLinked()&&!current.hasSkill('d2_ganran_infected');
+                                return player!=current&&!current.hasSkill('d2_ganran_infected');
                             });
                         },
                         content:function(){
                             var players=game.filterPlayer(function(current){
-                                return current.isLinked()&&!current.hasSkill('d2_ganran_infected');
+                                return player!=current&&!current.hasSkill('d2_ganran_infected');
                             });
                             for(var i=0;i<players.length;i++){
                                 players[i].addSkill('d2_ganran_infected');
@@ -7293,12 +7293,12 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     "d2_shibian":{
                         audio:"ext:Dota2:2",
                         enable:'phaseUse',
-                        round:3,
+                        round:2,
                         filter:function(event,player){
                             return true;
                         },
                         intro:{
-                            content:"不朽尸王的真正面目。每当你造成伤害弃置已被感染尸毒的角色的一张牌；每当你受到伤害横置一名未横置的其他角色。"
+                            content:"不朽尸王的真正面目。每当你造成伤害弃置已被感染尸毒的角色的一张牌；每当你受到伤害获得一枚“感染”标记。"
                         },
                         content:function(){
                             player.addSkill(['d2_shibian_1','d2_shibian_2','d2_shibian_remove']);
@@ -7335,24 +7335,11 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                                 forced:true,
                                 priority:2,
                                 filter:function(event,player){
-                                    return game.hasPlayer(function(current){
-                                        return current!=player&&!current.isLinked();
-                                    });
+                                    return player.hasSkill('d2_ganran');
                                 },
                                 content:function(){
-                                    'step 0'
-                                    player.chooseTarget('横置一名未横置的其他角色',function(card,player,target){
-                                        return target!=player&&!target.isLinked();
-                                    }).set('ai',function(target){
-                                        return -get.attitude(_status.event.player,target);
-                                    });
-                                    'step 1'
-                                    var target;
-                                    if(result.targets&&result.targets.length){
-                                        target=result.targets[0];
-                                    }
-                                    player.line(target);
-                                    target.link();
+                                    player.storage.d2_ganran++;
+                                    player.updateMarks();
                                 },
                                 sub:true,
                             },
@@ -9100,10 +9087,9 @@ game.import("extension",function(lib,game,ui,get,ai,_status){return {name:"Dota2
                     "d2_mubei":"墓碑",
                     "d2_mubei_info":"①每两轮限一次，你可以弃置任意张手牌，横置等量其他角色并令这些角色获得“僵尸”标记。若拥有“僵尸”标记的角色将受到致命伤害，弃置“僵尸”标记且该伤害+1；②你的准备阶段，拥有“僵尸”标记的角色弃置“僵尸”标记并失去一点护甲。",
                     "d2_ganran":"感染",
-                    "d2_ganran_info":"锁定技，你受到伤害后令场上已横置且未感染尸毒的角色感染尸毒。已感染尸毒的角色回复体力时你获得一个“感染”标记，若你有三个或更多“感染”标记，防止你受到的伤害。准备阶段，你弃置所有“感染”标记然后摸等量的牌（奥义：并回复等量体力）。",
+                    "d2_ganran_info":"锁定技，你受到伤害后令场上未感染尸毒的角色感染尸毒。已感染尸毒的角色回复体力时你获得一个“感染”标记，若你有三个或更多“感染”标记，防止你受到的伤害。准备阶段，你弃置所有“感染”标记然后摸等量的牌（奥义：并回复等量体力）。",
                     "d2_shibian":"尸变",
-                    "d2_shibian_2":"尸变",
-                    "d2_shibian_info":"每三轮限一次，出牌阶段，你可以获得以下效果直到你的下个回合：每当你造成伤害弃置已感染尸毒的角色的一张牌；每当你受到伤害横置一名未横置的其他角色。",
+                    "d2_shibian_info":"每两轮限一次，出牌阶段，你可以获得以下效果直到你的下个回合：每当你造成伤害弃置已感染尸毒的角色的一张牌；每当你受到伤害获得一枚“感染”标记。",
                     "d2_zuantou":"钻头",
                     "d2_zuantou_info":"出牌阶段限一次，你可以选择一名其他角色装备区里的一张牌，令其将此牌收回手牌。若该角色体力值大于你，你摸一张牌。",
                     "d2_danmu":"弹幕",
