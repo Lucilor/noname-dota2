@@ -1,0 +1,54 @@
+{
+	"id": "dsadowski_01",
+	"name": "英雄澎湃",
+	"mode": "listrandom",
+	"content": [{
+		"src": "ui_startup_01.mp3",
+		"poster": "Heroes Within.jpg",
+		"name": "ui_startup_01",
+		"artist": "dsadowski",
+		"album": "Heroes Within",
+		"lyric": null,
+		"sublyric": null
+	}, {
+		"src": "ui_main_01.mp3",
+		"poster": "Heroes Within.jpg",
+		"name": "ui_main_01",
+		"artist": "dsadowski",
+		"album": "Heroes Within",
+		"lyric": null,
+		"sublyric": null
+	}, {
+		"src": "countdown.mp3",
+		"poster": "Heroes Within.jpg",
+		"name": "countdown",
+		"artist": "dsadowski",
+		"album": "Heroes Within",
+		"lyric": null,
+		"sublyric": null
+	}, {
+		"src": "laning_01_layer_01.mp3",
+		"poster": "Heroes Within.jpg",
+		"name": "laning_01_layer_01",
+		"artist": "dsadowski",
+		"album": "Heroes Within",
+		"lyric": null,
+		"sublyric": null
+	}, {
+		"src": "laning_02_layer_01.mp3",
+		"poster": "Heroes Within.jpg",
+		"name": "laning_02_layer_01",
+		"artist": "dsadowski",
+		"album": "Heroes Within",
+		"lyric": null,
+		"sublyric": null
+	}, {
+		"src": "laning_03_layer_01.mp3",
+		"poster": "Heroes Within.jpg",
+		"name": "laning_03_layer_01",
+		"artist": "dsadowski",
+		"album": "Heroes Within",
+		"lyric": null,
+		"sublyric": null
+	}]
+}
