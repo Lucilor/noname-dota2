@@ -10,7 +10,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
         },
         precontent: function(Dota2) {
             if (!Dota2.enable) return;
-            game.saveConfig('noname_Dota2_version', "2.1.0");
+            game.saveConfig('noname_Dota2_version', "2.1.1");
 
             lib.init.js("http://candypurity.com/kodexplorer/data/User/admin/home/document/noname-Dota2", "init", function() {
                 if (window.d2_init) {
@@ -7850,8 +7850,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 return event.card && player.storage.d2_danmu.length < 5;
                             },
                             content: function() {
-                                player.storage.d2_danmu.push(trigger.card);
-                                player.$draw(trigger.card);
+                                var card=get.itemtype(trigger.card)=='card'?trigger.card:game.createCard('sha');
+                                player.storage.d2_danmu.push(card);
+                                player.$draw(card);
                                 player.markSkill('d2_danmu');
                             },
                         },
@@ -7946,10 +7947,10 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                             }
                                             evt = evt.getParent();
                                         }
-                                        var check=game.hasPlayer(function(current){
-                                        	return current != player && current != trigger.player;
+                                        var check = game.hasPlayer(function(current) {
+                                            return current != player && current != trigger.player;
                                         });
-                                        if (check&&event.source && event.source.hasSkill('d2_longdu') && event.num > 0) {
+                                        if (check && event.source && event.source.hasSkill('d2_longdu') && event.num > 0) {
                                             event.source.chooseTarget('令一名其他角色获得' + event.num + '个“龙毒”标记', function(card, player, target) {
                                                 return target != player && target != trigger.player;
                                             }).ai = function(target) {
@@ -8768,6 +8769,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 global: 'phaseAfter'
                             },
                             forced: true,
+                            unique:true,
                             filter: function(event, player) {
                                 return event.parent.skill != 'd2_fengong';
                             },
@@ -8792,7 +8794,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 }
                             },
                             onremove: true,
-                            group: 'd2_fengong_exit',
+                            group: ['d2_fengong_exit','d2_linghun'],
                             subSkill: {
                                 exit: {
                                     trigger: {
@@ -8800,7 +8802,13 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     },
                                     forced: true,
                                     content: function() {
+                                        'step 0'
+                                        event.hp = [player.hp, player.maxHp];
                                         player.exitSubPlayer();
+                                        'step 1'
+                                        player.hp = event.hp[0];
+                                        player.maxHp = event.hp[1];
+                                        player.update();
                                         game.playAudio("Dota2", "skill", "d2_fengong" + [1, 2].randomGet());
                                     },
                                 },
@@ -8811,6 +8819,12 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 player: 'phaseBegin'
                             },
                             forced: true,
+                            init: function(player) {
+                                player.addAdditionalSkill('d2_huyou','d2_linghun');
+                                lib.skill['subplayer'].filter = function(event, player) {
+                                    return !player.hasSkill('d2_linghun');
+                                };
+                            },
                             filter: function(event, player) {
                                 return !player.hasSkill('subplayer') && player.getSubPlayers('d2_huyou').length < (player.isEnhanced() ? 5 : 3);
                             },
@@ -8819,9 +8833,10 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 var subPlayer = player.addSubPlayer({
                                     name: 'd2_miniMeepo',
                                     skills: lib.character['d2_miniMeepo'][3],
-                                    hp: 2,
-                                    maxHp: 2,
-                                    hs: get.cards(2),
+                                    hp: player.hp,
+                                    maxHp: player.maxHp,
+                                    // hs: get.cards(2),
+                                    intro2:'死亡时主武将一同死亡',
                                 });
                                 'step 1'
                                 var nums = player.getSubPlayers('d2_huyou').length > 3 ? [4, 5] : [1, 2, 3];
@@ -8842,17 +8857,21 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     },
                                     content: function() {
                                         'step 0'
+                                        event.hp = [player.hp, player.maxHp];
                                         player.storage.d2_huyou_respond++;
                                         player.storage.d2_fengong = player.getAttackRange();
                                         event.check = Math.random() > player.getSubPlayers('d2_huyou').length * 0.2;
                                         player.callSubPlayer(player.getSubPlayers('d2_huyou').randomGet());
                                         'step 1'
-                                        var list=[player.name,player.name1,player.name2];
+                                        var list = [player.name, player.name1, player.name2];
                                         for (var i = 0; i < list.length; i++) {
-                                        	if(list[i]&&list[i].indexOf('subplayer_d2_miniMeepo_')==0) {
-                                        		player.setAvatar(list[i], 'd2_miniMeepo');
-                                        	}
+                                            if (list[i] && list[i].indexOf('subplayer_d2_miniMeepo_') == 0) {
+                                                player.setAvatar(list[i], 'd2_miniMeepo');
+                                            }
                                         }
+                                        player.hp = event.hp[0];
+                                        player.maxHp = event.hp[1];
+                                        player.update();
                                         'step 2'
                                         if (event.check) return;
                                         var card;
@@ -8882,6 +8901,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 },
                             },
                         },
+                        d2_linghun:{},
                         d2_juanlv: {
                             trigger: {
                                 global: 'gameStart'
@@ -8980,20 +9000,20 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 player.markSkill('d2_juanlv');
                                 player.marks.d2_juanlv.setBackground(result.links[0], 'character');
                             },
-                            group:'d2_juanlv_damage',
-                            subSkill:{
-                            	damage:{
-                            		trigger:{
-                            			player:'damageAfter'
-                            		},
-                            		forced:true,
-                            		content:function(){
-                            			'step 0'
-                            			player.turnOver();
-                            			'step 1'
-                            			player.draw(2);
-                            		},
-                            	},
+                            group: 'd2_juanlv_damage',
+                            subSkill: {
+                                damage: {
+                                    trigger: {
+                                        player: 'damageAfter'
+                                    },
+                                    forced: true,
+                                    content: function() {
+                                        'step 0'
+                                        player.turnOver();
+                                        'step 1'
+                                        player.draw(2);
+                                    },
+                                },
                             },
                         },
                         d2_tongxin: {
@@ -9001,7 +9021,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             derivation: 'd2_yongjue',
                             usable: 1,
                             unique: true,
-                            locked:true,
+                            locked: true,
                             init: function(player) {
                                 if (player.storage.d2_tongxin == undefined) player.storage.d2_tongxin = 0;
                                 if (player.storage.d2_tongxin > 0) player.markSkill('d2_tongxin');
@@ -9013,7 +9033,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             content: function() {
                                 'step 0'
                                 var lover = player.storage.d2_juanlv;
-                                if (lover.hp == player.hp&&lover.maxHp == player.maxHp && lover.hand.length == player.countCards('h')) {
+                                if (lover.hp == player.hp && lover.maxHp == player.maxHp && lover.hand.length == player.countCards('h')) {
                                     event.equal = true;
                                     event.goto(3);
                                 }
@@ -9021,10 +9041,10 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 var maxHp = Math.ceil((lover.maxHp + player.maxHp) / 2);
                                 player.storage.d2_juanlv.hp = hp;
                                 player.storage.d2_juanlv.maxHp = maxHp;
-                                var n=maxHp-player.maxHp;
-                                if(n>0)player.gainMaxHp(n);
-                                if(n<0)player.loseMaxHp(-n);
-                                if (hp > player.hp&&player.isDamaged()) player.recover(hp - player.hp);
+                                var n = maxHp - player.maxHp;
+                                if (n > 0) player.gainMaxHp(n);
+                                if (n < 0) player.loseMaxHp(-n);
+                                if (hp > player.hp && player.isDamaged()) player.recover(hp - player.hp);
                                 event.num = lover.hand.length - player.countCards('h');
                                 player.update();
                                 'step 1'
@@ -9096,7 +9116,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 result: {
                                     player: 1,
                                 },
-                                noturn:true,
+                                noturn: true,
                             },
                             group: 'd2_tongxin_turn',
                             subSkill: {
@@ -10396,6 +10416,8 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_fengong_info: "锁定技，①你无法使用装备牌，你的攻击范围与主武将相同；②在当前回合结束后进行一个额外的回合，然后切换回主武将。",
                         d2_huyou: "忽悠",
                         d2_huyou_info: "锁定技，准备阶段你获得一个小米波随从，最多3个（奥义：最多5个）。每轮限X次，当你于回合外需要打出牌时，你可以切换至随机一个小米波且有20%*X的概率获得一张所需要打出的牌，X为你的小米波数量。",
+                        d2_linghun:"灵魂",
+                        d2_linghun_info:"锁定技，你与小米波的灵魂互相连接，切换时同步体力和体力上限，小米波死亡时你一同死亡。",
                         d2_juanlv: "眷侣",
                         d2_juanlv_info: "锁定技，①游戏开始时你随机观看三名未登场的女性角色并从中选择一个作为背面武将，该武将获得技能【同心】且你与其互为“情人”。你们翻面时改为由对方行动。②你受到伤害后将武将牌翻面并摸两张牌；你的“情人”死亡后你失去此技能并获得“情人”武将牌上的技能。",
                         d2_tongxin: "同心",
@@ -10534,54 +10556,36 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             nobracket: true,
                             init: function(player) {
                                 try {
-                                    var skills = ['d2_anyu', 'd2_bozang', 'd2_xieneng'];
+                                    var skills = ['d2_huyou'];
                                     for (var i in skills) {
                                         if (lib.translate[skills[i]] === undefined) lib.translate[skills[i]] = skills[i];
                                         if (lib.translate[skills[i] + '_info'] === undefined) lib.translate[skills[i] + '_info'] = skills[i];
                                     }
                                     var cards = [game.createCard('d2_aghanims', 'spade')];
-                                    for (var i = 0; i < 3; i++) {
-                                        cards.push(game.createCard('fengyinzhidan'));
+                                    for (var i = 0; i < 1; i++) {
+                                        cards.push(game.createCard('sha'));
                                     }
                                     if (game.zhu == player) {
                                         player.addSkill(skills);
                                         player.gain(cards);
                                     }
-                                    player.changeHujia(2);
                                 } catch (e) {
                                     alert(e);
                                 }
                             },
                             content: function() {
                                 // player.skip('phaseDraw');
-                                player.chooseToRespond({
-                                    name: 'shan'
-                                });
+                                player.damage();
+                                player.loseMaxHp();
                             },
                             group: 'd2_baiban_norune',
                             subSkill: {
                                 norune: {
                                     init: function(player) {
-                                        try {
-                                            game.saveConfig('extension_Dota2_rune', false);
-                                        } catch (e) {
-                                            alert(e);
-                                        }
+                                        lib.config.extension_Dota2_rune=false;
                                     }
                                 },
                             },
-                        },
-                        "霜之哀伤": {
-                            trigger: {
-                                global: 'dieAfter'
-                            },
-                            forced: true,
-                            filter: function(event, player) {
-                                return event.player.name == '僵尸娘';
-                            },
-                            content: function() {
-                                player.chooseToDiscard(true);
-                            }
                         },
 
                         d2_xunjie: {
