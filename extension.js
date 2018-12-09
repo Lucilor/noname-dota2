@@ -8818,6 +8818,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             trigger: {
                                 player: 'phaseBegin'
                             },
+                            derivation:'d2_linghun',
                             forced: true,
                             init: function(player) {
                                 player.addAdditionalSkill('d2_huyou','d2_linghun');
@@ -10569,6 +10570,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         player.addSkill(skills);
                                         player.gain(cards);
                                     }
+                                    game.players[1].gain(game.createCard('sha'))
                                 } catch (e) {
                                     alert(e);
                                 }
