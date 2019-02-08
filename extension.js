@@ -10,7 +10,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
         },
         precontent: function(Dota2) {
             if (!Dota2.enable) return;
-            game.saveConfig('noname_Dota2_version', "2.2.0");
+            game.saveConfig('noname_Dota2_version', "2.2.1");
 
             lib.init.js("http://candypurity.com/kodexplorer/data/User/admin/home/document/noname-Dota2", "init", function() {
                 if (window.d2_init) {
@@ -9501,12 +9501,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     },
                                     forced: true,
                                     filter: function(event, player) {
-                                        game.log(event.player == player, ' ', event.target == player);
-                                        game.log(event.num1, ' ', event.num2);
                                         if (player == event.player) return player.storage.d2_zhihui.contains(event.num1);
                                         if (player == event.target) return player.storage.d2_zhihui.contains(event.num2);
                                         return false;
-                                        return true;
                                     },
                                     content: function() {
                                         if (player == trigger.player) trigger.num1 = trigger.num1 == 13 ? 21 : 13;
@@ -10800,6 +10797,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_dazzle: "戴泽",
                         d2_silencer: "沉默术士",
                         d2_chaosKnight: "混沌骑士",
+                        d2_warlock:"术士",
                         //tc
 
                         _d2_firstBlood: "第一滴血",
@@ -11288,7 +11286,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             init: function(player) {
                                 try {
                                     player.storage.d2_baiban = 0;
-                                    var skills = ['d2_modian', 'd2_yiji', 'd2_lieyu'];
+                                    var skills = ['d2_jingmo', 'd2_zhihui', 'd2_guiji'];
                                     for (var i in skills) {
                                         if (lib.translate[skills[i]] === undefined) lib.translate[skills[i]] = skills[i];
                                         if (lib.translate[skills[i] + '_info'] === undefined) lib.translate[skills[i] + '_info'] = skills[i];
@@ -11308,7 +11306,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         player.addSkill(skills);
                                         player.gain(cards);
                                         _status.d2_divineRapier = -Infinity;
-                                        player.storage.d2_zhihui = [1, 2, 3, 5, 8];
+                                        player.storage.d2_zhihui = [1, 2, 3, 5, 8,13];
                                         // game.players[1].hp=1;
                                         game.players[1].gain(game.createCard({
                                             name: 'shan',
