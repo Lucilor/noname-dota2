@@ -10,7 +10,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
         },
         precontent: function(Dota2) {
             if (!Dota2.enable) return;
-            game.saveConfig('noname_Dota2_version', "2.2.1");
+            game.saveConfig('noname_Dota2_version', "2.2.2");
 
             lib.init.js("http://candypurity.com/kodexplorer/data/User/admin/home/document/noname-Dota2", "init", function() {
                 if (window.d2_init) {
