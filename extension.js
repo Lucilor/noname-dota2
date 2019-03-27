@@ -10,7 +10,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
         },
         precontent: function(Dota2) {
             if (!Dota2.enable) return;
-            game.saveConfig('noname_Dota2_version', "2.2.2");
+            game.saveConfig('noname_Dota2_version', "2.3.0");
 
             lib.init.js("http://candypurity.com/kodexplorer/data/User/admin/home/document/noname-Dota2", "init", function() {
                 if (window.d2_init) {
@@ -14555,7 +14555,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                 "<li><font color='#87CEFF'>联动技</font><br>某些角色之间的联动，只有<font color='#87CEFF'>联动角色在场上且都是主武将</font>时才会生效。" +
                 "<li><font color='#87CEFF'>占卜</font><br>一名角色拥有占卜+X时，该角色在其准备阶段和结束阶段<font color='#87CEFF'>观看牌堆顶的X张牌且可以用手牌替换这些牌（没有手牌则改为摸一张牌）</font>。" +
                 "<li><font color='#87CEFF'>速度</font><br>速度<font color='#87CEFF'>初始值为1，上下限分别为5和0</font>。改变速度有两种方式：①<font color='#87CEFF'>增减</font>（如速度+1）：在原速度的基础上增加或减少（<font color='#87CEFF'>不能超过上下限</font>），多个同类效果同时生效。②<font color='#87CEFF'>设定</font>（如速度变为-1）：将速度设定为某个值（<font color='#87CEFF'>可以超过上下限</font>），此时所有增减运算均不生效，多个同类效果只有数值最小的生效。" +
-                "<li><font color='#87CEFF'>速度效果（X=当前速度-速度上限）</font><br><font color='#87CEFF'>≤-1</font> 不能使用或打出基本牌<br><font color='#87CEFF'>≤0</font> 进攻和防御距离-1<br><font color='#87CEFF'>≥2</font> 手牌上限+1<br><font color='#87CEFF'>≥3</font> TBD<br><font color='#87CEFF'>≥4</font> 占卜+2<br><font color='#87CEFF'>≥5</font> 准备阶段，若你的判定区内有牌，随机弃置其中一张，否则摸一张牌<br><font color='#87CEFF'>≥6</font> 使用一张牌后有X*20%的概率摸一张牌（每回合限3次）<br><font color='#87CEFF'>≥7</font> 回合结束时有X*15%的概率进行一个额外的回合（不重复触发）" +
+                "<li><font color='#87CEFF'>速度效果（X=当前速度-速度上限）</font><br><font color='#87CEFF'>≤-1</font> 不能使用或打出基本牌<br><font color='#87CEFF'>≤0</font> 进攻和防御距离-1<br><font color='#87CEFF'>≥2</font> 手牌上限+1<br><font color='#87CEFF'>≥3</font> 占卜+2<br><font color='#87CEFF'>≥4</font> 使用牌无距离限制<br><font color='#87CEFF'>≥5</font> 准备阶段，若你的判定区内有牌，随机弃置其中一张，否则摸一张牌<br><font color='#87CEFF'>≥6</font> 使用一张牌后有X*20%的概率摸一张牌（每回合限3次）<br><font color='#87CEFF'>≥7</font> 回合结束时有X*15%的概率进行一个额外的回合（不重复触发）" +
                 "<li><font color='#87CEFF'>神符</font><br>新的一轮开始时，神符将随机（<font color='#87CEFF'>速度越大，概率越大</font>）刷新在一名角色（A）身上，其他角色可依次与A<font color='#87CEFF'>拼点</font>（拼点牌无需弃置），其中<font color='#87CEFF'>点数最大者</font>获得神符。神符将在新的一轮开始时消失。发生以下情况时A<font color='#87CEFF'>直接获得神符</font>：①A没有手牌；②没有角色与A拼点；③拼点点数最大者不止一名角色。"
         },
         config: {
