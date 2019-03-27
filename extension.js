@@ -178,6 +178,27 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                     }
                 }
             });
+            String.prototype.format = function(args) {
+                var result = this;
+                if (arguments.length > 0) {
+                    if (arguments.length == 1 && typeof(args) == "object") {
+                        for (var key in args) {
+                            if (args[key] != undefined) {
+                                var reg = new RegExp("({" + key + "})", "g");
+                                result = result.replace(reg, args[key]);
+                            }
+                        }
+                    } else {
+                        for (var i = 0; i < arguments.length; i++) {
+                            if (arguments[i] != undefined) {
+                                var reg = new RegExp("({)" + i + "(})", "g");
+                                result = result.replace(reg, arguments[i]);
+                            }
+                        }
+                    }
+                }
+                return result;
+            }
 
             game.import('character', function(lib, game, ui, get, ai, _status) {
                 var Dota2Pack = {
@@ -328,6 +349,16 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_warlock: ["male", "shu", 3, ["d2_modian", "d2_yiji"],
                             []
                         ],
+                        d2_bloodseeker: ["male", "shu", 4, ["d2_jiaoke", "d2_gelie"],
+                            []
+                        ],
+                        d2_darkSeer: ["male", "wei", 3, ["d2_benteng", "d2_zhenkong", "d2_fuzhi"],
+                            []
+                        ],
+                        d2_spiritBreaker: ["male", "wei", 4, ["d2_chongci", "d2_weihe"],
+                            []
+                        ],
+                        //character
                     },
                     characterIntro: {
                         d2_blessingAngel: "人们的祈祷是有用的，赐福天使终临人世。只要有她在，就连最危险的绝境都依然充满希望。",
@@ -378,6 +409,10 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_silencer: "作为一支精心呵护的传承血脉中第七代也是最后一代的成员，诺崇从小就被一个叫做风蚀之寒的古老组织抚养，为的是让他成为世界上技艺空前的大魔法师。他就是预言中那个天选者，两百年来，先人在配偶和繁衍时谨慎无比，积累了数代的优秀血统，就是要培养出一个能够为组织带来无上荣誉的战斗法师，同时，毁灭他们的死敌：教会骑士团。组织在哈扎达尔废墟旁的山上的一个隐秘营地中抚养着一群和诺崇一样年轻的法师，导师们一直在等着诺崇展现自己独特的天赋。然而，就当其他学徒都开始施展并提升自己的火系、冰系、变形系魔法的时候，诺崇仍然是沉默的坐在那里，其貌不扬，连变形术都不会。随着最终考核日的临近，他身上仍然一点魔力都没有。导师们厌恶地斥责了他，其他人则大声的嘲笑着。“你根本不是法师。”组织的领袖大声的宣布。然而，诺崇并没有灰溜溜的走掉。他进入了比赛场，俯视着那些嘲笑他的年轻法师们，随后，他让这些人以及他们的导师们明白了一个重要的道理：魔法之极，唯寂方至。诺崇将那些所谓的天才法师们一个接一个的沉默，让他们不得不和他近身搏斗，直到最后，赛场中站着的只有他一个人，正如预言所说，他是风蚀之寒的首席法师。随后，他走出群山，走进大陆，现在的他有一个全新的名字：沉默术士，一切魔法，遭遇了他，都将归于寂静。",
                         d2_chaosKnight: "作为一名被上千个世界中无数战斗洗礼过的战斗大师，混沌骑士来自一个遥远的上层位面，在那里，宇宙的基本法则都能被直接感知到。在所有的法则中，混沌是最古老且最不知疲倦的——永无休止的搜寻着被他称为“光”的存在。很久以前,“光”违抗初始之契约离开了起源的世界，在其他世界开始了他的旅途。现在混沌骑士在一个个位面之间穿梭，无论到哪里，他永远都在搜寻然后抹杀“光”的存在 ，将其无数次的抹杀，然后进入下一个位面继续他的搜索。带着自己的铁甲战马“天劫”，带着疯狂的暴怒冲进战场，从宇宙的混乱中吸取力量。他就是混沌在物理位面的化身，并在有需要的时候他会召唤其他位面的自己，这群黑暗骑兵的齐冲如同自然之力一般无法阻挡。只有当一个世界中所有“光”的存在都被彻底消灭，他的搜寻才会结束。混沌骑士的铁蹄所到之处，死亡随之同行。",
                         d2_warlock: "作为秘湮学院禁断圣所的首席馆长和馆藏物主管，戴蒙·拉尼克不知疲倦地追求着那些罕见的失落的禁忌卷轴。无论被诅咒的寺庙有多禁忌，无论隐藏洞穴的路途有多危险，只要有谣传说那里藏着传说学识的原典，他就会不顾自己的安危进入这些危险的场所。然而，他经常在调查中惹怒各种守护者，这使他感到有必要掌握魔法。他将追寻古物时的执念用在了逼迫自己学习魔法上，最终他比大多数学徒都要快地完成了整个学业，在最短时间内成为了学院最强大的术士。后来他用恐惧之木雕刻了一根法杖，并在其中注入了一个他从异界之狱俘获的灵魂。因为期待着有一天能够复原所有的失落魔法书，他开始撰写自己的黑暗魔典。毫无疑问，这对他的黑暗魔法来说，意义非凡。 ",
+                        d2_bloodseeker: "嗜血狂魔史德利古尔是通过仪式严格甄选出的猎手，更准确的说，他是剥皮双子忠实的走狗，他从常年云雾缭绕的噬血之峰被派下去搜寻鲜血。剥皮双子需要海量的鲜血来获得满足和安抚，而如果当地的祭祀没能满足他们，他们就会抽干这个高原王国所有人民的鲜血。因此史德利古尔总是外出进行屠戮。他能榨取出血液之中的生命之力，然后这些能量通过他武器和护甲上的附魔标记立刻流向双子。多年以来，他一直是一条得力的走狗，在战斗时他像豺狼一样残暴。据说，在嗜血狂魔那涌动着对鲜血的渴望的面具之下，能够直视剥皮双子那可怖的嘴脸。",
+                        d2_darkSeer: "迅捷如风，足智多谋，黑暗贤者依什卡菲尔并不需要多么锋利的武器来搏斗，他总是运用强大的心灵之力来征服敌人。他有着颠覆战局使之对己方有利的天才。迎着欢呼和敬意，他从一个叫做“幻墙之末”的世界走了出来，并不热衷于这个世界的纷争——他是一个来自现实世界之外的勇者。曾经，黑暗贤者是备受人民尊敬的将军，是神王达玛瑞克斯麾下英勇的保卫者，然而他的军队在边境大战的最后几天，被一股更为强大的力量悉数歼灭。面临如此惨败，他绝望的做出了最后一个决定：引诱着敌军进入了幻墙迷宫。在他即将被捕的前一刻，他穿过幻墙，释放出强大的黑暗能量，将幻墙永远的封印起来。当飞扬的尘土归于平静以后，他发现他成功的拯救了自己的人民，而自己却沐浴在另一个世界的阳光下，亦真亦幻，无法回到现实世界。现在，他决心以一名战略家的身份来证明自己的价值，并且立誓要让这个新的世界见识他那伟大的谋略。",
+                        d2_spiritBreaker: "裂魂人巴拉森来自元素领域，他高傲、强大、凶猛且精通元素之力，来到物质世界参与那些会影响到元素世界的事件。为此他准备了一个能派上用处的形态，既存在于我们的物质世界，又存在于物质世界之外。他的物理形态来自于我们的物质世界，又像牛又像人，有蹄和手，这个外表象征着他的力量、速度与狡猾。他戴着的鼻环则暗示了他侍奉于一位藏在幕后的主人，而这个世界对他来说不过是元素世界的影子。",
+                        //cintro
                     },
                     characterTitle: {
                         d2_undying: "#p小月纸",
@@ -534,7 +569,20 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 if (!game.hasPlayer(function(current) {
                                         return current.storage._d2_rune;
                                     })) {
-                                    game.filterPlayer().randomGet().storage._d2_rune = true;
+                                    var speedTotal = 0,
+                                        cursor = 1;
+                                    for (var i = 0; i < game.players.length; i++) {
+                                        speedTotal += game.players[i].getSpeed();
+                                    }
+                                    var check = Math.floor(Math.random() * speedTotal) + 1;
+                                    for (var i = 0; i < game.players.length; i++) {
+                                        var current = game.players[i];
+                                        if (check >= cursor && check < cursor + current.getSpeed()) {
+                                            current.storage._d2_rune = true;
+                                            break;
+                                        }
+                                        cursor += current.getSpeed();
+                                    }
                                 }
                                 if (game.runeNumber === undefined) game.runeNumber = 1;
                                 return player.storage._d2_rune && game.runeNumber == game.roundNumber;
@@ -723,7 +771,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     },
                                     mod: {
                                         maxHandcard: function(player, num) {
-                                            return num += 2;
+                                            return num + 2;
                                         },
                                     },
                                 },
@@ -847,6 +895,201 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         }
                                     },
                                 },
+                            },
+                        },
+                        _d2_speed: {
+                            limits: [0, 5],
+                            trigger: {
+                                global: 'gameStart',
+                                player: 'enterGame',
+                            },
+                            silent: true,
+                            intro: {
+                                markcount: function(storage, player) {
+                                    return player.getSpeed();
+                                },
+                                content: function(storage, player) {
+                                    var speed = player.getSpeed();
+                                    var str = '';
+                                    var buffs = ['手牌上限+1', '占卜+2', '使用牌无距离限制', '准备阶段，若你的判定区内有牌，随机弃置其中一张，否则摸一张牌', '使用一张牌后有{0}%的概率摸一张牌（每回合限3次）', '回合结束时有{1}%的概率进行一个额外的回合（不重复触发）'],
+                                        debuffs = ['进攻和防御距离-1', '不能使用或打出基本牌'];
+                                    if (speed > 1) {
+                                        var n = Math.min(speed - 1, buffs.length);
+                                        for (var i = 0; i < n; i++) {
+                                            str += buffs[i];
+                                            if (i < n - 1) str += '；<br>';
+                                        }
+                                        str = str.format(Math.min(100, 20 * (speed - lib.skill._d2_speed.limits[1])), Math.min(100, 15 * (speed - lib.skill._d2_speed.limits[1])));
+                                        str = "获得以下效果：<br><font color='#00EEEE'>{0}</font>".format(str);
+                                    } else if (speed < 1) {
+                                        var n = Math.min(-speed, buffs.length);
+                                        for (var i = 0; i <= n; i++) {
+                                            str += debuffs[i];
+                                            if (i < n) str += '；<br>';
+                                        }
+                                        str = "获得以下效果：<br><font color='#EE2C2C'>{0}</font>".format(str);
+                                    } else {
+                                        str = '无额外效果'
+                                    }
+                                    return '当前速度为{0}，{1}'.format(speed, str);
+                                },
+                            },
+                            content: function() {
+                                player.markSkill('_d2_speed');
+                            },
+                            subSkill: {
+                                // useCard: {
+                                //     trigger: {
+                                //         player: 'useCardToBefore'
+                                //     },
+                                //     silent: true,
+                                //     filter: function(event, player) {
+                                //         return player.getSpeed() != event.target.getSpeed();
+                                //     },
+                                //     content: function() {
+                                //         game.log(trigger.player.getSpeed());
+                                //         game.log(trigger.target.getSpeed());
+                                //     }
+                                // },
+                                tier0: {
+                                    mod: {
+                                        cardEnabled: function(card, player) {
+                                            if (get.type(card, 'basic') == 'basic' && player.getSpeed() <= -1) return false;
+                                        },
+                                        cardUsable: function(card, player) {
+                                            if (get.type(card, 'basic') == 'basic' && player.getSpeed() <= -1) return false;
+                                        },
+                                        cardRespondable: function(card, player) {
+                                            if (get.type(card, 'basic') == 'basic' && player.getSpeed() <= -1) return false;
+                                        },
+                                        cardSavable: function(card, player) {
+                                            if (get.type(card, 'basic') == 'basic' && player.getSpeed() <= -1) return false;
+                                        },
+                                    },
+                                },
+                                tier1: {
+                                    mod: {
+                                        globalTo: function(from, to, distance) {
+                                            if (to.getSpeed() <= 0) return distance - 1;
+                                        },
+                                        globalFrom: function(from, to, distance) {
+                                            if (from.getSpeed() <= 0) return distance + 1;
+                                        },
+                                    },
+                                },
+                                tier2: {
+                                    mod: {
+                                        maxHandcard: function(player, num) {
+                                            if (player.getSpeed() >= 2) return num + 1;
+                                        },
+                                    },
+                                },
+                                tier3: {
+                                    scry: function(player) {
+                                        if (player.getSpeed() >= 3) return 2;
+                                        return 0;
+                                    },
+                                },
+                                tier4: {
+                                    mod: {
+                                        targetInRange: function(card, player, target, now) {
+                                            if (player.getSpeed() >= 4) return true;
+                                        }
+                                    },
+                                },
+                                tier5: {
+                                    trigger: {
+                                        player: 'phaseBegin'
+                                    },
+                                    silent: true,
+                                    filter: function(event, player) {
+                                        return player.getSpeed() >= 5;
+                                    },
+                                    content: function() {
+                                        var cards = player.getCards('j');
+                                        if (cards.length) player.randomDiscard(cards.randomGet());
+                                        else player.draw();
+                                    },
+                                },
+                                tier6: {
+                                    trigger: {
+                                        player: 'useCardAfter'
+                                    },
+                                    silent: true,
+                                    usable: 3,
+                                    filter: function(event, player) {
+                                        var speed = player.getSpeed();
+                                        return speed >= 6 && Math.random() < 0.2 * (speed - lib.skill._d2_speed.limits[1]);
+                                    },
+                                    content: function() {
+                                        player.draw();
+                                    },
+                                },
+                                tier7: {
+                                    trigger: {
+                                        player: 'phaseEnd'
+                                    },
+                                    silent: true,
+                                    filter: function(event, player) {
+                                        var speed = player.getSpeed();
+                                        return event.skill != '_d2_speed_tier7' && speed >= 7 && Math.random() < 0.15 * (speed - lib.skill._d2_speed.limits[1]);
+                                    },
+                                    content: function() {
+                                        player.insertPhase();
+                                    },
+                                },
+                            },
+                        },
+                        _d2_scry: {
+                            trigger: {
+                                player: ['phaseBegin', 'phaseEnd'],
+                            },
+                            forced: true,
+                            filter: function(event, player) {
+                                return player.getScry() > 0;
+                            },
+                            content: function() {
+                                "step 0"
+                                event.top = get.cards(player.getScry());
+                                player.chooseCardButton(event.top, '选择要交换的牌', [1, player.countCards('h')]).ai = function(button) {
+                                    var val = get.value(button.link);
+                                    if (val < 0) return -10;
+                                    if (player.skipList.contains('phaseUse') && trigger.name == 'phaseBegin') {
+                                        return -val;
+                                    }
+                                    return val;
+                                }
+                                "step 1"
+                                if (result.bool) {
+                                    event.toExchange = result.links;
+                                    var num = event.toExchange.length;
+                                    player.chooseCard('选择' + num + '张手牌交换', num, true).ai = function(card) {
+                                        var val = get.value(card);
+                                        if (val < 0) return 10;
+                                        if (player.skipList.contains('phaseUse')) {
+                                            return val;
+                                        }
+                                        return -val;
+                                    };
+                                    if (player == game.me && !event.isMine()) {
+                                        game.delay(0.5);
+                                    }
+                                } else {
+                                    event.goto(3);
+                                }
+                                "step 2"
+                                for (var i = 0; i < event.top.length; i++) {
+                                    event.top[event.top.indexOf(event.toExchange[i])] = game.createCard(result.cards[i]);
+                                }
+                                player.lose(result.cards, ui.special)._triggered = null;
+                                player.gain(event.toExchange)._triggered = null;
+                                'step 3'
+                                while (event.top.length > 0) {
+                                    ui.cardPile.insertBefore(event.top.pop(), ui.cardPile.firstChild);
+                                }
+                                if (player == game.me && _status.auto) {
+                                    game.delay(0.5);
+                                }
                             },
                         },
 
@@ -1006,7 +1249,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     if (storage == 0) {
                                         return "尚未有灵魂。";
                                     } else {
-                                        return "已搜集" + storage + "个灵魂。";
+                                        return "已搜集{0}个灵魂。".format(storage);
                                     }
                                 },
                             },
@@ -1154,7 +1397,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             subSkill: {
                                 effect: {
                                     intro: {
-                                        content: "不能使用或打出基本牌",
+                                        content: "冰封禁制中",
                                     },
                                     mark: true,
                                     marktext: "冰",
@@ -1394,13 +1637,13 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             selectCard: [1, 3],
                             filterCard: true,
                             filterTarget: function(card, player, target) {
-                                return player != target && !(target.hasSkill('d2_ruohua1') && target.hasSkill('d2_ruohua2') && target.hasSkill('d2_ruohua3'));
+                                return player != target && !(target.hasSkill('d2_ruohua_effect1') && target.hasSkill('d2_ruohua_effect2') && target.hasSkill('d2_ruohua_effect3'));
                             },
                             selectTarget: function() {
                                 return ui.selected.cards.length;
                             },
                             content: function() {
-                                var list = ['d2_ruohua1', 'd2_ruohua2', 'd2_ruohua3'];
+                                var list = ['d2_ruohua_effect1', 'd2_ruohua_effect2', 'd2_ruohua_effect3'];
                                 for (var i in list) {
                                     if (target.hasSkill(list[i])) {
                                         list.splice(i--, 1);
@@ -1417,63 +1660,62 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     target: -1,
                                 },
                             },
-                        },
-                        d2_ruohua1: {
-                            trigger: {
-                                player: "phaseAfter",
-                            },
-                            silent: true,
-                            mark: true,
-                            marktext: "弱",
-                            intro: {
-                                content: "下个回合手牌上限-1",
-                            },
-                            init: function(player) {
-                                player.storage.d2_ruohua1 = 1;
-                            },
-                            content: function() {
-                                player.removeSkill('d2_ruohua1');
-                            },
-                            mod: {
-                                maxHandcard: function(player, num) {
-                                    return num--;
+                            subSkill: {
+                                effect1: {
+                                    trigger: {
+                                        player: "phaseAfter",
+                                    },
+                                    silent: true,
+                                    mark: true,
+                                    intro: {
+                                        content: "下个回合手牌上限-1",
+                                    },
+                                    init: function(player) {
+                                        player.storage.d2_ruohua_effect1 = 1;
+                                    },
+                                    content: function() {
+                                        player.removeSkill('d2_ruohua_effect1');
+                                    },
+                                    mod: {
+                                        maxHandcard: function(player, num) {
+                                            return num - 1;
+                                        },
+                                    },
                                 },
-                            },
-                        },
-                        d2_ruohua2: {
-                            trigger: {
-                                player: "phaseDrawBefore",
-                            },
-                            mark: true,
-                            marktext: "弱",
-                            intro: {
-                                content: "下个摸牌阶段少摸一张牌",
-                            },
-                            init: function(player) {
-                                player.storage.d2_ruohua2 = 2;
-                            },
-                            silent: true,
-                            content: function() {
-                                trigger.num--;
-                                player.removeSkill('d2_ruohua2');
-                            },
-                        },
-                        d2_ruohua3: {
-                            trigger: {
-                                source: "damageBegin",
-                            },
-                            mark: true,
-                            marktext: "弱",
-                            intro: {
-                                content: "下一次造成的伤害-1",
-                            },
-                            init: function(player) {
-                                player.storage.d2_ruohua3 = 3;
-                            },
-                            silent: true,
-                            content: function() {
-                                trigger.num--;
-                                player.removeSkill('d2_ruohua3');
+                                effect2: {
+                                    trigger: {
+                                        player: "phaseDrawBefore",
+                                    },
+                                    mark: true,
+                                    intro: {
+                                        content: "下个摸牌阶段少摸一张牌",
+                                    },
+                                    init: function(player) {
+                                        player.storage.d2_ruohua_effect2 = 2;
+                                    },
+                                    forced: true,
+                                    content: function() {
+                                        trigger.num--;
+                                        player.removeSkill('d2_ruohua_effect2');
+                                    },
+                                },
+                                effect3: {
+                                    trigger: {
+                                        source: "damageBegin",
+                                    },
+                                    mark: true,
+                                    intro: {
+                                        content: "下一次造成的伤害-1",
+                                    },
+                                    init: function(player) {
+                                        player.storage.d2_ruohua_effect3 = 3;
+                                    },
+                                    forced: true,
+                                    content: function() {
+                                        trigger.num--;
+                                        player.removeSkill('d2_ruohua_effect3');
+                                    },
+                                },
                             },
                         },
                         d2_tayin: {
@@ -1523,7 +1765,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             },
                             content: function() {
                                 "step 0"
-                                // target.gain(cards,player);
                                 event.skillai = function(list) {
                                     return get.max(list, get.skillRank, 'item');
                                 };
@@ -1821,7 +2062,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         return (Math.min(player.hp, target.maxHp) - target.hp) * 2;
                                     },
                                     player: function(player, target) {
-                                        // if(player.hp==player.maxHp) return 0;
                                         return (Math.min(target.hp, player.maxHp) - player.hp) * 2 - Math.abs(target.hp - player.hp);
                                     },
                                 },
@@ -1853,7 +2093,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     player.updateMarks();
                                     var info = get.info(card);
                                     if (info.skills) {
-                                        //player.addTempSkill(info.skills);
                                         for (var i = 0; i < info.skills.length; i++) {
                                             player.addTempSkill(info.skills[i]);
                                         }
@@ -2225,21 +2464,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 player.storage.d2_qihuan = [];
                                 player.storage.d2_qihuan_skills = [];
                                 player.storage.d2_qihuan_ai = [0, 0, 0];
-                                // lib.d2_qihuan_skills=ui.create.system('祈唤技能',null,true);
-                                // lib.setPopped(lib.d2_qihuan_skills,function(){
-                                //     var uiintro=ui.create.dialog('hidden');
-                                //     uiintro.listen(function(e){
-                                //         e.stopPropagation();
-                                //     });
-                                //     var skills=['d2_jisulengque','d2_youlingmanbu','d2_qiangxijufeng','d2_diancimaichong','d2_hundunyunshi','d2_yangyanchongji','d2_ronglujingling','d2_hanbingzhiqiang','d2_chaozhenshengbo'];
-                                //     while(skills.length){
-                                //         var current=skills.shift();
-                                //         var elements=get.d2_qihuan_elements(current);
-                                //         var str=get.translation(elements[0])+get.translation(elements[1])+get.translation(elements[2]);
-                                //         uiintro.addText(get.translation(current)+'('+str+')：'+get.translation(current+'_info'));
-                                //     }
-                                //     return uiintro;
-                                // },220);
                             },
                             onremove: function(player) {
                                 var list = player.storage.d2_qihuan_skills;
@@ -2405,10 +2629,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                             }
                                             player.storage.d2_qihuan_ai = [2, 0, 1];
                                         } while (false)
-                                        // game.log(player.storage.d2_qihuan_ai);
                                         var skill = lib.skill.d2_qihuan.getSkill(player.storage.d2_qihuan);
-                                        // game.log(skill);
-                                        // game.log(player.storage.d2_qihuan_skills.contains(skill));
                                         if (player.storage.d2_qihuan_skills.contains(skill) || player.storage.d2_qihuan.length < 3) return 0;
                                         return 1;
                                     },
@@ -2595,12 +2816,29 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 player.addTempSkill('qianxing', {
                                     player: 'phaseBefore'
                                 });
+                                player.addAdditionalSkill('qianxing', 'd2_youlingmanbu_effect');
                             },
                             ai: {
                                 order: 1,
                                 result: {
                                     player: 1,
                                 },
+                            },
+                            subSkill: {
+                                effect: {
+                                    mark: true,
+                                    intro: {
+                                        content: function(storage, player) {
+                                            return '获得【潜行】，期间速度+{0}'.format(Math.min(2, player.maxHp - player.hp));
+                                        },
+                                    },
+                                    init: function(player) {
+                                        player.addAdditionalSkill('d2_youlingmanbu_effect', 'qianxing');
+                                    },
+                                    speed: [1, function(player) {
+                                        return Math.min(2, player.maxHp - player.hp)
+                                    }],
+                                }
                             },
                             group: ["d2_youlingmanbu_roundcount"],
                         },
@@ -2871,22 +3109,17 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             group: ["d2_hanbingzhiqiang_roundcount"],
                             subSkill: {
                                 effect: {
-                                    trigger: {
-                                        player: "phaseDrawBefore",
-                                    },
                                     silent: true,
                                     mark: true,
                                     intro: {
-                                        content: "进攻距离-2，摸牌阶段少摸一张牌",
-                                    },
-                                    content: function() {
-                                        trigger.num--;
+                                        content: "进攻距离-2，速度-1",
                                     },
                                     mod: {
                                         globalFrom: function(from, to, distance) {
                                             return distance + 2;
                                         },
                                     },
+                                    speed: [1, -1],
                                 },
                             },
                         },
@@ -3445,29 +3678,33 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             selectCard: 2,
                             filterCard: true,
                             check: function(card) {
-                                var player = _status.event.player;
-                                var check1 = game.hasPlayer(function(current) {
-                                    return current.hp <= 1 && get.attitude(player.current) > 0 && get.recoverEffect(current, player, current);
-                                });
-                                var check2 = game.hasPlayer(function(current) {
-                                    return current.hp <= 1 && get.attitude(player.current) < 0 && get.damageEffect(current, player, current);
-                                });
-                                var check3 = game.hasPlayer(function(current) {
-                                    return current.isDamaged() && get.attitude(player.current) > 0;
-                                });
-                                if (ui.selected.cards.length) {
-                                    var selectedCard = ui.selected.cards[0];
-                                    if (player.isEnhanced()) {
-                                        if (get.color(selectedCard) == get.color(card)) return 10;
-                                        return 5 - get.value(card);
+                                try {
+                                    var player = _status.event.player;
+                                    var check1 = game.hasPlayer(function(current) {
+                                        return current.hp <= 1 && get.attitude(player.current) > 0 && get.recoverEffect(current, player, current);
+                                    });
+                                    var check2 = game.hasPlayer(function(current) {
+                                        return current.hp <= 1 && get.attitude(player.current) < 0 && get.damageEffect(current, player, current);
+                                    });
+                                    var check3 = game.hasPlayer(function(current) {
+                                        return current.isDamaged() && get.attitude(player.current) > 0;
+                                    });
+                                    if (ui.selected.cards.length) {
+                                        var selectedCard = ui.selected.cards[0];
+                                        if (player.isEnhanced()) {
+                                            if (get.color(selectedCard) == get.color(card)) return 10;
+                                            return 5 - get.value(card);
+                                        } else {
+                                            if (get.suit(selectedCard) == get.suit(card)) return 10;
+                                            return 5 - get.value(card);
+                                        }
                                     } else {
-                                        if (get.suit(selectedCard) == get.suit(card)) return 10;
-                                        return 5 - get.value(card);
+                                        if (check1 && get.color(card) == 'red') return 10;
+                                        if ((check2 || check3) && get.color(card) == 'black') return 10;
+                                        return 10 - get.value(card);
                                     }
-                                } else {
-                                    if (check1 && get.color(card) == 'red') return 10;
-                                    if ((check2 || check3) && get.color(card) == 'black') return 10;
-                                    return 10 - get.value(card);
+                                } catch (e) {
+                                    alert(e)
                                 }
                             },
                             content: function() {
@@ -3510,31 +3747,35 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 expose: 0.1,
                                 result: {
                                     target: function(player, target) {
-                                        var cards = ui.selected.cards;
-                                        var suit1 = get.suit(cards[0]);
-                                        var suit2 = get.suit(cards[1]);
-                                        var color1 = get.color(cards[0]);
-                                        var color2 = get.color(cards[1]);
-                                        if (player.isEnhanced()) {
-                                            if (color1 == color2) {
-                                                if (color1 == 'black') {
-                                                    return get.damageEffect(target, player, target, 'fire');
-                                                } else {
-                                                    return get.recoverEffect(target, player, target);
+                                        try {
+                                            var cards = ui.selected.cards;
+                                            var suit1 = get.suit(cards[0]);
+                                            var suit2 = get.suit(cards[1]);
+                                            var color1 = get.color(cards[0]);
+                                            var color2 = get.color(cards[1]);
+                                            if (player.isEnhanced()) {
+                                                if (color1 == color2) {
+                                                    if (color1 == 'black') {
+                                                        return get.damageEffect(target, player, target, 'fire');
+                                                    } else {
+                                                        return get.recoverEffect(target, player, target);
+                                                    }
+                                                }
+                                            } else {
+                                                if (suit1 == suit2) {
+                                                    if (suit1 == 'spade' || suit1 == 'club') {
+                                                        return get.damageEffect(target, player, target, 'fire');
+                                                    } else {
+                                                        return get.recoverEffect(target, player, target);
+                                                    }
                                                 }
                                             }
-                                        } else {
-                                            if (suit1 == suit2) {
-                                                if (suit1 == 'spade' || suit1 == 'club') {
-                                                    return get.damageEffect(target, player, target, 'fire');
-                                                } else {
-                                                    return get.recoverEffect(target, player, target);
-                                                }
-                                            }
+                                            if (target.hp <= 1) return get.damageEffect(target, player, target, 'fire');
+                                            if (target.hasSkillTag('maixie_hp')) return 3;
+                                            return 2;
+                                        } catch (e) {
+                                            alert(e)
                                         }
-                                        if (target.hp <= 1) return get.damageEffect(target, player, target, 'fire');
-                                        if (target.hasSkillTag('maixie_hp')) return 3;
-                                        return 2;
                                     },
                                 },
                             },
@@ -3600,7 +3841,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 content: function(storage, player) {
                                     var damage = player.storage.d2_xunuo2_damage;
                                     var recover = player.storage.d2_xunuo2_recover;
-                                    return '在' + get.translation(storage) + '的准备阶段时受到' + player.storage.d2_xunuo2_damage + '点伤害，回复' + player.storage.d2_xunuo2_recover + '*2点体力，总和：' + (recover * 2 - damage);
+                                    return '在{0}的准备阶段时受到{1}点伤害，回复{2}*2点体力，总和：{3}'.format(get.translation(storage), player.storage.d2_xunuo2_damage, player.storage.d2_xunuo2_recover, recover * 2 - damage);
                                 },
                             },
                             init: function(player) {
@@ -4975,7 +5216,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             marktext: "肉",
                             intro: {
                                 content: function(storage, player) {
-                                    return '共有' + storage + '枚肉标记，提供' + Math.floor(storage / 3) + '点体力上限'
+                                    return '共有{0}枚肉标记，提供{1}点体力上限'.format(storage, Math.floor(storage / 3));
                                 },
                             },
                             content: function() {
@@ -5185,11 +5426,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     marktext: "印",
                                     intro: {
                                         content: function(storage, player) {
-                                            // if(player.storage.d2_miyin_effect){
-                                            //     return "不能使用锦囊牌且下次成为锦囊牌的目标时弃两张牌";
-                                            // } else {
-                                            //     return "不能使用锦囊牌";
-                                            // }    
                                             return '成为锦囊牌的目标或使用锦囊牌时弃置一张牌';
                                         },
                                     },
@@ -5197,18 +5433,14 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         return player.storage.d2_miyin_effect && event.card && (get.type(event.card) == 'trick' || get.type(event.card) == 'delay');
                                     },
                                     content: function() {
-                                        // player.chooseToDiscard('上古封印','he',2,true);
-                                        // player.storage.d2_miyin_effect=false;
-                                        // player.markSkill('d2_miyin_effect');
                                         player.chooseToDiscard('上古封印：弃置一张牌', 'he', 1, true);
                                     },
                                 },
                                 clear: {
                                     trigger: {
-                                        player: ["phaseBefore", "dieBegin"],
+                                        player: ["phaseBegin", "dieBegin"],
                                     },
-                                    forced: true,
-                                    popup: false,
+                                    silent: true,
                                     content: function() {
                                         var players = game.filterPlayer(function(current) {
                                             return current.hasSkill('d2_miyin_effect');
@@ -6563,7 +6795,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 content: function(storage, player) {
                                     var num = player.countCards('h') + player.storage.d2_tianqiu;
                                     var d = player.storage.d2_shizhi_damage ? '已' : '未';
-                                    var str = '手牌数+天球标记数：' + num + '；' + d + '发动过【天球】伤害+1效果';
+                                    var str = '手牌数+天球标记数：{0}；{1}发动过【天球】伤害+1效果'.format(num, d);
                                     return str;
                                 },
                             },
@@ -6644,7 +6876,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 cardUsable: function(card, player, num) {
                                     var num2 = player.storage.d2_yingya;
                                     if (num2 == undefined) num2 = 0;
-                                    // if(num2>=3) num2=2;
                                     if (card.name == 'sha') return num + num2;
                                 },
                                 attackFrom: function(from, to, distance) {
@@ -6961,7 +7192,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 content: function(storage, player) {
                                     var nature = player.storage.d2_jianglin2.nature ? get.translation(player.storage.d2_jianglin2.nature) : '无';
                                     var source = player.storage.d2_jianglin2.source ? get.translation(player.storage.d2_jianglin2.source.name) + '造成' : '无来源';
-                                    return '回合结束时受到' + source + '的' + player.storage.d2_jianglin2.num + '点' + nature + '属性伤害';
+                                    return '回合结束时受到{0}的{1}点{2}属性伤害'.format(source, player.storage.d2_jianglin2.num, nature);
                                 }
                             },
                             content: function() {
@@ -7248,7 +7479,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         str += get.translation(player.storage.d2_moyong2[i]);
                                         if (i + 1 < player.storage.d2_moyong2.length) str += '，';
                                     }
-                                    return '下个出牌阶段不能使用或打出花色为' + str + '的牌';
+                                    return '下个出牌阶段不能使用或打出花色为{0}的牌'.format(str);
                                 }
                             },
                             onremove: true,
@@ -7564,7 +7795,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             intro: {
                                 content: function(storage, player) {
                                     var str = player.hasSkill('d2_ganran_immune') ? '，防止一切伤害。' : '。';
-                                    return '共有' + player.storage.d2_ganran + '个感染体' + str;
+                                    return '共有{0}个感染体{1}'.format(player.storage.d2_ganran, str);
                                 }
                             },
                             filter: function(event, player) {
@@ -7624,7 +7855,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         player: 'dieBegin'
                                     },
                                     silent: true,
-                                    contont: function() {
+                                    content: function() {
                                         delete player.storage.d2_ganran;
                                         var players = game.filterPlayer(function(current) {
                                             return current.hasSkill('d2_ganran_infected');
@@ -8205,7 +8436,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     mark: true,
                                     intro: {
                                         content: function(storage, player) {
-                                            return '不能使用或打出花色为' + get.translation(player.storage.d2_shufu_disable) + '的牌直到回合结束';
+                                            return '不能使用或打出花色为{0}的牌直到回合结束'.format(get.translation(player.storage.d2_shufu_disable));
                                         },
                                     },
                                     onremove: true,
@@ -8244,41 +8475,25 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             subSkill: {
                                 shan: {
                                     audio: "ext:Dota2:2",
-                                    enable: ['chooseToRespond'],
+                                    trigger: {
+                                        target: 'shaBefore'
+                                    },
                                     mark: true,
                                     intro: {
-                                        content: '攻击距离+1；你可以将一张手牌当【闪】打出'
+                                        content: '速度+1；当你成为【杀】的目标时取消之'
                                     },
-                                    filterCard: function(card) {
-                                        return true;
-                                    },
-                                    viewAs: {
-                                        name: 'shan'
-                                    },
-                                    viewAsFilter: function(player) {
-                                        if (!player.countCards('h')) return false;
-                                    },
-                                    prompt: '将一张手牌当【闪】打出',
-                                    check: function() {
-                                        return 1
+                                    content: function() {
+                                        trigger.cancel();
                                     },
                                     ai: {
-                                        threaten: 0.8,
-                                        respondShan: true,
-                                        skillTagFilter: function(player) {
-                                            if (!player.countCards('h')) return false;
-                                        },
+                                        threaten: 0.7,
                                         effect: {
                                             target: function(card, player, target, current) {
-                                                if (get.tag(card, 'respondShan') && current < 0) return 0.6;
+                                                if (card.name == 'sha') return 0;
                                             }
                                         }
                                     },
-                                    mod: {
-                                        attackFrom: function(from, to, distance) {
-                                            return distance - 1;
-                                        },
-                                    },
+                                    speed: [1, 1],
                                 },
                             },
                             ai: {
@@ -8436,8 +8651,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         result: {
                                             player: 1,
                                         },
-                                        // useful:-1,
-                                        // value:-1
                                     },
                                 },
                                 respond: {
@@ -9237,13 +9450,12 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             },
                             content: function() {
                                 'step 0'
-                                var list = ['回复', '伤害'];
                                 if (target.isHealthy()) {
-                                    result.control = list[1];
+                                    result.control = '伤害';
                                 } else {
-                                    player.chooseControl(list).set('prompt', '暗愈：令' + get.translation(target) + '回复一点体力，或对其距离1以内的一名其他角色造成一点伤害').set('ai', function() {
-                                        if (get.attitude(player, target) > 0) return list[0];
-                                        return list[1];
+                                    player.chooseControl('回复', '伤害').set('prompt', '暗愈：令' + get.translation(target) + '回复一点体力，或对其距离1以内的一名其他角色造成一点伤害').set('ai', function(target) {
+                                        if (get.attitude(player, target) > 0) return '回复';
+                                        return '伤害';
                                     });
                                 }
                                 'step 1'
@@ -9255,7 +9467,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     player.chooseTarget('对一名角色造成一点伤害', true, function(card, player, target) {
                                         return target != target2 && get.distance(target2, target) <= 1;
                                     }).ai = function(target) {
-                                        return get.damageEffect(target, player, target);
+                                        return get.damageEffect(target, player, player);
                                     }
                                 }
                                 'step 2'
@@ -9437,63 +9649,8 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 game.log(player, '填充了斐波那契数列中的', num);
                                 player.popup(num, 'unknownx');
                             },
-                            group: ['d2_zhihui_scry', 'd2_zhihui_compare', 'd2_zhihui_use'],
+                            group: ['d2_zhihui_compare', 'd2_zhihui_use'],
                             subSkill: {
-                                scry: {
-                                    trigger: {
-                                        player: ['phaseBegin', 'phaseEnd']
-                                    },
-                                    forced: true,
-                                    filter: function(event, player) {
-                                        return player.storage.d2_zhihui.length > 0;
-                                    },
-                                    content: function() {
-                                        "step 0"
-                                        event.top = get.cards(player.storage.d2_zhihui.length);
-                                        player.chooseCardButton(event.top, '选择要交换的牌', [1, player.countCards('h')]).ai = function(button) {
-                                            var val = get.value(button.link);
-                                            if (val < 0) return -10;
-                                            if (player.skipList.contains('phaseUse') && trigger.name == 'phaseBegin') {
-                                                return -val;
-                                            }
-                                            return val;
-                                        }
-                                        "step 1"
-                                        if (result.bool) {
-                                            event.toExchange = result.links;
-                                            var num = event.toExchange.length;
-                                            player.chooseCard('选择' + num + '张手牌交换', num, true).ai = function(card) {
-                                                var val = get.value(card);
-                                                if (val < 0) return 10;
-                                                if (player.skipList.contains('phaseUse')) {
-                                                    return val;
-                                                }
-                                                return -val;
-                                            };
-                                            if (player == game.me && !event.isMine()) {
-                                                game.delay(0.5);
-                                            }
-                                        } else {
-                                            event.goto(3);
-                                        }
-                                        "step 2"
-                                        var j = 0;
-                                        for (var i = 0; i < event.top.length; i++) {
-                                            if (event.top[i] == event.toExchange[j]) {
-                                                event.top[i] = game.createCard(result.cards[j++]);
-                                            }
-                                        }
-                                        player.lose(result.cards, ui.special)._triggered = null;
-                                        player.gain(event.toExchange)._triggered = null;
-                                        'step 3'
-                                        while (event.top.length > 0) {
-                                            ui.cardPile.insertBefore(event.top.pop(), ui.cardPile.firstChild);
-                                        }
-                                        if (player == game.me && _status.auto) {
-                                            game.delay(0.5);
-                                        }
-                                    }
-                                },
                                 compare: {
                                     trigger: {
                                         player: 'compare',
@@ -9518,7 +9675,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         return player.isEnhanced();
                                     },
                                     content: function() {
-                                        player.useSkill('d2_zhihui_scry');
+                                        player.useSkill('_d2_scry');
                                     },
                                     ai: {
                                         order: 1,
@@ -9527,6 +9684,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         },
                                     },
                                 },
+                            },
+                            scry: function(player) {
+                                return player.storage.d2_zhihui.length;
                             },
                         },
                         d2_jingmo: {
@@ -9568,11 +9728,11 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     intro: {
                                         content: function(storage, player) {
                                             var str = '';
-                                            if (storage) str += '只能使用' + get.translation(storage) + '牌';
+                                            if (storage) str += '只能使用{0}牌'.format(get.translation(storage));
                                             else str += (_status.currentPhase == player ? '本' : '下') + '回合只能使用一种类型的牌';
                                             var num = player.storage.d2_jingmo_effect2;
                                             if (num > 0) {
-                                                str += '，回合结束时弃置' + num + '张牌';
+                                                str += '，回合结束时弃置{0}张牌'.format(num);
                                             }
                                             return str;
                                         },
@@ -10005,9 +10165,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 return player.countCards('h') > 0;
                             },
                             filterCard: true,
-                            filterTarget: function(card, player, target) {
-                                return true;
-                            },
+                            filterTarget: true,
                             check: function(card) {
                                 var player = _status.event.player;
                                 var num = game.filterPlayer(function(current) {
@@ -10249,8 +10407,466 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 },
                             },
                         },
+                        d2_jiaoke: {
+                            trigger: {
+                                player: 'shaBegin'
+                            },
+                            forced: true,
+                            filter: function(event, player) {
+                                return event.target.hp < 2;
+                            },
+                            content: function() {
+                                trigger.untrigger();
+                                trigger.directHit = true;
+                            },
+                            mod: {
+                                wuxieRespondable: function(card, player, target) {
+                                    if (target.hp < 2) return false;
+                                }
+                            },
+                            speed: [1, function(player) {
+                                var speed = 0;
+                                var players = game.filterPlayer();
+                                for (var i = 0; i < players.length; i++) {
+                                    if (players[i] != player) speed += players[i].maxHp - players[i].hp;
+                                }
+                                return speed;
+                            }, true],
+                            ai: {
+                                effect: {
+                                    player: function(card, player, target) {
+                                        if (target.hp < 2 && card.name == 'sha') return [1, 2];
+                                    },
+                                },
+                            },
+                            global: 'd2_jiaoke_audio',
+                            group: 'd2_jiaoke_mark',
+                            subSkill: {
+                                audio: {
+                                    trigger: {
+                                        player: 'changeHp'
+                                    },
+                                    silent: true,
+                                    usable: 1,
+                                    filter: function(event, player) {
+                                        var check = game.hasPlayer(function(current) {
+                                            return current != player && current.hasSkill('d2_jiaoke');
+                                        });
+                                        return check && event.num < 0;
+                                    },
+                                    content: function() {
+                                        game.playAudio("Dota2", "skill", "d2_jiaoke" + [1, 2].randomGet());
+                                        var bs = game.filterPlayer(function(current) {
+                                            return current.hasSkill('d2_jiaoke');
+                                        });
+                                        for (var i = 0; i < bs.length; i++) {
+                                            bs[i].popup('d2_jiaoke');
+                                        }
+                                    }
+                                },
+                                mark: {
+                                    trigger: {
+                                        global: 'changeHp'
+                                    },
+                                    silent: true,
+                                    filter: function(event, player) {
+                                        return event.num != 0;
+                                    },
+                                    content: function() {
+                                        player.updateMarks();
+                                    }
+                                },
+                            },
+                        },
+                        d2_gelie: {
+                            audio: "ext:Dota2:2",
+                            enable: 'phaseUse',
+                            round: 3,
+                            selectTarget: function() {
+                                return _status.event.player.isEnhanced() ? [1, 2] : 1;
+                            },
+                            filterTarget: function(card, player, target) {
+                                return true || player != target;
+                            },
+                            content: function() {
+                                if (target.isHealthy()) target.damage();
+                                target.storage.d2_gelie_effect = player;
+                                target.addSkill('d2_gelie_effect');
+                            },
+                            ai: {
+                                result: {
+                                    target: function(player, target) {
+                                        if (target.isHealthy()) return -4;
+                                        return -2;
+                                    },
+                                }
+                            },
+                            group: 'd2_gelie_clear',
+                            subSkill: {
+                                effect: {
+                                    mark: 'character',
+                                    intro: {
+                                        content: '被$割裂',
+                                    },
+                                    init: function(player) {
+                                        player.storage.d2_gelie_effect_count = 0;
+                                    },
+                                    onremove: function(player) {
+                                        delete player.storage.d2_gelie_effect_count;
+                                        delete player.storage.d2_gelie_effect;
+                                    },
+                                    trigger: {
+                                        player: 'useCardAfter',
+                                    },
+                                    filter: function(event, player) {
+                                        return player.hp > 1 && player.storage.d2_gelie_effect_count < Math.max(1, player.getSpeed() + 1);
+                                    },
+                                    content: function() {
+                                        var bs = player.storage.d2_gelie_effect;
+                                        player.damage(bs);
+                                        bs.line(player);
+                                        player.storage.d2_gelie_effect_count++;
+                                    },
+                                    ai: {
+                                        effect: {
+                                            player: function(card, player, target) {
+                                                var hand = player.countCards('h'),
+                                                    hp = player.hp;
+                                                if (hp <= 1 || player.storage.d2_gelie_effect_count >= Math.max(1, player.getSpeed())) return [1, 0];
+                                                if (hand > hp + 1) return [1, -3];
+                                                if (player.hp > 3) return [1, 0];
+                                                if (player.hp > 2) return [1, -1];
+                                                return 0;
+                                            },
+                                        },
+                                    },
+                                },
+                                clear: {
+                                    trigger: {
+                                        player: ["phaseBegin", "dieBegin"],
+                                    },
+                                    silent: true,
+                                    content: function() {
+                                        var players = game.filterPlayer();
+                                        for (var i = 0; i < players.length; i++) {
+                                            if (players[i].storage.d2_gelie_effect == player) players[i].removeSkill('d2_gelie_effect');
+                                        }
+                                    },
+                                },
+                            },
+                        },
+                        d2_zhenkong: {
+                            audio: "ext:Dota2:2",
+                            enable: 'phaseUse',
+                            usable: 1,
+                            position: 'he',
+                            selectCard: [1, 3],
+                            filter: function(event, player) {
+                                return player.countCards('he') > 0;
+                            },
+                            filterCard: true,
+                            selectTarget: function() {
+                                return ui.selected.cards.length;
+                            },
+                            filterTarget: function(card, player, target) {
+                                return player != target;
+                            },
+                            check: function(card) {
+                                return 0 - get.value(card);
+                            },
+                            content: function() {
+                                target.addSkill('d2_zhenkong_effect');
+                            },
+                            subSkill: {
+                                effect: {
+                                    trigger: {
+                                        player: 'phaseUseBegin'
+                                    },
+                                    filter: function(event, player) {
+                                        return player.countCards('h') > 0;
+                                    },
+                                    forced: true,
+                                    mark: true,
+                                    intro: {
+                                        content: '下个出牌阶段开始时随机使用3张手牌'
+                                    },
+                                    content: function() {
+                                        'step 0'
+                                        event.count = 0;
+                                        event.exclude = [];
+                                        'step 1'
+                                        var cards = player.getCards('h').removeArray(event.exclude);
+                                        if (event.count < 3 && cards.length > 0) {
+                                            var card = cards.randomGet();
+                                            var targets = game.filterPlayer(function(current) {
+                                                return player.canUse(card, current, false);
+                                            });
+                                            if (targets.length) {
+                                                var num = lib.card[card.name].selectTarget;
+                                                player.useCard(card, num == -1 ? targets : targets.randomGets(num));
+                                                event.count++;
+                                            } else {
+                                                event.exclude.add(card);
+                                            }
+                                        } else {
+                                            player.removeSkill('d2_zhenkong_effect');
+                                            event.finish();
+                                        }
+                                        'step 2'
+                                        event.goto(1);
+                                    },
+                                },
+                            },
+                            ai: {
+                                order: 1,
+                                result: {
+                                    target: function(player, target) {
+                                        var card = target.countCards('h');
+                                        return Math.min(-1, -card);
+                                    }
+                                },
+                            },
+                        },
+                        d2_benteng: {
+                            audio: "ext:Dota2:2",
+                            enable: 'phaseUse',
+                            usable: 1,
+                            position: 'he',
+                            selectCard: [0, 1],
+                            filterCard: function(card, player, target) {
+                                return get.suit(card) == 'spade';
+                            },
+                            filterTarget: true,
+                            check: function(card) {
+                                return 9 - get.value(card);
+                            },
+                            content: function() {
+                                if (event.cards.length) target.addSkill('d2_benteng_faster');
+                                else target.addSkill('d2_benteng_fast');
+                            },
+                            group: 'd2_benteng_clear',
+                            subSkill: {
+                                fast: {
+                                    mark: true,
+                                    intro: {
+                                        content: '速度+2且无视上限和减速'
+                                    },
+                                    speed: [1, 2, true, true],
+                                },
+                                faster: {
+                                    mark: true,
+                                    intro: {
+                                        content: '速度+4且无视上限和减速'
+                                    },
+                                    speed: [1, 4, true, true],
+                                },
+                                clear: {
+                                    trigger: {
+                                        player: ["phaseUseBegin", "dieBegin"],
+                                    },
+                                    silent: true,
+                                    content: function() {
+                                        var players = game.filterPlayer();
+                                        for (var i = 0; i < players.length; i++) {
+                                            if (players[i].hasSkill('d2_benteng_fast')) players[i].removeSkill('d2_benteng_fast');
+                                            if (players[i].hasSkill('d2_benteng_faster')) players[i].removeSkill('d2_benteng_faster');
+                                        }
+                                    },
+                                },
+                            },
+                            ai: {
+                                order: 5,
+                                result: {
+                                    target: 2,
+                                }
+                            },
+                        },
+                        d2_fuzhi: {
+                            audio: "ext:Dota2:2",
+                            round: 3,
+                            enable: 'phaseUse',
+                            content: function() {
+                                player.addTempSkill('d2_fuzhi_effect', {
+                                    player: 'phaseBegin'
+                                });
+                            },
+                            subSkill: {
+                                effect: {
+                                    trigger: {
+                                        global: 'damageAfter'
+                                    },
+                                    forced: true,
+                                    mark: true,
+                                    global: 'd2_fuzhi_ai',
+                                    intro: {
+                                        content: function(storage, player) {
+                                            var str = player.isEnhanced() ? '两' : '一';
+                                            return '当一名敌方角色使用牌造成伤害时，视为你对{0}名随机敌方角色使用该牌（同名的牌不连续触发）'.format(str);
+                                        },
+                                    },
+                                    onremove: true,
+                                    filter: function(event, player) {
+                                        return event.card && event.card.name != player.storage.d2_fuzhi_effect && player.getEnemies().contains(event.source);
+                                    },
+                                    content: function() {
+                                        var num = player.isEnhanced() ? 2 : 1;
+                                        player.useCard(game.createCard(trigger.card), player.getEnemies().randomGets(num), false);
+                                        player.storage.d2_fuzhi_effect = trigger.card.name;
+                                    }
+                                },
+                                ai: {
+                                    ai: {
+                                        effect: {
+                                            player: function(card, player) {
+                                                var ds = game.filterPlayer(function(current) {
+                                                    return current.hasSkill('d2_fuzhi_effect');
+                                                });
+                                                var check = false;
+                                                for (var i = 0; i < ds.length; i++) {
+                                                    if (ds[i].getEnemies().contains(player)) {
+                                                        check = true;
+                                                        break;
+                                                    }
+                                                }
+                                                if (get.tag(card, 'damage') && check) {
+                                                    return [0, -2, 1, 0];
+                                                }
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        d2_chongci: {
+                            audio: "ext:Dota2:2",
+                            enable: 'phaseUse',
+                            filter: function(event, player) {
+                                return !player.hasSkill('d2_chongci_effect') && !player.hasSkill('d2_chongci_effect2');
+                            },
+                            filterTarget: function(card, player, target) {
+                                return player != target;
+                            },
+                            content: function() {
+                                player.storage.d2_chongci_effect = target;
+                                player.turnOver(true);
+                                player.addSkill('d2_chongci_effect');
+                            },
+                            subSkill: {
+                                effect: {
+                                    speed: [1, 2, true],
+                                    mark: 'character',
+                                    intro: {
+                                        content: '你的速度+2且无视上限，速度比你小的角色使用牌时不能以你为目标'
+                                    },
+                                    onremove: true,
+                                    forced: true,
+                                    trigger: {
+                                        player: 'turnOverEnd'
+                                    },
+                                    filter: function(event, player) {
+                                        return !player.isTurnedOver();
+                                    },
+                                    content: function() {
+                                        var num = Math.ceil(player.getSpeed() / 2),
+                                            target = player.storage.d2_chongci_effect;
+                                        if (target.isAlive()) {
+                                            game.playAudio('Dota2', 'skill', 'd2_chongci' + [3, 4].randomGet());
+                                            player.line(target);
+                                            target.randomDiscard(num);
+                                            player.storage.d2_chongci_effect2 = target;
+                                        }
+                                        player.draw(num);
+                                        player.insertPhase();
+                                        player.addSkill('d2_chongci_effect2');
+                                        player.removeSkill('d2_chongci_effect');
+                                    },
+                                    mod: {
+                                        targetEnabled: function(card, player, target) {
+                                            if (player.getSpeed() < target.getSpeed()) return false;
+                                        },
+                                    },
+                                },
+                                effect2: {
+                                    trigger: {
+                                        player: 'phaseBegin'
+                                    },
+                                    silent: true,
+                                    onremove: true,
+                                    mark: 'character',
+                                    intro: {
+                                        content: '进行一个额外的回合，跳过该回合的摸牌阶段且在该回合内你使用牌时只能以自己或$为目标'
+                                    },
+                                    content: function() {
+                                        player.skip('phaseDraw');
+                                        player.addSkill('d2_chongci_effect3');
+                                    },
+                                },
+                                effect3: {
+                                    trigger: {
+                                        player: 'phaseEnd'
+                                    },
+                                    silent: true,
+                                    content: function() {
+                                        player.removeSkill(['d2_chongci_effect2', 'd2_chongci_effect3']);
+                                    },
+                                    mod: {
+                                        targetInRange: function(card, player, target) {
+                                            if (player.storage.d2_chongci_effect2 == target) {
+                                                return true;
+                                            }
+                                        },
+                                        playerEnabled: function(card, player, target) {
+                                            var t = player.storage.d2_chongci_effect2;
+                                            if (t && ![player, t].contains(target)) {
+                                                return false;
+                                            }
+                                        },
+                                    },
+                                },
+                            },
+                            ai: {
+                                order: 1,
+                                result: {
+                                    target: -1,
+                                },
+                            },
+                        },
+                        d2_weihe: {
+                            speed: [1, function(player) {
+                                var speed = 0;
+                                if (player.isTurnedOver()) speed += 2;
+                                if (player.isLinked()) speed += 2;
+                                if (player.countCards('j')) speed += 2;
+                                return speed;
+                            }],
+                            ai: {
+                                effect: {
+                                    target: function(card, player, target, current) {
+                                        if (card.name == 'tiesuo') {
+                                            if (target.isLinked()) {
+                                                return [1, -1];
+                                            } else {
+                                                return [1, 1];
+                                            }
+                                        }
+                                    },
+                                },
+                            },
+                            group: 'd2_weihe_mark',
+                            subSkill: {
+                                mark: {
+                                    trigger: {
+                                        player: ['turnOverEnd', 'useCardToEnd'],
+                                    },
+                                    silent: true,
+                                    content: function() {
+                                        player.updateMarks();
+                                    },
+                                },
+                            },
+                        },
 
-                        //ss
+                        //skill
                         d2_visible: {
                             init: function(player) {
                                 player.storage.d2_visible = game.filterPlayer();
@@ -10288,22 +10904,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_chanrao: {
                             mark: true,
                             intro: {
-                                content: '不能使用或打出基本牌'
+                                content: '速度变为-1'
                             },
-                            mod: {
-                                cardEnabled: function(card, player) {
-                                    if (get.type(card, 'basic') == 'basic') return false;
-                                },
-                                cardUsable: function(card, player) {
-                                    if (get.type(card, 'basic') == 'basic') return false;
-                                },
-                                cardRespondable: function(card, player) {
-                                    if (get.type(card, 'basic') == 'basic') return false;
-                                },
-                                cardSavable: function(card, player) {
-                                    if (get.type(card, 'basic') == 'basic') return false;
-                                },
-                            },
+                            speed: [0, -1],
                         },
                         d2_gongsheng: {
                             trigger: {
@@ -10797,8 +11400,11 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_dazzle: "戴泽",
                         d2_silencer: "沉默术士",
                         d2_chaosKnight: "混沌骑士",
-                        d2_warlock:"术士",
-                        //tc
+                        d2_warlock: "术士",
+                        d2_bloodseeker: "血魔",
+                        d2_darkSeer: "黑暗贤者",
+                        d2_spiritBreaker: "裂魂人",
+                        //cname
 
                         _d2_firstBlood: "第一滴血",
                         _d2_doubleKill: "双杀",
@@ -10820,6 +11426,8 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_rune_invisibility_info: "锁定技，你获得【潜行】。",
                         d2_rune_bounty: "赏金神符",
                         d2_rune_bounty_info: "锁定技，准备阶段，你令任意名角色摸一张牌。",
+                        _d2_speed: "速度",
+                        _d2_scry: "占卜",
                         d2_junheng: "均衡",
                         d2_junheng_info: "锁定技，准备阶段，你选择一名角色，若该角色体力值比手牌少，则回复体力直至与手牌相等；若该角色手牌比体力值少，则摸牌直至与体力值相等。",
                         d2_shengdi: "圣地",
@@ -10846,9 +11454,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_chuancheng2: "传承",
                         d2_chuancheng_info: "锁定技，准备阶段，若牌堆或弃牌堆中有【阿哈利姆神杖】，你装备之；当其他角色装备阿哈利姆神杖时你摸一张牌。",
                         d2_ruohua: "弱化",
-                        d2_ruohua1: "弱化·1",
-                        d2_ruohua2: "弱化·2",
-                        d2_ruohua3: "弱化·3",
+                        d2_ruohua_effect1: "弱化·1",
+                        d2_ruohua_effect2: "弱化·2",
+                        d2_ruohua_effect3: "弱化·3",
                         d2_ruohua_info: "出牌阶段限一次，你可以弃置X张手牌，并指定X名其他角色，这些角色随机获得以下效果之一：1.下个回合手牌上限-1；2.下个摸牌阶段少摸一张牌；3.下一次造成的伤害-1。（X至多为3）",
                         d2_tayin: "拓印",
                         d2_tayin_info: "出牌阶段限一次（奥义：改为限两次，替换前一次获得的技能），你可以获得一名其他角色的一项技能直到回合结束。",
@@ -10879,7 +11487,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_jisulengque: "急速冷却",
                         d2_jisulengque_info: "每三轮限一次，出牌阶段，将一名角色的手牌置于其武将牌上直到其受到伤害。",
                         d2_youlingmanbu: "幽灵漫步",
-                        d2_youlingmanbu_info: "每两轮限一次，出牌阶段，获得潜行直到你的下个回合。",
+                        d2_youlingmanbu_info: "每两轮限一次，出牌阶段，获得【潜行】直到你的下个回合（生效期间速度+X，X为你已损失体力值且至多为2）。",
                         d2_qiangxijufeng: "强袭飓风",
                         d2_qiangxijufeng_info: "每三轮限一次,出牌阶段，令一名角色弃置装备区内所有牌；每以此法弃置两张牌你摸一张牌",
                         d2_diancimaichong: "电磁脉冲",
@@ -10893,7 +11501,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_ronglujingling: "熔炉精灵",
                         d2_ronglujingling_info: "每三轮限一次,出牌阶段，获得两张小火人。需要1冰2火。",
                         d2_hanbingzhiqiang: "寒冰之墙",
-                        d2_hanbingzhiqiang_info: "每三轮限一次,出牌阶段，弃置一名角色的一张牌，直到该角色的回合结束，其进攻距离-2且摸牌阶段少摸一张牌。",
+                        d2_hanbingzhiqiang_info: "每三轮限一次,出牌阶段，弃置一名角色的一张牌，直到该角色的回合结束，其进攻距离-2且速度-1。",
                         d2_chaozhenshengbo: "超震声波",
                         d2_chaozhenshengbo_info: "每四轮限一次,出牌阶段，令所有敌方角色不能使用【杀】直到其回合结束，然后将3种随机负面效果随机施加给敌方角色。",
                         d2_polong: "破龙",
@@ -11104,7 +11712,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_shufu: "束缚",
                         d2_shufu_info: "出牌阶段限一次，你可以弃置一张牌令两名角色依次进行判定，若判定结果颜色相同，你弃置第一名角色的一张牌；若花色相同，第一名角色于其下个出牌阶段不能使用或打出该花色的牌；若奇偶性相同，横置这两名角色。你可以弃置一张牌代替第二次判定。若结果满足至少两个条件，你获得一张“箭羽”。",
                         d2_fengxing: "风行",
-                        d2_fengxing_info: "出牌阶段限一次，你可以弃置一张装备牌获得以下效果直到下个回合：攻击距离+1；你可以将一张手牌当【闪】打出。",
+                        d2_fengxing_info: "出牌阶段限一次，你可以弃置一张装备牌获得以下效果直到下个回合：速度+1；当你成为【杀】的目标时取消之。",
                         d2_qianyu: "千羽",
                         d2_qianyu_info: "你拥有技能【箭羽】。每三轮限一次，出牌阶段，你可以弃置所有“箭羽”（奥义：每张“箭羽”有65%的概率不被弃置）并指定攻击范围内的一名其他角色，视为你依次对该角色使用这些【杀】。",
                         d2_jianyu: "箭羽",
@@ -11132,7 +11740,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_xieneng: "邪能",
                         d2_xieneng_info: "锁定技，出牌阶段开始时，将你的红色牌的颜色转换为黑色，每以此法转换一张牌便令一名随机敌方角色失去一点护甲。",
                         d2_zhihui: "智慧",
-                        d2_zhihui_info: "锁定技，①你使用或打出一张牌后若该牌点数符合斐波那契数列，则在数列上填充该数字；②准备阶段及结束阶段，你观看牌堆顶的X张牌，你可以用手牌交换这些牌，X为数列已填充数量（奥义：你可以在出牌阶段如此做，每阶段限两次）；③你拼点时所有数列已填充数字均视为13，若已为13则视为21。",
+                        d2_zhihui_info: "锁定技，①你使用或打出一张牌后若该牌点数符合斐波那契数列，则在数列上填充该数字；②占卜+X（奥义：你可以在出牌阶段占卜至多两次），X为数列已填充数量；③你拼点时所有数列已填充数字均视为13，若已为13则视为21。",
                         d2_jingmo: "静默",
                         d2_jingmo_info: "出牌阶段限一次，你可以与一名其他角色拼点，若你赢，该角色于其下个回合内，只能使用一种类型的牌且每使用一张牌便于弃牌结束后弃置一张牌。",
                         d2_guiji: "归寂",
@@ -11151,10 +11759,26 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_zuzhoushu_info: "依次选择两名角色，每当前者弃牌后后者弃置等量牌，然后前者弃置一张牌。",
                         d2_yiji: "仪祭",
                         d2_yiji_info: "觉醒技，你死亡前防止死亡，将体力回复至1，获得随从地狱火并切换至该随从（奥义：限定技，你可以在出牌阶段如此做）。",
-                        //ts
+                        d2_jiaoke: "焦渴",
+                        d2_jiaoke_info: "锁定技，①速度+X且无视上限（X为其他角色已损失体力值之和）；②体力值不大于1的角色不能闪避你的【杀】，你对其使用的普通锦囊牌不能被【无懈可击】响应。",
+                        d2_gelie: "割裂",
+                        d2_gelie_info: "每三轮限一次，出牌阶段，你可以令一名其他角色（若其未受伤则受到你造成的一点伤害）获得以下效果直到你的下个回合：使用一张牌后受到你对其造成的一点伤害（至多X+1次，X为其速度且至少为1；只在体力值大于1时生效）。",
+                        d2_zhenkong: "真空",
+                        d2_zhenkong_info: "出牌阶段限一次，你可以弃置X张牌并指定X名其他角色，这些角色于其下个出牌阶段开始时随机使用三张手牌（无合理目标的牌除外）。",
+                        d2_benteng: "奔腾",
+                        d2_benteng_info: "出牌阶段限一次，你可以令一名角色速度+2（你可以弃置一张♠牌改为+4）且无视上限和减速直到你的下个出牌阶段。",
+                        d2_fuzhi: "复制",
+                        d2_fuzhi_info: "每三轮限一次，你可以获得以下效果直到你的下个回合：一名敌方角色使用牌造成伤害后，视为你对一名（奥义：改为两名）随机敌方角色使用该牌（同名的牌不连续触发）。",
+                        d2_chongci: "冲刺",
+                        d2_chongci_info: "出牌阶段，你可以将武将牌翻至背面并指定一名其他角色，直到你的下个准备阶段，你的速度+2且无视上限，速度比你小的角色使用牌时不能以你为目标。你的武将牌翻至正面时，该角色随机弃置X张牌，你摸X张牌并进行一个额外的回合（X为你的速度的一半，向上取整），跳过该回合的摸牌阶段且在该回合内你使用牌时只能以自己或该角色为目标。",
+                        d2_weihe: "威吓",
+                        d2_weihe_info: "锁定技，当你的武将牌背面朝上/武将牌被横置/判定区内有牌时，你的速度分别+2。",
+                        //stranslation
 
                         d2_chaofeng: "嘲讽",
                         d2_chaofeng_info: "锁定技，其他角色若能对你使用【杀】或【决斗】，则只能对你使用之。",
+                        d2_scry: "占卜",
+                        d2_scry_info: "",
                         d2_chanrao: "缠绕",
                         d2_chanrao_info: "锁定技，你不能使用或打出基本牌。",
                         d2_gongsheng: "共生",
@@ -11244,10 +11868,10 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             ["forbidai", "creeps", "minskin"]
                         ],
                         d2_infernoGolemSmall: ["male", "shen", 2, ["d2_xianji"],
-                            []
+                            ["forbidai"]
                         ],
                         d2_infernoGolem: ["male", "shen", 3, ["d2_lieyu"],
-                            []
+                            ["forbidai"]
                         ],
                     },
                     characterIntro: {
@@ -11286,7 +11910,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             init: function(player) {
                                 try {
                                     player.storage.d2_baiban = 0;
-                                    var skills = ['d2_jingmo', 'd2_zhihui', 'd2_guiji'];
+                                    var skills = ['d2_diyan'];
                                     for (var i in skills) {
                                         if (lib.translate[skills[i]] === undefined) lib.translate[skills[i]] = skills[i];
                                         if (lib.translate[skills[i] + '_info'] === undefined) lib.translate[skills[i] + '_info'] = skills[i];
@@ -11296,45 +11920,47 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     //     cards.push(game.createCard('d2_refresherOrb', 'diamond'));
                                     // }
                                     for (var i = 0; i < 2; i++) {
-                                        cards.push(game.createCard({
-                                            name: 'sha',
-                                            nature: 'fire'
-                                        }));
-                                        cards.push(game.createCard('shan'));
+                                        // cards.push(game.createCard({
+                                        //     name: 'd2_bootsOfSpeed',
+                                        // }));
+                                        cards.push(game.createCard('jiedao'));
+                                        // cards.push(game.createCard('sha'));
                                     }
                                     if (game.zhu == player) {
                                         player.addSkill(skills);
                                         player.gain(cards);
                                         _status.d2_divineRapier = -Infinity;
-                                        player.storage.d2_zhihui = [1, 2, 3, 5, 8,13];
-                                        // game.players[1].hp=1;
-                                        game.players[1].gain(game.createCard({
-                                            name: 'shan',
-                                            number: 13
-                                        }));
-                                        game.players[1].gain(game.createCard({
-                                            name: 'shan',
-                                            number: 13
-                                        }));
-                                        game.players[1].gain(game.createCard({
-                                            name: 'shan',
-                                            number: 13
-                                        }));
-                                        // game.players[1].draw(5);
+                                        player.storage.d2_zhihui = [1, 2, 3, 5, 8, 13];
+                                        var cards2 = [];
+                                        cards2.push(game.createCard('sha'));
+                                        cards2.push(game.createCard('sha'));
+                                        cards2.push(game.createCard('sha'));
+                                        game.players[1].gain(cards2);
+                                        // game.asyncDraw([game.players[1], game.players[2]], 4);
+                                        // game.players[1].hujia = 3;
+                                        game.players[1].addSkill('d2_benteng');
+                                        // game.players[1].hp = 1;
+                                        // game.players[1].update();
+                                    } else {
+                                        // player.draw();
                                     }
                                 } catch (e) {
                                     alert(e);
                                 }
                             },
                             content: function() {
-                                player.draw();
+                                // player.draw();
+                                player.turnOver();
+                                // game.players[1].damage();
                             },
                             group: 'd2_baiban_norune',
+                            // speed: [1, 2,true],
                             subSkill: {
                                 norune: {
                                     init: function(player) {
                                         lib.config.extension_Dota2_rune = false;
-                                    }
+                                    },
+
                                 },
                             },
                         },
@@ -12005,7 +12631,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             fullimage: true,
                             type: "equip",
                             subtype: "equip5",
-                            skills: ["d2_aghanims"],
+                            skills: ["d2_aghanims_skill"],
                             nomod: true,
                             nopower: true,
                             unique: true,
@@ -12030,12 +12656,12 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 return !target.hasSkill('d2_sentry');
                             },
                             content: function() {
-                                if (target.hasSkill('d2_observer')) {
-                                    target.storage.d2_observer += 3;
-                                    target.syncStorage('d2_observer');
+                                if (target.hasSkill('d2_observer_skill')) {
+                                    target.storage.d2_observer_skill += 3;
+                                    target.syncStorage('d2_observer_skill');
                                 } else {
-                                    target.addSkill('d2_observer');
-                                    target.marks.d2_observer.setBackgroundImage('extension/Dota2/image/card/d2_observer.jpg');
+                                    target.addSkill('d2_observer_skill');
+                                    target.marks.d2_observer_skill.setBackgroundImage('extension/Dota2/image/card/d2_observer.jpg');
                                 }
                             },
                             ai: {
@@ -12059,12 +12685,12 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             type: "basic",
                             filterTarget: true,
                             content: function() {
-                                if (target.hasSkill('d2_sentry')) {
-                                    target.removeSkill('d2_sentry');
+                                if (target.hasSkill('d2_sentry_skill')) {
+                                    target.removeSkill('d2_sentry_skill');
                                 } else {
-                                    target.removeSkill('d2_observer');
-                                    target.addSkill('d2_sentry');
-                                    target.marks.d2_sentry.setBackgroundImage('extension/Dota2/image/card/d2_sentry.jpg');
+                                    target.removeSkill('d2_observer_skill');
+                                    target.addSkill('d2_sentry_skill');
+                                    target.marks.d2_sentry_skill.setBackgroundImage('extension/Dota2/image/card/d2_sentry.jpg');
                                 }
                             },
                             ai: {
@@ -12073,7 +12699,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 useful: 2,
                                 result: {
                                     target: function(player, target) {
-                                        if (target.hasSkill('d2_sentry')) return -1;
+                                        if (target.hasSkill('d2_sentry_skill')) return -1;
                                         return 1;
                                     },
                                 },
@@ -12086,7 +12712,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             subtype: "equip1",
                             nopower: true,
                             nomod: true,
-                            skills: ["d2_monkeyKingBar"],
+                            skills: ["d2_monkeyKingBar_skill"],
                             distance: {
                                 attackFrom: -2,
                             },
@@ -12097,7 +12723,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_bloodStone: {
                             type: "equip",
                             subtype: "equip5",
-                            skills: ["d2_bloodStone"],
+                            skills: ["d2_bloodStone_skill"],
                             ai: {
                                 equipValue: 12,
                             },
@@ -12107,25 +12733,25 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             pDelay: false,
                             loseDelay: false,
                             onLose: function() {
-                                delete player.storage.d2_bloodStone;
-                                player.unmarkSkill('d2_bloodStone');
+                                delete player.storage.d2_bloodStone_skill;
+                                player.unmarkSkill('d2_bloodStone_skill');
                             },
                             onEquip: function() {
-                                player.storage.d2_bloodStone = 2;
-                                player.markSkill('d2_bloodStone');
+                                player.storage.d2_bloodStone_skill = 2;
+                                player.markSkill('d2_bloodStone_skill');
                             },
                         },
                         d2_shivasGuard: {
                             type: "equip",
                             subtype: "equip2",
-                            skills: ["d2_shivasGuard"],
+                            skills: ["d2_shivasGuard_skill"],
                             fullimage: true,
                             ai: {
                                 equipValue: 8,
                             },
                             onLose: function() {
-                                delete player.storage.d2_shivasGuard;
-                                player.unmarkSkill('d2_shivasGuard');
+                                delete player.storage.d2_shivasGuard_skill;
+                                player.unmarkSkill('d2_shivasGuard_skill');
                                 var enemies = player.getEnemies();
                                 var enemies2 = [];
                                 for (var i = 0; i < enemies.length; i++) {
@@ -12150,15 +12776,15 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 }
                             },
                             onEquip: function() {
-                                player.storage.d2_shivasGuard = true;
-                                player.markSkill('d2_shivasGuard');
+                                player.storage.d2_shivasGuard_skill = true;
+                                player.markSkill('d2_shivasGuard_skill');
                             },
                         },
                         d2_echoSabre: {
                             fullimage: true,
                             type: "equip",
                             subtype: "equip1",
-                            skills: ["d2_echoSabre"],
+                            skills: ["d2_echoSabre_skill"],
                             distance: {
                                 attackFrom: -1,
                             },
@@ -12169,7 +12795,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_heartOfTarrasque: {
                             type: "equip",
                             subtype: "equip5",
-                            skills: ["d2_heartOfTarrasque"],
+                            skills: ["d2_heartOfTarrasque_skill"],
                             ai: {
                                 equipValue: 12,
                             },
@@ -12281,6 +12907,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 target.addTempSkill('qianxing', {
                                     player: 'phaseBegin'
                                 });
+                                target.addAdditionalSkill('qianxing', 'd2_smokeOfDeceit');
                             },
                             ai: {
                                 order: 1,
@@ -12350,9 +12977,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_refresherOrb: {
                             fullimage: true,
                             type: 'trick',
-                            enable: function(card, player) {
-                                return true;
-                            },
                             selectTarget: -1,
                             filterTarget: function(card, player, target) {
                                 return target == player;
@@ -12416,6 +13040,224 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 }
                             },
                         },
+                        d2_bootsOfSpeed: {
+                            process: function(player, origin) {
+                                var mirror = origin + '_mirror';
+                                lib.translate[mirror] = lib.translate[origin];
+                                lib.translate[mirror + '_info'] = lib.translate[origin + '_info'];
+                                lib.card[mirror] = lib.card[mirror] || {
+                                    fullimage: true,
+                                    type: "equip",
+                                    subtype: "equip4",
+                                    nopower: true,
+                                    nomod: true,
+                                    vanish: true,
+                                    onLose: function() {
+                                        if (!player.getEquip(3)) return;
+                                        var origin = player.getEquip(3).name;
+                                        if (player.getEquip(origin) && lib.card[origin + '_mirror']) player.discard(player.getEquip(origin), false)._triggered = null;
+                                    },
+                                    ai: {
+                                        order: 10,
+                                        value: 8,
+                                        useful: 8,
+                                        result: {
+                                            player: 1,
+                                        }
+                                    },
+                                }
+                                // var card = game.createCard(mirror);
+                                return game.createCard(mirror);
+                            },
+                            fullimage: true,
+                            type: 'trick',
+                            selectTarget: -1,
+                            filterTarget: function(card, player, target) {
+                                return target == player;
+                            },
+                            enable: function(card, player) {
+                                return true;
+                            },
+                            modTarget: true,
+                            toself: true,
+                            content: function() {
+                                'step 0'
+                                var list = ['d2_arcaneBoots', 'd2_phaseBoots', 'd2_powerTreads', 'd2_tranquilBoots', 'd2_bootsOfTravel'];
+                                player.chooseButton(['速度之靴', [list, 'vcard']], true).set('ai', function(button) {
+                                    return Math.random();
+                                });
+                                'step 1'
+                                if (result.bool) {
+                                    var card = result.links[0][2];
+                                    player.gain(game.createCard(card));
+                                }
+                            },
+                            ai: {
+                                order: 10,
+                                value: 8,
+                                useful: 10,
+                                result: {
+                                    player: 1,
+                                }
+                            },
+                        },
+                        d2_arcaneBoots: {
+                            fullimage: true,
+                            type: "equip",
+                            subtype: "equip3",
+                            onEquip: function() {
+                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_arcaneBoots');
+                                card.setBackgroundImage('extension/Dota2/image/card/d2_arcaneBoots.jpg');
+                                player.equip(card)._triggered = null;
+                                player.updateMarks();
+                            },
+                            onLose: function() {
+                                if (player.getEquip('d2_arcaneBoots_mirror')) player.discard(player.getEquip('d2_arcaneBoots_mirror'), false)._triggered = null;
+                                player.updateMarks();
+                            },
+                            nopower: true,
+                            nomod: true,
+                            skills: ['d2_arcaneBoots_skill'],
+                            ai: {
+                                order: 10,
+                                value: 8,
+                                useful: 8,
+                                result: {
+                                    player: 1,
+                                }
+                            },
+                        },
+                        d2_phaseBoots: {
+                            fullimage: true,
+                            type: "equip",
+                            subtype: "equip3",
+                            onEquip: function() {
+                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_phaseBoots');
+                                card.setBackgroundImage('extension/Dota2/image/card/d2_phaseBoots.jpg');
+                                player.equip(card)._triggered = null;
+                                player.updateMarks();
+                            },
+                            onLose: function() {
+                                if (player.getEquip('d2_phaseBoots_mirror')) player.discard(player.getEquip('d2_phaseBoots_mirror'), false)._triggered = null;
+                                player.updateMarks();
+                            },
+                            nopower: true,
+                            nomod: true,
+                            skills: ['d2_phaseBoots_skill'],
+                            ai: {
+                                order: 10,
+                                value: 8,
+                                useful: 8,
+                                result: {
+                                    player: 1,
+                                }
+                            },
+                        },
+                        d2_powerTreads: {
+                            fullimage: true,
+                            type: "equip",
+                            subtype: "equip3",
+                            onEquip: function() {
+                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_powerTreads');
+                                card.setBackgroundImage('extension/Dota2/image/card/d2_powerTreads.jpg');
+                                player.equip(card)._triggered = null;
+                                player.updateMarks();
+                            },
+                            onLose: function() {
+                                if (player.getEquip('d2_powerTreads_mirror')) player.discard(player.getEquip('d2_powerTreads_mirror'), false)._triggered = null;
+                                player.updateMarks();
+                            },
+                            nopower: true,
+                            nomod: true,
+                            skills: ['d2_powerTreads_skill'],
+                            ai: {
+                                order: 10,
+                                value: 8,
+                                useful: 8,
+                                result: {
+                                    player: 1,
+                                }
+                            },
+                        },
+                        d2_tranquilBoots: {
+                            fullimage: true,
+                            type: "equip",
+                            subtype: "equip3",
+                            onEquip: function() {
+                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_tranquilBoots');
+                                card.setBackgroundImage('extension/Dota2/image/card/d2_tranquilBoots.jpg');
+                                player.equip(card)._triggered = null;
+                                player.updateMarks();
+                            },
+                            onLose: function() {
+                                if (player.getEquip('d2_tranquilBoots_mirror')) player.discard(player.getEquip('d2_tranquilBoots_mirror'), false)._triggered = null;
+                                player.updateMarks();
+                            },
+                            nopower: true,
+                            nomod: true,
+                            skills: ['d2_tranquilBoots_skill'],
+                            ai: {
+                                order: 10,
+                                value: 8,
+                                useful: 8,
+                                result: {
+                                    player: 1,
+                                }
+                            },
+                        },
+                        d2_bootsOfTravel: {
+                            fullimage: true,
+                            type: "equip",
+                            subtype: "equip3",
+                            onEquip: function() {
+                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_bootsOfTravel');
+                                card.setBackgroundImage('extension/Dota2/image/card/d2_bootsOfTravel.jpg');
+                                player.equip(card)._triggered = null;
+                                player.updateMarks();
+                            },
+                            onLose: function() {
+                                if (player.getEquip('d2_bootsOfTravel_mirror')) player.discard(player.getEquip('d2_bootsOfTravel_mirror'), false)._triggered = null;
+                                player.updateMarks();
+                            },
+                            nopower: true,
+                            nomod: true,
+                            skills: ['d2_bootsOfTravel_skill'],
+                            ai: {
+                                order: 10,
+                                value: 8,
+                                useful: 8,
+                                result: {
+                                    player: 1,
+                                }
+                            },
+                        },
+                        d2_bootsOfTravel2: {
+                            fullimage: true,
+                            type: "equip",
+                            subtype: "equip3",
+                            onEquip: function() {
+                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_bootsOfTravel2');
+                                card.setBackgroundImage('extension/Dota2/image/card/d2_bootsOfTravel2.jpg');
+                                player.equip(card)._triggered = null;
+                                player.updateMarks();
+                            },
+                            onLose: function() {
+                                if (player.getEquip('d2_bootsOfTravel2_mirror')) player.discard(player.getEquip('d2_bootsOfTravel2_mirror'), false)._triggered = null;
+                                player.updateMarks();
+                            },
+                            nopower: true,
+                            nomod: true,
+                            skills: ['d2_bootsOfTravel2_skill'],
+                            ai: {
+                                order: 10,
+                                value: 10,
+                                useful: 10,
+                                result: {
+                                    player: 1,
+                                }
+                            },
+                        },
+                        //i
                         d2_forgedSpirit: {
                             enable: true,
                             fullimage: true,
@@ -12500,27 +13342,29 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         },
                     },
                     skill: {
-                        d2_aghanims: {
+                        d2_aghanims_skill: {
                             trigger: {
                                 player: "phaseUseEnd",
                             },
                             forced: true,
                             content: function() {
                                 if (player.countCards('h') > player.hp) {
-                                    player.addTempSkill('d2_aghanims2');
+                                    player.addTempSkill('d2_aghanims_skill_effect');
                                 } else {
                                     player.draw(2);
                                 }
                             },
-                        },
-                        d2_aghanims2: {
-                            mod: {
-                                maxHandcard: function(player, num) {
-                                    return num + 2;
+                            subSkill: {
+                                effect: {
+                                    mod: {
+                                        maxHandcard: function(player, num) {
+                                            return num + 2;
+                                        },
+                                    },
                                 },
                             },
                         },
-                        d2_observer: {
+                        d2_observer_skill: {
                             trigger: {
                                 player: ["phaseAfter"],
                             },
@@ -12530,7 +13374,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             temp: true,
                             intro: {
                                 mark: function(dialog, content, player) {
-                                    dialog.addText('手牌对所有人可见，剩余' + player.storage.d2_observer + '回合');
+                                    dialog.addText('手牌对所有人可见，剩余' + player.storage.d2_observer_skill + '回合');
                                     if (player.storage.d2_observer_cards.length) dialog.addSmall(player.storage.d2_observer_cards);
                                     else dialog.addText('（无）');
                                 },
@@ -12539,17 +13383,17 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 },
                             },
                             init: function(player) {
-                                player.storage.d2_observer = 3;
+                                player.storage.d2_observer_skill = 3;
                                 player.storage.d2_observer_cards = player.getCards('h');
                             },
                             onremove: function(player) {
-                                delete player.storage.d2_observer;
+                                delete player.storage.d2_observer_skill;
                                 delete player.storage.d2_observer_cards;
                             },
                             content: function() {
-                                player.storage.d2_observer--;
-                                if (player.storage.d2_observer <= 0) {
-                                    player.removeSkill('d2_observer');
+                                player.storage.d2_observer_skill--;
+                                if (player.storage.d2_observer_skill <= 0) {
+                                    player.removeSkill('d2_observer_skill');
                                 } else {
                                     player.updateMarks();
                                 }
@@ -12566,9 +13410,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     },
                                 },
                             },
-                            group: ["d2_observer_update", "d2_visible"],
+                            group: ["d2_observer_skill_update", "d2_visible"],
                         },
-                        d2_sentry: {
+                        d2_sentry_skill: {
                             trigger: {
                                 player: "phaseBefore",
                             },
@@ -12580,24 +13424,24 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 content: "不能成为【侦查守卫】、【过河拆桥】、【顺手牵羊】的目标，剩余#回合",
                             },
                             init: function(player) {
-                                player.storage.d2_sentry = 3;
+                                player.storage.d2_sentry_skill = 3;
                             },
                             onremove: true,
                             content: function() {
-                                player.storage.d2_sentry--;
-                                if (player.storage.d2_sentry <= 0) {
-                                    player.removeSkill('d2_sentry');
+                                player.storage.d2_sentry_skill--;
+                                if (player.storage.d2_sentry_skill <= 0) {
+                                    player.removeSkill('d2_sentry_skill');
                                 } else {
                                     player.updateMarks();
                                 }
                             },
                             mod: {
                                 targetEnabled: function(card) {
-                                    if (card.name == 'd2_observer' || card.name == 'guohe' || card.name == 'shunshou') return false;
+                                    if (card.name == 'd2_observer_skill' || card.name == 'guohe' || card.name == 'shunshou') return false;
                                 },
                             },
                         },
-                        d2_monkeyKingBar: {
+                        d2_monkeyKingBar_skill: {
                             trigger: {
                                 player: "shaBegin",
                             },
@@ -12612,7 +13456,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 trigger.untrigger();
                             },
                         },
-                        d2_bloodStone: {
+                        d2_bloodStone_skill: {
                             trigger: {
                                 player: "loseEnd",
                             },
@@ -12622,52 +13466,54 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             forced: true,
                             usable: 3,
                             filter: function(event, player) {
-                                return player.storage.d2_bloodStone && _status.currentPhase == player;
+                                return player.storage.d2_bloodStone_skill && _status.currentPhase == player;
                             },
                             content: function() {
-                                player.storage.d2_bloodStone--;
+                                player.storage.d2_bloodStone_skill--;
                                 player.updateMarks();
                                 player.draw();
                             },
-                            group: ["d2_bloodStone2", "d2_bloodStone3", "d2_bloodStone4"],
+                            group: ["d2_bloodStone_skill_effect1", "d2_bloodStone_skill_effect2", "d2_bloodStone_skill_effect3"],
+                            subSkill: {
+                                effect1: {
+                                    trigger: {
+                                        player: "drawEnd",
+                                    },
+                                    usable: 3,
+                                    forced: true,
+                                    filter: function(event, player) {
+                                        return event.parent.name != 'd2_bloodStone_skill';
+                                    },
+                                    content: function() {
+                                        player.storage.d2_bloodStone_skill++;
+                                        player.updateMarks();
+                                    },
+                                },
+                                effect2: {
+                                    trigger: {
+                                        player: "damageEnd",
+                                    },
+                                    usable: 1,
+                                    forced: true,
+                                    content: function() {
+                                        player.storage.d2_bloodStone_skill = Math.floor(player.storage.d2_bloodStone_skill * 2 / 3);
+                                        player.updateMarks();
+                                    },
+                                },
+                                effect3: {
+                                    trigger: {
+                                        source: "damageEnd",
+                                    },
+                                    usable: 1,
+                                    forced: true,
+                                    content: function() {
+                                        player.storage.d2_bloodStone_skill += 2;
+                                        player.updateMarks();
+                                    },
+                                },
+                            },
                         },
-                        d2_bloodStone2: {
-                            trigger: {
-                                player: "drawEnd",
-                            },
-                            usable: 3,
-                            forced: true,
-                            filter: function(event, player) {
-                                return event.parent.name != 'd2_bloodStone';
-                            },
-                            content: function() {
-                                player.storage.d2_bloodStone++;
-                                player.updateMarks();
-                            },
-                        },
-                        d2_bloodStone3: {
-                            trigger: {
-                                player: "damageEnd",
-                            },
-                            usable: 1,
-                            forced: true,
-                            content: function() {
-                                player.storage.d2_bloodStone = Math.floor(player.storage.d2_bloodStone * 2 / 3);
-                                player.updateMarks();
-                            },
-                        },
-                        d2_bloodStone4: {
-                            trigger: {
-                                source: "damageEnd",
-                            },
-                            usable: 1,
-                            forced: true,
-                            content: function() {
-                                player.storage.d2_bloodStone += 2;
-                                player.updateMarks();
-                            },
-                        },
-                        d2_shivasGuard: {
+                        d2_shivasGuard_skill: {
                             trigger: {
                                 player: "damageBefore",
                             },
@@ -12676,26 +13522,28 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 content: "防止你下一次受到【杀】造成的伤害",
                             },
                             filter: function(event, player) {
-                                return event.card && event.card.name == 'sha' && player.storage.d2_shivasGuard;
+                                return event.card && event.card.name == 'sha' && player.storage.d2_shivasGuard_skill;
                             },
                             content: function() {
                                 trigger.cancel();
-                                player.storage.d2_shivasGuard = false;
-                                player.unmarkSkill('d2_shivasGuard');
+                                player.storage.d2_shivasGuard_skill = false;
+                                player.unmarkSkill('d2_shivasGuard_skill');
                             },
-                            group: "d2_shivasGuard2",
+                            group: "d2_shivasGuard_skill_clear",
+                            subSkill: {
+                                clear: {
+                                    trigger: {
+                                        global: "roundStart",
+                                    },
+                                    silent: true,
+                                    content: function() {
+                                        player.markSkill('d2_shivasGuard_skill');
+                                        player.storage.d2_shivasGuard_skill = true;
+                                    },
+                                },
+                            },
                         },
-                        d2_shivasGuard2: {
-                            trigger: {
-                                global: "roundStart",
-                            },
-                            silent: true,
-                            content: function() {
-                                player.markSkill('d2_shivasGuard');
-                                player.storage.d2_shivasGuard = true;
-                            },
-                        },
-                        d2_echoSabre: {
+                        d2_echoSabre_skill: {
                             trigger: {
                                 player: 'shaAfter'
                             },
@@ -12708,7 +13556,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 player.useCard(trigger.card, trigger.target);
                             },
                         },
-                        d2_heartOfTarrasque: {
+                        d2_heartOfTarrasque_skill: {
                             trigger: {
                                 global: 'roundStart'
                             },
@@ -12870,6 +13718,13 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 trigger.source.damage(player, trigger.nature);
                             },
                         },
+                        d2_smokeOfDeceit: {
+                            mark: true,
+                            intro: {
+                                content: '获得【潜行】，期间速度+1'
+                            },
+                            speed: [1, 1],
+                        },
                         d2_refresherOrb_zhu: {
                             silent: true,
                             content: function() {
@@ -12880,151 +13735,377 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 player.update();
                             }
                         },
-                        _d2_divineRapier: {
-                            trigger: {
-                                player: 'phaseBegin'
+                        d2_arcaneBoots_skill: {
+                            enable: 'phaseUse',
+                            usable: 1,
+                            filter: function(event, player) {
+                                return game.hasPlayer(function(current) {
+                                    return current.countCards('h') < current.hp;
+                                });
                             },
-                            forced: true,
-                            filter: function() {
-                                return _status.d2_divineRapier && !game.hasPlayer(function(current) {
-                                    return current.hasSkill('d2_divineRapier');
-                                }) && Math.random() < _status.d2_divineRapier;
+                            selectTarget: [1, 3],
+                            filterTarget: function(card, player, target) {
+                                return target.countCards('h') < target.hp;
                             },
-                            chats: ['圣剑刃下，千锋辟易！', '我才是它的主人！', '你也配用圣剑？！', '我的！', '拿来！'],
+                            multitarget: true,
+                            multiline: true,
                             content: function() {
-                                player.chat(lib.skill._d2_divineRapier.chats[0]);
-                                player.addSkill('d2_divineRapier');
-                                player.marks.d2_divineRapier.setBackgroundImage('extension/Dota2/image/card/d2_divineRapier.jpg');
-                                game.delay();
+                                game.asyncDraw(targets);
                             },
-                            subSkill: {
-                                init: {
-                                    trigger: {
-                                        global: 'gameStart'
-                                    },
-                                    silent: true,
-                                    filter: function(event, player) {
-                                        try {
-                                            var banned = get.mode() + '_bannedcards';
-                                            if (_status.connectMode) banned += 'connect_';
-                                            if (lib.config[banned] && lib.config[banned].contains('d2_divineRapier')) {
-                                                _status.d2_divineRapier = false;
-                                            }
-                                            return _status.d2_divineRapier === undefined;
-                                        } catch (e) {
-                                            alert(e)
-                                        }
-                                    },
-                                    content: function() {
-                                        _status.d2_divineRapier = 0.25 / game.players.length;
-                                    },
-                                },
-                                damage: {
-                                    trigger: {
-                                        source: 'damageEnd',
-                                    },
-                                    silent: true,
-                                    filter: function(event, player) {
-                                        return _status.d2_divineRapier;
-                                    },
-                                    content: function() {
-                                        var num = game.players.concat(game.dead).length;
-                                        _status.d2_divineRapier += 0.05 / num * trigger.num;
-                                        _status.d2_divineRapier = Math.min(_status.d2_divineRapier, 1 / game.players.length);
-                                    },
+                            speed: [1, 1],
+                            ai: {
+                                order: 10,
+                                result: {
+                                    target: 1,
                                 },
                             },
                         },
-                        d2_divineRapier: {
+                        d2_phaseBoots_skill: {
                             trigger: {
-                                source: 'damageBegin'
+                                player: 'damageBefore'
                             },
-                            forced: true,
-                            mark: true,
-                            marktext: ' ',
-                            intro: {
-                                content: function(storage, player) {
-                                    return get.translation('d2_divineRapier_info');
+                            enable: 'phaseUse',
+                            usable: 1,
+                            content: function() {
+                                player.addTempSkill('d2_phaseBoots_skill_effect', {
+                                    player: 'phaseBegin'
+                                });
+                            },
+                            subSkill: {
+                                effect: {
+                                    trigger: {
+                                        player: 'damageBefore'
+                                    },
+                                    forced: true,
+                                    mark: true,
+                                    intro: {
+                                        content: function(storage, player) {
+                                            var str = '速度+1';
+                                            if (storage) str += '，下一次受到的伤害-1';
+                                            return str;
+                                        },
+                                    },
+                                    init: function(player) {
+                                        player.storage.d2_phaseBoots_skill_effect = true;
+                                    },
+                                    onremove: true,
+                                    filter: function(event, player) {
+                                        return player.storage.d2_phaseBoots_skill_effect;
+                                    },
+                                    content: function() {
+                                        trigger.num--;
+                                        player.storage.d2_phaseBoots_skill_effect = false;
+                                    },
+                                    speed: [1, 1]
                                 },
                             },
+                            speed: [1, 1],
+                            ai: {
+                                order: 10,
+                                result: {
+                                    player: 1,
+                                },
+                            },
+                        },
+                        d2_powerTreads_skill: {
+                            enable: 'phaseUse',
+                            usable: 1,
+                            content: function() {
+                                'step 0'
+                                player.chooseControl(['力量', '敏捷', '智力']).set('prompt', '力量：获得一张【杀】<br>敏捷：此阶段内出【杀】次数+1<br>智力：摸一张牌，占卜+1直到你的下个出牌阶段').set('ai', function() {
+                                    if (player.getCardUsable('sha') <= 0) return '智力';
+                                    if (player.getCardUsable('sha') < player.countCards('h', 'sha')) return '敏捷';
+                                    return '力量';
+                                });
+                                'step 1'
+                                switch (result.control) {
+                                    case '力量':
+                                        player.gain(game.createCard('sha'), 'gain2');
+                                        break;
+                                    case '敏捷':
+                                        player.addTempSkill('d2_powerTreads_skill_agi', {
+                                            player: 'phaseUseEnd'
+                                        });
+                                        break;
+                                    case '智力':
+                                        player.draw();
+                                        player.addTempSkill('d2_powerTreads_skill_int', {
+                                            player: 'phaseUseBegin'
+                                        });
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            },
+                            subSkill: {
+                                agi: {
+                                    mark: true,
+                                    intro: {
+                                        content: '攻击距离+1'
+                                    },
+                                    mod: {
+                                        cardUsable: function(card, player, num) {
+                                            if (card.name == 'sha') return num + 1;
+                                        },
+                                    },
+                                },
+                                int: {
+                                    mark: true,
+                                    intro: {
+                                        content: '占卜+1'
+                                    },
+                                    mod: {
+                                        cardUsable: function(card, player, num) {
+                                            if (card.name == 'sha') return num + 1;
+                                        },
+                                    },
+                                    scry: 1
+                                }
+                            },
+                            speed: [1, 1],
+                        },
+                        d2_tranquilBoots_skill: {
+                            trigger: {
+                                player: 'phaseEnd'
+                            },
+                            forced: true,
                             init: function(player) {
-                                player.storage.d2_divineRapier_count = 0;
-                            },
-                            onremove: function(player) {
-                                delete player.storage.d2_divineRapier_count;
-                            },
-                            filter: function(event, player) {
-                                var num = player.storage.d2_divineRapier_count;
-                                return num == 0 || num < player.maxHp - player.hp && num < 3;
+                                player.storage.d2_tranquilBoots_skill = true;
                             },
                             content: function() {
-                                trigger.num++;
-                                player.storage.d2_divineRapier_count++;
+                                if (player.storage.d2_tranquilBoots_skill) {
+                                    player.recover();
+                                    player.addTempSkill('d2_tranquilBoots_skill_effect', {
+                                        player: 'phaseBegin'
+                                    });
+                                }
                             },
-                            group: ['d2_divineRapier_clear', 'd2_divineRapier_change', 'd2_divineRapier_unequip'],
                             subSkill: {
-                                clear: {
+                                enable: {
                                     trigger: {
                                         player: 'phaseBegin'
                                     },
                                     silent: true,
                                     content: function() {
-                                        player.storage.d2_divineRapier_count = 0;
-                                    },
+                                        player.storage.d2_tranquilBoots_skill = true;
+                                    }
                                 },
-                                change: {
+                                disable: {
                                     trigger: {
-                                        player: ['damageAfter', 'dieBegin'],
+                                        source: 'damageAfter'
                                     },
-                                    forced: true,
-                                    content: function() {
-                                        if (trigger.source) {
-                                            if (trigger.source == player) return;
-                                            trigger.source.line(player, 'thunder');
-                                            trigger.source.chat(lib.skill._d2_divineRapier.chats.slice(1).randomGet());
-                                            trigger.source.addSkill('d2_divineRapier');
-                                            trigger.source.marks.d2_divineRapier.setBackgroundImage('extension/Dota2/image/card/d2_divineRapier.jpg');
-                                            game.delay();
-                                        } else {
-                                            _status.d2_divineRapier = Math.max(_status.d2_divineRapier / 2, 0.25 / game.players.length);
-                                        }
-                                        player.removeSkill('d2_divineRapier');
-                                    },
-                                },
-                                unequip: {
-                                    trigger: {
-                                        player: 'equipAfter',
-                                    },
-                                    forced: true,
+                                    silent: true,
                                     filter: function(event, player) {
-                                        game.log(get.type(event.card), get.subtype(event.card))
-                                        return event.card && get.type(event.card) == 'equip' && get.subtype(event.card) == 'equip1';
+                                        return event.num > 0 && _status.currentPhase == player;
                                     },
                                     content: function() {
-                                        player.discard(trigger.card)._triggered = null;
-                                    },
+                                        player.storage.d2_tranquilBoots_skill = false;
+                                    }
                                 },
-                            },
-                            ai: {
-                                threaten: 2,
                                 effect: {
-                                    target: function(card, player, target) {
-                                        if (get.tag(card, 'damage')) return [1, -5];
+                                    trigger: {
+                                        target: 'shaHit'
                                     },
+                                    forced: true,
+                                    mark: true,
+                                    intro: {
+                                        content: '速度+1，直到被【杀】命中或回合开始'
+                                    },
+                                    content: function() {
+                                        player.removeSkill('d2_tranquilBoots_skill_effect');
+                                    },
+                                    ai: {
+                                        effect: {
+                                            target: function(card, player, target) {
+                                                if (card.name == 'sha') return [1, -1];
+                                            },
+                                        }
+                                    },
+                                    speed: [1, 1]
                                 },
                             },
-                            mod: {
-                                attackFrom: function(from, to, distance) {
-                                    return distance - 2;
+                            speed: [1, 1]
+                        },
+                        d2_bootsOfTravel_skill: {
+                            speed: [1, 2],
+                            global: 'd2_bootsOfTravel_skill_take',
+                            group: 'd2_bootsOfTravel_skill_upgrade',
+                            subSkill: {
+                                take: {
+                                    enable: 'phaseUse',
+                                    usable: 1,
+                                    filterCard: true,
+                                    discard: false,
+                                    prepare: 'give',
+                                    filterTarget: function(card, player, target) {
+                                        return target.hasSkill('d2_bootsOfTravel_skill');
+                                    },
+                                    filter: function(event, player) {
+                                        return !player.hasSkill('d2_bootsOfTravel_skill');
+                                    },
+                                    check: function(card) {
+                                        var player = get.owner(card);
+                                        var players = game.filterPlayer(function(current) {
+                                            return current.hasSkill('d2_bootsOfTravel_skill');
+                                        });
+                                        var friend = false;
+                                        for (var i = 0; i < players.length; i++) {
+                                            if (player.getFriends().contains(players[i])) {
+                                                friend = true;
+                                                break;
+                                            }
+                                        }
+                                        if (ui.selected.cards.length && ui.selected.cards[0].name == 'du') {
+                                            if (card.name == 'du') return 20;
+                                            return 0;
+                                        }
+                                        if (!ui.selected.cards.length && card.name == 'du') return 20;
+                                        if (!friend) return 0;
+                                        var players = game.filterPlayer();
+                                        for (var i = 0; i < players.length; i++) {
+                                            if (players[i].hasSkill('haoshi') &&
+                                                !players[i].isTurnedOver() &&
+                                                !players[i].hasJudge('lebu') &&
+                                                get.attitude(player, players[i]) >= 3 &&
+                                                get.attitude(players[i], player) >= 3) {
+                                                return 11 - get.value(card);
+                                            }
+                                        }
+                                        return 8 - get.value(card);
+                                    },
+                                    content: function() {
+                                        target.gain(cards, player);
+                                        target.storage.d2_bootsOfTravel_skill_taken = true;
+                                    },
+                                    ai: {
+                                        order: 1,
+                                        result: {
+                                            target: function(player, target) {
+                                                if (target.hasSkillTag('nogain')) return 0;
+                                                if (ui.selected.cards.length && ui.selected.cards[0].name == 'du') {
+                                                    if (target.hasSkillTag('nodu')) return 0;
+                                                    return -10;
+                                                }
+                                                if (target.hasJudge('lebu')) return 0;
+                                                var nh = target.countCards('h');
+                                                var np = player.countCards('h');
+                                                if (nh >= np - 1 && np <= player.hp && !target.hasSkill('haoshi')) return 0;
+                                                return Math.max(1, 5 - nh);
+                                            }
+                                        },
+                                        effect: {
+                                            target: function(card, player, target) {
+                                                if (player == target && get.type(card) == 'equip') {
+                                                    if (player.countCards('e', {
+                                                            subtype: get.subtype(card)
+                                                        })) {
+                                                        var players = game.filterPlayer();
+                                                        for (var i = 0; i < players.length; i++) {
+                                                            if (players[i] != player && get.attitude(player, players[i]) > 0) {
+                                                                return 0;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        threaten: 0.8
+                                    }
                                 },
-                                cardUsable: function(card, player, num) {
-                                    if (get.type(card) == 'equip' && get.subtype(card) == 'equip1') return false;
-                                },
-                                cardEnabled: function(card, player) {
-                                    if (get.type(card) == 'equip' && get.subtype(card) == 'equip1') return false;
+                                upgrade: {
+                                    trigger: {
+                                        player: 'phaseBegin'
+                                    },
+                                    silent: true,
+                                    filter: function(event, player) {
+                                        return player.getEquip('d2_bootsOfTravel');
+                                    },
+                                    content: function() {
+                                        var card1 = player.getEquip('d2_bootsOfTravel'),
+                                            card2 = player.getEquip('d2_bootsOfTravel_mirror');
+                                        var mirror = lib.card.d2_bootsOfSpeed.process(player, 'd2_bootsOfTravel2');
+                                        if (card1 && card2) {
+                                            card1.init([card1.suit, card1.number, 'd2_bootsOfTravel2', card1.nature]);
+                                            card2.init(mirror);
+                                            card2.setBackgroundImage('extension/Dota2/image/card/d2_bootsOfTravel2.jpg');
+                                        }
+                                    }
                                 },
                             },
                         },
+                        d2_bootsOfTravel2_skill: {
+                            speed: [1, 2],
+                            group: 'd2_bootsOfTravel_skill',
+                            enable: 'phaseUse',
+                            usable: 1,
+                            selectCard: [1, 2],
+                            filterCard: true,
+                            discard: false,
+                            prepare: 'give',
+                            filterTarget: function(card, player, target) {
+                                return target != player;
+                            },
+                            filter: function(event, player) {
+                                return player.countCards('h') > 0;
+                            },
+                            check: function(card) {
+                                if (ui.selected.cards.length && ui.selected.cards[0].name == 'du') {
+                                    if (card.name == 'du') return 20;
+                                    return 0;
+                                }
+                                if (!ui.selected.cards.length && card.name == 'du') return 20;
+                                var player = get.owner(card);
+                                var players = game.filterPlayer();
+                                for (var i = 0; i < players.length; i++) {
+                                    if (players[i].hasSkill('haoshi') &&
+                                        !players[i].isTurnedOver() &&
+                                        !players[i].hasJudge('lebu') &&
+                                        get.attitude(player, players[i]) >= 3 &&
+                                        get.attitude(players[i], player) >= 3) {
+                                        return 11 - get.value(card);
+                                    }
+                                }
+                                return 8 - get.value(card);
+                            },
+                            content: function() {
+                                target.gain(cards, player);
+                            },
+                            ai: {
+                                order: 1,
+                                result: {
+                                    target: function(player, target) {
+                                        if (target.hasSkillTag('nogain')) return 0;
+                                        if (ui.selected.cards.length && ui.selected.cards[0].name == 'du') {
+                                            if (target.hasSkillTag('nodu')) return 0;
+                                            return -10;
+                                        }
+                                        if (target.hasJudge('lebu')) return 0;
+                                        var nh = target.countCards('h');
+                                        var np = player.countCards('h');
+                                        if (nh >= np - 1 && np <= player.hp && !target.hasSkill('haoshi')) return 0;
+                                        return Math.max(1, 5 - nh);
+                                    }
+                                },
+                                effect: {
+                                    target: function(card, player, target) {
+                                        if (player == target && get.type(card) == 'equip') {
+                                            if (player.countCards('e', {
+                                                    subtype: get.subtype(card)
+                                                })) {
+                                                var players = game.filterPlayer();
+                                                for (var i = 0; i < players.length; i++) {
+                                                    if (players[i] != player && get.attitude(player, players[i]) > 0) {
+                                                        return 0;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                threaten: 0.8
+                            }
+                        },
+                        //iskill
                     },
                     translate: {
                         d2_summoned: "召唤生物",
@@ -13033,31 +14114,39 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_aghanims_info: "出牌阶段结束时，若你的手牌大于体力值，本回合内你的手牌上限+2；否则摸两张牌。",
                         d2_observer: "侦查守卫",
                         d2_observer_info: "出牌阶段对一名攻击范围内的角色使用，该角色的手牌对所有人可见，持续3回合。",
+                        d2_observer_skill: "侦查守卫",
                         d2_sentry: "岗哨守卫",
                         d2_sentry_info: "出牌阶段对一名攻击范围内的角色使用，①该角色终止【岗哨守卫】的效果；②该角色终止【侦查守卫】的效果且不能成为【侦查守卫】、【过河拆桥】、【顺手牵羊】的目标，持续3回合。",
+                        d2_sentry_skill: "岗哨守卫",
                         d2_monkeyKingBar: "金箍棒",
+                        d2_monkeyKingBar_skill: "金箍棒",
                         d2_monkeyKingBar_info: "锁定技，你的【杀】有75%的概率不可闪避。",
                         d2_forgedSpirit: "小火人",
                         d2_forgedSpirit_info: "出牌阶段限一次，对一名其他角色使用，该角色失去一点护甲并需打出一张【闪】，否则受到你造成的1点火属性伤害。",
                         d2_houzihousun: "猴子猴孙",
                         d2_houzihousun_info: "出牌阶段对一名攻击范围内的其他角色使用，若该角色手牌中有【桃】你获得其中一张，否则视为你对其使用一张【杀】。",
                         d2_bloodStone: "血精石",
-                        d2_bloodStone_info: "①每回合各限一次，你造成伤害后获得2点血精能量，受到伤害后失去1/3的血精能量（向下取整）；②每回合各限三次，你不因【血精石】的效果摸牌时获得1点血精能量，你于回合内失去牌时失去1点血精能量并摸一张牌。",
+                        d2_bloodStone_info: "锁定技，①每回合各限一次，你造成伤害后获得2点血精能量，受到伤害后失去1/3的血精能量（向下取整）；②每回合各限三次，你不因【血精石】的效果摸牌时获得1点血精能量，你于回合内失去牌时失去1点血精能量并摸一张牌。",
+                        d2_bloodStone_skill: "血精",
                         d2_shivasGuard: "希瓦的守护",
                         d2_shivasGuard_info: "锁定技，每回合限一次，防止你受到【杀】造成的伤害；当你失去装备区里的【希瓦的守护】时，随机弃置敌方角色手牌中的两张【杀】，若敌方角色手牌中没有【杀】，你获得一点护甲。",
+                        d2_shivasGuard_skill: "希瓦",
                         d2_echoSabre: "回音战刃",
                         d2_echoSabre_info: "锁定技，每回合限一次，你的【杀】额外结算一次。",
+                        d2_echoSabre_skill: "回音",
                         d2_heartOfTarrasque: "恐鳌之心",
                         d2_heartOfTarrasque_info: "锁定技，①每轮开始时你回复一点体力；②当你装备恐鳌之心时你的体力上限+1。",
+                        d2_heartOfTarrasque_skill: "龙心",
                         d2_dagon: "达贡",
+                        d2_dagon_info: "达贡之神力",
                         d2_dagon1: "达贡之神力一",
-                        d2_dagon1_info: "出牌阶段限一次，你可以进行一次判定并令一名有牌的其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你弃置其一张牌。升级达贡之神力。",
+                        d2_dagon1_info: "出牌阶段限一次，你可以进行一次判定并令一名有牌的其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你弃置其一张牌。升级此牌。",
                         d2_dagon2: "达贡之神力二",
-                        d2_dagon2_info: "出牌阶段限一次，你可以进行一次判定并令一名有牌的其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你获得其一张牌。升级达贡之神力。",
+                        d2_dagon2_info: "出牌阶段限一次，你可以进行一次判定并令一名有牌的其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你获得其一张牌。升级此牌。",
                         d2_dagon3: "达贡之神力三",
-                        d2_dagon3_info: "出牌阶段限一次，你可以进行一次判定并令一名其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你对其造成一点伤害。升级达贡之神力。",
+                        d2_dagon3_info: "出牌阶段限一次，你可以进行一次判定并令一名其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你对其造成一点伤害。升级此牌。",
                         d2_dagon4: "达贡之神力四",
-                        d2_dagon4_info: "出牌阶段限一次，你可以进行一次判定并令一名其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你对其造成一点伤害并弃置其一张牌。升级达贡之神力。",
+                        d2_dagon4_info: "出牌阶段限一次，你可以进行一次判定并令一名其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你对其造成一点伤害并弃置其一张牌。升级此牌。",
                         d2_dagon5: "达贡之神力五",
                         d2_dagon5_info: "出牌阶段限一次，你可以进行一次判定并令一名其他角色展示一张与判定牌花色相同的手牌，若其无法如此做，你对其造成一点伤害并获得其一张牌。",
                         d2_linkensSphere: "林肯法球",
@@ -13065,7 +14154,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_bladeMail: "刃甲",
                         d2_bladeMail_info: "其他角色对你造成伤害后，弃置手牌中的刃甲，对该角色造成一点伤害（不触发刃甲）。",
                         d2_smokeOfDeceit: '诡计之雾',
-                        d2_smokeOfDeceit_info: "出牌阶段对任意名角色使用，这些角色摸一张牌并获得【潜行】直到其回合开始。",
+                        d2_smokeOfDeceit_info: "出牌阶段对任意名角色使用，这些角色摸一张牌并获得【潜行】直到其下个回合（生效期间速度+1）。",
                         d2_dust: "显影之尘",
                         d2_dust_info: "出牌阶段对自己使用，场上所有拥有【潜行】的其他角色失去潜行并随机弃置一张牌。没有符合条件的角色时不能使用但能重铸。",
                         d2_divineRapier: "圣剑",
@@ -13073,10 +14162,32 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_divineRapier_append: "圣剑不出现在牌堆中。每名角色的准备阶段（若场上未有圣剑）都有同等概率获得圣剑；场上角色造成过越多伤害，概率越大。",
                         d2_refresherOrb: "刷新球",
                         d2_refresherOrb_info: "出牌阶段对自己使用，弃置判定区内的牌（不触发技能），结束本回合并以全新姿态进行一个额外的回合。",
-                        d2_armageddon_defense: "天劫·守",
-                        d2_armageddon_defense_info: "锁定技，你的防御距离+1，且【混沌】少摸一张牌的概率减少33%。",
-                        d2_armageddon_offense: "天劫·攻",
-                        d2_armageddon_offense_info: "锁定技，你的进攻距离+1，且【混沌】多摸一张牌的概率增加33%。",
+                        d2_bootsOfSpeed: "速度之靴",
+                        d2_bootsOfSpeed_info: "出牌阶段对自己使用，获得任意一张此牌的升级（鞋类装备同时占用防御马和进攻马的栏位）。",
+                        d2_arcaneBoots: "秘法鞋",
+                        d2_arcaneBoots_info: "①锁定技，速度+1；②出牌阶段限一次，你可以令至多三名手牌数小于体力值的角色摸一张牌。",
+                        d2_arcaneBoots_skill: "秘法",
+                        d2_arcaneBoots_skill_info: "出牌阶段限一次，你可以令至多三名手牌数小于体力值的角色摸一张牌。",
+                        d2_phaseBoots: "相位鞋",
+                        d2_phaseBoots_info: "①锁定技，速度+1；②出牌阶段限一次，你可以获得以下效果直到你的下个回合：速度+1，并防止你受到的下一次伤害。",
+                        d2_phaseBoots_skill: "相位",
+                        d2_phaseBoots_skill_info: "出牌阶段限一次，你可以获得以下效果直到你的下个回合：速度+1，你受到的下一次伤害-1。",
+                        d2_powerTreads: "动力鞋",
+                        d2_powerTreads_info: "①锁定技，速度+1；②出牌阶段限一次，你可以选择一项：获得一张【杀】；或此阶段内出【杀】次数+1；或摸一张牌并占卜+1直到你的下个出牌阶段。",
+                        d2_powerTreads_skill: "动力",
+                        d2_powerTreads_skill_info: "出牌阶段限一次，你可以选择一项：获得一张【杀】；或此阶段内出【杀】次数+1；或摸一张牌并占卜+1直到你的下个出牌阶段。",
+                        d2_tranquilBoots: "静谧之鞋",
+                        d2_tranquilBoots_info: "①锁定技，速度+1；②结束阶段，若你于本回合内未造成过伤害，你回复一点体力且速度+1直到你的下个回合或被【杀】命中。",
+                        d2_tranquilBoots_skill: "静谧",
+                        d2_bootsOfTravel: "远行鞋",
+                        d2_bootsOfTravel_info: "①锁定技，速度+2，准备阶段升级此牌；②其他角色的出牌阶段限一次，该角色可以交给你一张手牌。",
+                        d2_bootsOfTravel2: "高级远行鞋",
+                        d2_bootsOfTravel2_info: "①锁定技，速度+2；②其他角色的出牌阶段限一次，该角色可以交给你一张手牌；③出牌阶段限一次，你可以交给一名其他角色至多两张手牌。",
+                        d2_bootsOfTravel_skill: "远行",
+                        d2_bootsOfTravel_skill_info: "出牌阶段限一次，交给装备远行鞋的角色一张手牌。",
+                        d2_bootsOfTravel2_skill: "远行",
+                        d2_bootsOfTravel2_skill_info: "出牌阶段限一次，交给一名其他角色至多两张手牌。",
+                        //itranslation
                     },
                     list: [
                         ["spade", "13", "d2_aghanims"],
@@ -13109,6 +14220,8 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         ["club", "9", "d2_dust"],
                         ["club", "10", "d2_dust"],
                         ["diamond", "12", "d2_refresherOrb"],
+                        ["diamond", "5", "d2_bootsOfSpeed"],
+                        ["club", "5", "d2_bootsOfSpeed"],
                     ],
                 }
                 if (lib.device || lib.node) {
@@ -13391,11 +14504,59 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                     dialog.delete();
                 }, timeout);
             };
+            lib.element.player.getSpeed = function() {
+                var list = [];
+                var skills = this.getSkills();
+                var speed = [1, 0];
+                var unlimited = false,
+                    noreduce = false;
+                var limits = lib.skill._d2_speed.limits;
+                skills.addArray(lib.skill.global);
+                for (var i = 0; i < skills.length; i++) {
+                    var current = lib.skill[skills[i]];
+                    if (Array.isArray(current.speed)) {
+                        var num = (typeof current.speed[1] == 'function') ? current.speed[1](this) : current.speed[1];
+                        if (!unlimited && current.speed[2]) unlimited = true;
+                        if (!noreduce && current.speed[3]) noreduce = true;
+                        if (current.speed[0]) {
+                            speed[num > 0 ? 0 : 1] += num;
+                        } else {
+                            list.push(num);
+                        }
+                    }
+                }
+                if (list.length > 0) {
+                    list.sort(function(a, b) {
+                        return a > b;
+                    });
+                    return list[0];
+                }
+                var result = speed[0];
+                if (!noreduce) result += speed[1];
+                if (!unlimited) result = Math.min(limits[1], result);
+                result = Math.max(limits[0], result);
+                return result;
+            };
+            lib.element.player.getScry = function() {
+                var list = [];
+                var skills = this.getSkills();
+                var scry = 0;
+                skills.addArray(lib.skill.global);
+                for (var i = 0; i < skills.length; i++) {
+                    var current = lib.skill[skills[i]];
+                    if (typeof current.scry == 'number') scry += current.scry;
+                    if (typeof current.scry == 'function') scry += current.scry(this);
+                }
+                return scry;
+            };
         },
         help: {
-            Dota2: "<ul><li>阿哈利姆神杖<br>拥有神杖的英雄将领悟技能的奥义，技能描述中（奥义：...）的字段仅在装备神杖时生效。" +
-                "<li>联动技<br>某些角色之间的联动，只有联动角色在场上且你与联动角色都是主武将时联动技才会生效。" +
-                "<li>神符<br>新的一轮开始时，神符将刷新在场上一名随机角色（记为A）身上，其他角色可依次与A拼点（拼点牌无需弃置），其中点数最大者获得神符。神符将在新的一轮开始时消失。发生以下情况时A直接获得神符：①A没有手牌；②没有角色与A拼点；③拼点点数最大者不止一名角色。"
+            Dota2: "<ul><li><font color='#87CEFF'>阿哈利姆神杖</font><br>拥有神杖的英雄将领悟技能的奥义，技能描述中<font color='#87CEFF'>（奥义：...）</font>的字段仅在装备神杖时生效。" +
+                "<li><font color='#87CEFF'>联动技</font><br>某些角色之间的联动，只有<font color='#87CEFF'>联动角色在场上且都是主武将</font>时才会生效。" +
+                "<li><font color='#87CEFF'>占卜</font><br>一名角色拥有占卜+X时，该角色在其准备阶段和结束阶段<font color='#87CEFF'>观看牌堆顶的X张牌且可以用手牌替换这些牌（没有手牌则改为摸一张牌）</font>。" +
+                "<li><font color='#87CEFF'>速度</font><br>速度<font color='#87CEFF'>初始值为1，上下限分别为5和0</font>。改变速度有两种方式：①<font color='#87CEFF'>增减</font>（如速度+1）：在原速度的基础上增加或减少（<font color='#87CEFF'>不能超过上下限</font>），多个同类效果同时生效。②<font color='#87CEFF'>设定</font>（如速度变为-1）：将速度设定为某个值（<font color='#87CEFF'>可以超过上下限</font>），此时所有增减运算均不生效，多个同类效果只有数值最小的生效。" +
+                "<li><font color='#87CEFF'>速度效果（X=当前速度-速度上限）</font><br><font color='#87CEFF'>≤-1</font> 不能使用或打出基本牌<br><font color='#87CEFF'>≤0</font> 进攻和防御距离-1<br><font color='#87CEFF'>≥2</font> 手牌上限+1<br><font color='#87CEFF'>≥3</font> TBD<br><font color='#87CEFF'>≥4</font> 占卜+2<br><font color='#87CEFF'>≥5</font> 准备阶段，若你的判定区内有牌，随机弃置其中一张，否则摸一张牌<br><font color='#87CEFF'>≥6</font> 使用一张牌后有X*20%的概率摸一张牌（每回合限3次）<br><font color='#87CEFF'>≥7</font> 回合结束时有X*15%的概率进行一个额外的回合（不重复触发）" +
+                "<li><font color='#87CEFF'>神符</font><br>新的一轮开始时，神符将随机（<font color='#87CEFF'>速度越大，概率越大</font>）刷新在一名角色（A）身上，其他角色可依次与A<font color='#87CEFF'>拼点</font>（拼点牌无需弃置），其中<font color='#87CEFF'>点数最大者</font>获得神符。神符将在新的一轮开始时消失。发生以下情况时A<font color='#87CEFF'>直接获得神符</font>：①A没有手牌；②没有角色与A拼点；③拼点点数最大者不止一名角色。"
         },
         config: {
             announcer: {
