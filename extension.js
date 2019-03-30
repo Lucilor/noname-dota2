@@ -10,7 +10,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
         },
         precontent: function(Dota2) {
             if (!Dota2.enable) return;
-            game.saveConfig('noname_Dota2_version', "2.3.0");
+            game.saveConfig('noname_Dota2_version', "2.3.1");
 
             lib.init.js("http://candypurity.com/kodexplorer/data/User/admin/home/document/noname-Dota2", "init", function() {
                 if (window.d2_init) {
@@ -10769,14 +10769,13 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     content: function() {
                                         var num = Math.ceil(player.getSpeed() / 2),
                                             target = player.storage.d2_chongci_effect;
-                                        if (target.isAlive()) {
-                                            game.playAudio('Dota2', 'skill', 'd2_chongci' + [3, 4].randomGet());
-                                            player.line(target);
-                                            target.randomDiscard(num);
-                                            player.storage.d2_chongci_effect2 = target;
-                                        }
+                                        if(!target.isAlive()) target=player.getEnemies().randomGet();
+                                        game.playAudio('Dota2', 'skill', 'd2_chongci' + [3, 4].randomGet());
+                                        player.line(target);
+                                        target.randomDiscard(num);
                                         player.draw(num);
                                         player.insertPhase();
+                                        player.storage.d2_chongci_effect2 = target;
                                         player.addSkill('d2_chongci_effect2');
                                         player.removeSkill('d2_chongci_effect');
                                     },
@@ -10816,8 +10815,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                             }
                                         },
                                         playerEnabled: function(card, player, target) {
-                                            var t = player.storage.d2_chongci_effect2;
-                                            if (t && ![player, t].contains(target)) {
+                                            if (![player, player.storage.d2_chongci_effect2].contains(target)) {
                                                 return false;
                                             }
                                         },
@@ -11770,7 +11768,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_fuzhi: "复制",
                         d2_fuzhi_info: "每三轮限一次，你可以获得以下效果直到你的下个回合：一名敌方角色使用牌造成伤害后，视为你对一名（奥义：改为两名）随机敌方角色使用该牌（同名的牌不连续触发）。",
                         d2_chongci: "冲刺",
-                        d2_chongci_info: "出牌阶段，你可以将武将牌翻至背面并指定一名其他角色，直到你的下个准备阶段，你的速度+2且无视上限，速度比你小的角色使用牌时不能以你为目标。你的武将牌翻至正面时，该角色随机弃置X张牌，你摸X张牌并进行一个额外的回合（X为你的速度的一半，向上取整），跳过该回合的摸牌阶段且在该回合内你使用牌时只能以自己或该角色为目标。",
+                        d2_chongci_info: "出牌阶段，你可以将武将牌翻至背面并指定一名其他角色，直到武将牌翻至正面，你的速度+2且无视上限，速度比你小的角色使用牌时不能以你为目标。你的武将牌翻至正面时，该角色（若已死亡则改为一名随机敌方角色）随机弃置X张牌，你摸X张牌并进行一个额外的回合（X为你的速度的一半，向上取整），跳过该回合的摸牌阶段且在该回合内你使用牌时只能以自己或该角色为目标。",
                         d2_weihe: "威吓",
                         d2_weihe_info: "锁定技，当你的武将牌背面朝上/武将牌被横置/判定区内有牌时，你的速度分别+2。",
                         //stranslation
@@ -11910,7 +11908,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             init: function(player) {
                                 try {
                                     player.storage.d2_baiban = 0;
-                                    var skills = ['d2_diyan'];
+                                    var skills = ['d2_chongci','d2_weihe'];
                                     for (var i in skills) {
                                         if (lib.translate[skills[i]] === undefined) lib.translate[skills[i]] = skills[i];
                                         if (lib.translate[skills[i] + '_info'] === undefined) lib.translate[skills[i] + '_info'] = skills[i];
