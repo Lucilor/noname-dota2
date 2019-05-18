@@ -415,7 +415,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_bloodseeker: "嗜血狂魔史德利古尔是通过仪式严格甄选出的猎手，更准确的说，他是剥皮双子忠实的走狗，他从常年云雾缭绕的噬血之峰被派下去搜寻鲜血。剥皮双子需要海量的鲜血来获得满足和安抚，而如果当地的祭祀没能满足他们，他们就会抽干这个高原王国所有人民的鲜血。因此史德利古尔总是外出进行屠戮。他能榨取出血液之中的生命之力，然后这些能量通过他武器和护甲上的附魔标记立刻流向双子。多年以来，他一直是一条得力的走狗，在战斗时他像豺狼一样残暴。据说，在嗜血狂魔那涌动着对鲜血的渴望的面具之下，能够直视剥皮双子那可怖的嘴脸。",
                         d2_darkSeer: "迅捷如风，足智多谋，黑暗贤者依什卡菲尔并不需要多么锋利的武器来搏斗，他总是运用强大的心灵之力来征服敌人。他有着颠覆战局使之对己方有利的天才。迎着欢呼和敬意，他从一个叫做“幻墙之末”的世界走了出来，并不热衷于这个世界的纷争——他是一个来自现实世界之外的勇者。曾经，黑暗贤者是备受人民尊敬的将军，是神王达玛瑞克斯麾下英勇的保卫者，然而他的军队在边境大战的最后几天，被一股更为强大的力量悉数歼灭。面临如此惨败，他绝望的做出了最后一个决定：引诱着敌军进入了幻墙迷宫。在他即将被捕的前一刻，他穿过幻墙，释放出强大的黑暗能量，将幻墙永远的封印起来。当飞扬的尘土归于平静以后，他发现他成功的拯救了自己的人民，而自己却沐浴在另一个世界的阳光下，亦真亦幻，无法回到现实世界。现在，他决心以一名战略家的身份来证明自己的价值，并且立誓要让这个新的世界见识他那伟大的谋略。",
                         d2_spiritBreaker: "裂魂人巴拉森来自元素领域，他高傲、强大、凶猛且精通元素之力，来到物质世界参与那些会影响到元素世界的事件。为此他准备了一个能派上用处的形态，既存在于我们的物质世界，又存在于物质世界之外。他的物理形态来自于我们的物质世界，又像牛又像人，有蹄和手，这个外表象征着他的力量、速度与狡猾。他戴着的鼻环则暗示了他侍奉于一位藏在幕后的主人，而这个世界对他来说不过是元素世界的影子。",
-                        d2_luna: "她曾经是被称为平原之灾的残酷领导者，率领着众多爪牙和野兽，敢于在任何地方肆虐。但不知为何沦落为现在这副样子。远离故土，饥饿至半疯状态流浪了好几个月，她的军队早已成为了尸体，甚至某些更糟的东西。当她站在一片古老森林的边缘时，那古老的树枝之间有一双灼热的眼睛正在暗中监视她。在这落幕的黄昏中，某种美丽但致命的野兽正在寻找一顿美餐。它悄无声息的转身离开了。愤怒占据了她的大脑。她紧紧抓住手中生锈的匕首，冲向那只野兽，只为寻回一丝曾经的荣誉。但这只猎物却无法被抓住。她三次将它逼进岩石和树木的死角，但每次她要扑上去抓住它时，都只能看见一丝褐色残影冲进森林的深处。不过由于满月的月光十分明亮，这头野兽的足迹很容易追踪。当一路追到一座高山开阔的山顶上时，这头体型巨大的野兽就那么坐在那里，专注地等待着她。当她挥起匕首刺过去时，野兽后退了一下，然后咆哮着冲向她。在坚持了这么久之后，在这片陌生的土地上，她似乎感到了自己的死期终于到来了。她平静的站在那里，准备接受结局。但在这一瞬间，野兽夺下了她手中的匕首，然后消失进了树林中。此时万物归于平静，几个戴头巾的身影靠近了她。她们用虔诚的语气告诉她，月之女神赛莉蒙妮选择了她，并指引了她，也测试了她。在不知不觉中，她已经通过了银夜森林的守卫者-暗月骑士的神圣仪式。",
+                        // d2_luna: "她曾经是被称为平原之灾的残酷领导者，率领着众多爪牙和野兽，敢于在任何地方肆虐。但不知为何沦落为现在这副样子。远离故土，饥饿至半疯状态流浪了好几个月，她的军队早已成为了尸体，甚至某些更糟的东西。当她站在一片古老森林的边缘时，那古老的树枝之间有一双灼热的眼睛正在暗中监视她。在这落幕的黄昏中，某种美丽但致命的野兽正在寻找一顿美餐。它悄无声息的转身离开了。愤怒占据了她的大脑。她紧紧抓住手中生锈的匕首，冲向那只野兽，只为寻回一丝曾经的荣誉。但这只猎物却无法被抓住。她三次将它逼进岩石和树木的死角，但每次她要扑上去抓住它时，都只能看见一丝褐色残影冲进森林的深处。不过由于满月的月光十分明亮，这头野兽的足迹很容易追踪。当一路追到一座高山开阔的山顶上时，这头体型巨大的野兽就那么坐在那里，专注地等待着她。当她挥起匕首刺过去时，野兽后退了一下，然后咆哮着冲向她。在坚持了这么久之后，在这片陌生的土地上，她似乎感到了自己的死期终于到来了。她平静的站在那里，准备接受结局。但在这一瞬间，野兽夺下了她手中的匕首，然后消失进了树林中。此时万物归于平静，几个戴头巾的身影靠近了她。她们用虔诚的语气告诉她，月之女神赛莉蒙妮选择了她，并指引了她，也测试了她。在不知不觉中，她已经通过了银夜森林的守卫者-暗月骑士的神圣仪式。",
                         //cintro
                     },
                     characterTitle: {
@@ -1061,7 +1061,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             content: function() {
                                 "step 0"
                                 event.top = get.cards(player.getScry());
-                                var num=player.countCards('h')?[1,player.countCards('h')]:0;
+                                var num=player.countCards('h')?[1,player.countCards('h')]:Infinity;
                                 player.chooseCardButton(event.top, '选择要交换的牌', num).ai = function(button) {
                                     var val = get.value(button.link);
                                     if (val < 0) return -10;
@@ -12181,7 +12181,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             init: function(player) {
                                 try {
                                     player.storage.d2_baiban = 0;
-                                    var skills = ['d2_modian','xiaoji'];
+                                    var skills = ['d2_modian','xiaoji','zhijian'];
                                     for (var i in skills) {
                                         if (lib.translate[skills[i]] === undefined) lib.translate[skills[i]] = skills[i];
                                         if (lib.translate[skills[i] + '_info'] === undefined) lib.translate[skills[i] + '_info'] = skills[i];
@@ -12216,9 +12216,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 }
                             },
                             content: function() {
-                                // player.draw();
-                                player.turnOver();
-                                // game.players[1].damage();
+                                player.gain(player.getCards('e'))
                             },
                             group: 'd2_baiban_norune',
                             // speed: [1, 2,true],
@@ -13317,32 +13315,24 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             process: function(player, origin) {
                                 var mirror = origin + '_mirror';
                                 lib.translate[mirror] = lib.translate[origin];
-                                lib.translate[mirror + '_info'] = '<span style="color:red">注意：此牌只起占位作用，若要拿鞋请拿另一张！</span>';
+                                lib.translate[mirror + '_info'] = lib.translate[origin + '_info'];
                                 lib.card[mirror] = lib.card[mirror] || {
                                     fullimage: true,
                                     type: "equip",
                                     subtype: "equip4",
                                     nopower: true,
                                     nomod: true,
-                                    vanish: true,
                                     onLose: function() {
-                                        if (!player.getEquip(3)) return;
-                                        var origin = player.getEquip(3);
+                                        var origin = player.getEquip(3),card=this.card;
                                         if (origin && lib.card[origin.name + '_mirror']) {
                                             origin.remove();
-                                            card=this.card;
-                                            card.init([card.suit, card.number, origin.name, card.nature]);
-                                        } else {
-                                            game.log(2);
-                                            // var card=this.card;
-                                            // player.discard(card, false)._triggered = null;
-                                            // game.removeDiscardedCard(card.name);
                                         }
+                                        card.init([card.suit, card.number, card.name.replace(/_mirror/g,''), card.nature]);
                                     },
                                     ai: {
                                         order: 10,
-                                        value: 6,
-                                        useful: 8,
+                                        value: 8,
+                                        useful: 10,
                                         result: {
                                             player: 1,
                                         }
@@ -14023,12 +14013,12 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             usable: 1,
                             filter: function(event, player) {
                                 return game.hasPlayer(function(current) {
-                                    return current.countCards('h') < current.hp;
+                                    return current.countCards('h') < current.maxHp;
                                 });
                             },
                             selectTarget: [1, 3],
                             filterTarget: function(card, player, target) {
-                                return target.countCards('h') < target.hp;
+                                return target.countCards('h') < target.maxHp;
                             },
                             multitarget: true,
                             multiline: true,
@@ -14227,14 +14217,14 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         return target.hasSkill('d2_bootsOfTravel_skill');
                                     },
                                     filter: function(event, player) {
-                                        return !player.hasSkill('d2_bootsOfTravel_skill')&&!player.hasSkill('d2_bootsOfTravel2_skill')&&game.hasPlayer(function(current){
-                                            return current.hasSkill('d2_bootsOfTravel_skill');
+                                        return game.hasPlayer(function(current){
+                                            return current.hasSkill('d2_bootsOfTravel_skill')&&current!=player;
                                         });
                                     },
                                     check: function(card) {
                                         var player = get.owner(card);
                                         var players = game.filterPlayer(function(current) {
-                                            return current.hasSkill('d2_bootsOfTravel_skill');
+                                            return current.hasSkill('d2_bootsOfTravel_skill')&&current!=player;
                                         });
                                         var friend = false;
                                         for (var i = 0; i < players.length; i++) {
@@ -14297,7 +14287,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                                 }
                                             }
                                         },
-                                        threaten: 0.8
+                                        threaten: 1.1
                                     }
                                 },
                                 upgrade: {
@@ -14325,7 +14315,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         },
                         d2_bootsOfTravel2_skill: {
                             speed: [1, 2],
-                            global: 'd2_bootsOfTravel_skill_take',
+                            group:'d2_bootsOfTravel_skill',
                             enable: 'phaseUse',
                             usable: 1,
                             selectCard: [1, 2],
@@ -14392,7 +14382,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         }
                                     }
                                 },
-                                threaten: 0.8
+                                threaten: 1.2
                             }
                         },
                         //iskill
@@ -14457,7 +14447,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_arcaneBoots: "秘法鞋",
                         d2_arcaneBoots_info: "①锁定技，速度+1；②出牌阶段限一次，你可以令至多三名手牌数小于体力值的角色摸一张牌。",
                         d2_arcaneBoots_skill: "秘法",
-                        d2_arcaneBoots_skill_info: "出牌阶段限一次，你可以令至多三名手牌数小于体力值的角色摸一张牌。",
+                        d2_arcaneBoots_skill_info: "出牌阶段限一次，你可以令至多三名手牌数小于体力上限的角色摸一张牌。",
                         d2_phaseBoots: "相位鞋",
                         d2_phaseBoots_info: "①锁定技，速度+1；②出牌阶段限一次，你可以弃置一张牌获得以下效果直到你的下个回合：速度+1，你受到的下一次伤害-1。",
                         d2_phaseBoots_skill: "相位",
@@ -14854,7 +14844,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
         help: {
             Dota2: "<ul><li><font color='#87CEFF'>阿哈利姆神杖</font><br>拥有神杖的英雄将领悟技能的奥义，技能描述中<font color='#87CEFF'>（奥义：...）</font>的字段仅在装备神杖时生效。" +
                 "<li><font color='#87CEFF'>联动技</font><br>某些角色之间的联动，只有<font color='#87CEFF'>联动角色在场上且都是主武将</font>时才会生效。" +
-                "<li><font color='#87CEFF'>占卜</font><br>一名角色拥有占卜+X时，该角色在其准备阶段和结束阶段<font color='#87CEFF'>观看牌堆顶的X张牌且可以用手牌替换这些牌（没有手牌则改为摸一张牌）</font>。" +
+                "<li><font color='#87CEFF'>占卜</font><br>一名角色拥有占卜+X时，该角色在其准备阶段和结束阶段<font color='#87CEFF'>观看牌堆顶的X张牌且可以用手牌替换这些牌</font>。" +
                 "<li><font color='#87CEFF'>速度</font><br>速度<font color='#87CEFF'>初始值为1，上下限分别为5和0</font>。改变速度有两种方式：①<font color='#87CEFF'>增减</font>（如速度+1）：在原速度的基础上增加或减少（<font color='#87CEFF'>不能超过上下限</font>），多个同类效果同时生效。②<font color='#87CEFF'>设定</font>（如速度变为-1）：将速度设定为某个值（<font color='#87CEFF'>可以超过上下限</font>），此时所有增减运算均不生效，多个同类效果只有数值最小的生效。" +
                 "<li><font color='#87CEFF'>速度效果（X=当前速度-速度上限）</font><br><font color='#87CEFF'>≤-1</font> 不能使用或打出基本牌<br><font color='#87CEFF'>≤0</font> 进攻和防御距离-1<br><font color='#87CEFF'>≥2</font> 手牌上限+1<br><font color='#87CEFF'>≥3</font> 占卜+2<br><font color='#87CEFF'>≥4</font> 使用牌无距离限制<br><font color='#87CEFF'>≥5</font> 准备阶段，若你的判定区内有牌，随机弃置其中一张，否则摸一张牌<br><font color='#87CEFF'>≥6</font> 使用一张牌后有X*20%的概率摸一张牌（每回合限3次）<br><font color='#87CEFF'>≥7</font> 回合结束时有X*15%的概率进行一个额外的回合（不重复触发）" +
                 "<li><font color='#87CEFF'>神符</font><br>新的一轮开始时，神符将随机（<font color='#87CEFF'>速度越大，概率越大</font>）刷新在一名角色（A）身上，其他角色可依次与A<font color='#87CEFF'>拼点</font>（拼点牌无需弃置），其中<font color='#87CEFF'>点数最大者</font>获得神符。神符将在新的一轮开始时消失。发生以下情况时A<font color='#87CEFF'>直接获得神符</font>：①A没有手牌；②没有角色与A拼点；③拼点点数最大者不止一名角色。"
