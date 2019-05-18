@@ -10,7 +10,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
         },
         precontent: function(Dota2) {
             if (!Dota2.enable) return;
-            game.saveConfig('noname_Dota2_version', "2.3.1");
+            game.saveConfig('noname_Dota2_version', "2.3.2");
 
             lib.init.js("http://candypurity.com/kodexplorer/data/User/admin/home/document/noname-Dota2", "init", function() {
                 if (window.d2_init) {
@@ -358,6 +358,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_spiritBreaker: ["male", "wei", 4, ["d2_chongci", "d2_weihe"],
                             []
                         ],
+                        // d2_luna: ["female", "wei", 3, ["d2_yuexiang","d2_yueshen_qishi"],
+                        //     []
+                        // ],
                         //character
                     },
                     characterIntro: {
@@ -412,6 +415,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_bloodseeker: "嗜血狂魔史德利古尔是通过仪式严格甄选出的猎手，更准确的说，他是剥皮双子忠实的走狗，他从常年云雾缭绕的噬血之峰被派下去搜寻鲜血。剥皮双子需要海量的鲜血来获得满足和安抚，而如果当地的祭祀没能满足他们，他们就会抽干这个高原王国所有人民的鲜血。因此史德利古尔总是外出进行屠戮。他能榨取出血液之中的生命之力，然后这些能量通过他武器和护甲上的附魔标记立刻流向双子。多年以来，他一直是一条得力的走狗，在战斗时他像豺狼一样残暴。据说，在嗜血狂魔那涌动着对鲜血的渴望的面具之下，能够直视剥皮双子那可怖的嘴脸。",
                         d2_darkSeer: "迅捷如风，足智多谋，黑暗贤者依什卡菲尔并不需要多么锋利的武器来搏斗，他总是运用强大的心灵之力来征服敌人。他有着颠覆战局使之对己方有利的天才。迎着欢呼和敬意，他从一个叫做“幻墙之末”的世界走了出来，并不热衷于这个世界的纷争——他是一个来自现实世界之外的勇者。曾经，黑暗贤者是备受人民尊敬的将军，是神王达玛瑞克斯麾下英勇的保卫者，然而他的军队在边境大战的最后几天，被一股更为强大的力量悉数歼灭。面临如此惨败，他绝望的做出了最后一个决定：引诱着敌军进入了幻墙迷宫。在他即将被捕的前一刻，他穿过幻墙，释放出强大的黑暗能量，将幻墙永远的封印起来。当飞扬的尘土归于平静以后，他发现他成功的拯救了自己的人民，而自己却沐浴在另一个世界的阳光下，亦真亦幻，无法回到现实世界。现在，他决心以一名战略家的身份来证明自己的价值，并且立誓要让这个新的世界见识他那伟大的谋略。",
                         d2_spiritBreaker: "裂魂人巴拉森来自元素领域，他高傲、强大、凶猛且精通元素之力，来到物质世界参与那些会影响到元素世界的事件。为此他准备了一个能派上用处的形态，既存在于我们的物质世界，又存在于物质世界之外。他的物理形态来自于我们的物质世界，又像牛又像人，有蹄和手，这个外表象征着他的力量、速度与狡猾。他戴着的鼻环则暗示了他侍奉于一位藏在幕后的主人，而这个世界对他来说不过是元素世界的影子。",
+                        d2_luna: "她曾经是被称为平原之灾的残酷领导者，率领着众多爪牙和野兽，敢于在任何地方肆虐。但不知为何沦落为现在这副样子。远离故土，饥饿至半疯状态流浪了好几个月，她的军队早已成为了尸体，甚至某些更糟的东西。当她站在一片古老森林的边缘时，那古老的树枝之间有一双灼热的眼睛正在暗中监视她。在这落幕的黄昏中，某种美丽但致命的野兽正在寻找一顿美餐。它悄无声息的转身离开了。愤怒占据了她的大脑。她紧紧抓住手中生锈的匕首，冲向那只野兽，只为寻回一丝曾经的荣誉。但这只猎物却无法被抓住。她三次将它逼进岩石和树木的死角，但每次她要扑上去抓住它时，都只能看见一丝褐色残影冲进森林的深处。不过由于满月的月光十分明亮，这头野兽的足迹很容易追踪。当一路追到一座高山开阔的山顶上时，这头体型巨大的野兽就那么坐在那里，专注地等待着她。当她挥起匕首刺过去时，野兽后退了一下，然后咆哮着冲向她。在坚持了这么久之后，在这片陌生的土地上，她似乎感到了自己的死期终于到来了。她平静的站在那里，准备接受结局。但在这一瞬间，野兽夺下了她手中的匕首，然后消失进了树林中。此时万物归于平静，几个戴头巾的身影靠近了她。她们用虔诚的语气告诉她，月之女神赛莉蒙妮选择了她，并指引了她，也测试了她。在不知不觉中，她已经通过了银夜森林的守卫者-暗月骑士的神圣仪式。",
                         //cintro
                     },
                     characterTitle: {
@@ -783,23 +787,25 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     mark: true,
                                     marktext: '符',
                                     init: function(player) {
-                                        player.storage.d2_rune_haste = 4;
-                                        var list = [];
-                                        for (var i = 1; i <= 5; i++) {
-                                            if (!player.getEquip(i)) {
-                                                var name = get.inpile('equip' + i).randomGet();
-                                                if (name) {
-                                                    var card = game.createCard(name);
-                                                    list.push(card);
-                                                    player.equip(card)._triggered = null;
+                                        try{
+                                            player.storage.d2_rune_haste = 4;
+                                            var list = [];
+                                            for (var i = 1; i <= 5; i++) {
+                                                if (!player.getEquip(i)) {
+                                                    var name = get.inpile('equip' + i).randomGet();
+                                                    if (name) {
+                                                        var card = game.createCard(name);
+                                                        list.push(card);
+                                                        player.equip(card)._triggered = null;
+                                                    }
                                                 }
                                             }
-                                        }
-                                        if (list.length) {
-                                            player.$draw(list);
-                                        }
-                                        player.storage.d2_rune_haste_lose = list;
-                                        player.storage.d2_rune_haste_gain = [];
+                                            if (list.length) {
+                                                player.$draw(list);
+                                            }
+                                            player.storage.d2_rune_haste_lose = list;
+                                            player.storage.d2_rune_haste_gain = [];
+                                        } catch(e) {alert(e)}
                                     },
                                     onremove: function(player) {
                                         var cards = player.storage.d2_rune_haste_lose;
@@ -821,22 +827,26 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         }
                                     },
                                     filter: function(event, player) {
-                                        for (var i in event.cards) {
-                                            if (player.storage.d2_rune_haste_lose.contains(event.cards[i]) || player.storage.d2_rune_haste_gain.contains(event.cards[i])) return true;
-                                        }
-                                        return false;
+                                        try{
+                                            for (var i in event.cards) {
+                                                if (player.storage.d2_rune_haste_lose.contains(event.cards[i]) || player.storage.d2_rune_haste_gain.contains(event.cards[i])) return true;
+                                            }
+                                            return false;
+                                        } catch(e) {alert(e)}
                                     },
                                     content: function() {
-                                        for (var i in trigger.cards) {
-                                            if (trigger.name == 'lose') {
-                                                player.storage.d2_rune_haste_lose.remove(trigger.cards[i]);
-                                                player.storage.d2_rune_haste_gain.push(trigger.cards[i]);
+                                        try{
+                                            for (var i in trigger.cards) {
+                                                if (trigger.name == 'lose') {
+                                                    player.storage.d2_rune_haste_lose.remove(trigger.cards[i]);
+                                                    player.storage.d2_rune_haste_gain.push(trigger.cards[i]);
+                                                }
+                                                if (trigger.name == 'gain') {
+                                                    player.storage.d2_rune_haste_gain.remove(trigger.cards[i]);
+                                                    player.storage.d2_rune_haste_lose.push(trigger.cards[i]);
+                                                }
                                             }
-                                            if (trigger.name == 'gain') {
-                                                player.storage.d2_rune_haste_gain.remove(trigger.cards[i]);
-                                                player.storage.d2_rune_haste_lose.push(trigger.cards[i]);
-                                            }
-                                        }
+                                        } catch(e) {alert(e)}
                                     }
                                 },
                                 regeneration: {
@@ -1051,7 +1061,8 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             content: function() {
                                 "step 0"
                                 event.top = get.cards(player.getScry());
-                                player.chooseCardButton(event.top, '选择要交换的牌', [1, player.countCards('h')]).ai = function(button) {
+                                var num=player.countCards('h')?[1,player.countCards('h')]:0;
+                                player.chooseCardButton(event.top, '选择要交换的牌', num).ai = function(button) {
                                     var val = get.value(button.link);
                                     if (val < 0) return -10;
                                     if (player.skipList.contains('phaseUse') && trigger.name == 'phaseBegin') {
@@ -3660,8 +3671,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         return event != player && player.hasSkill('d2_jianyu') && player.storage.d2_jianyu.length < 4 && event.card && event.card.name == 'sha';
                                     },
                                     content: function() {
-                                        player.storage.d2_jianyu.push(trigger.card);
-                                        player.$gain2(trigger.card);
+                                        var card = get.itemtype(trigger.card) == 'card' ? trigger.card : game.createCard('sha');
+                                        player.storage.d2_jianyu.push(card);
+                                        player.$gain2(card);
                                         player.markSkill('d2_jianyu');
                                     },
                                 },
@@ -3689,7 +3701,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     var check3 = game.hasPlayer(function(current) {
                                         return current.isDamaged() && get.attitude(player.current) > 0;
                                     });
-                                    if (ui.selected.cards.length) {
+                                    if (ui.selected.cards&&ui.selected.cards.length) {
                                         var selectedCard = ui.selected.cards[0];
                                         if (player.isEnhanced()) {
                                             if (get.color(selectedCard) == get.color(card)) return 10;
@@ -3784,8 +3796,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             trigger: {
                                 global: "phaseEnd",
                             },
-                            forced: true,
-                            popup: false,
+                            silent:true,
                             mark: true,
                             intro: {
                                 content: "一名角色的回合结束阶段回复一点体力，剩余#回合",
@@ -4056,7 +4067,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 result: {
                                     player: 1,
                                     target: function(player, target) {
-                                        if (target.hp <= 1) return -3;
+                                        if (target.hp <= 1) return -4;
                                         return -2;
                                     },
                                 },
@@ -6389,6 +6400,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     intro: {
                                         content: "共有#个残岩",
                                     },
+                                    init:function(player){
+                                        player.storage.d2_tuling_mark=0;
+                                    },
                                 },
                                 gather: {
                                     trigger: {
@@ -6727,7 +6741,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     player.unmarkSkill('d2_tianqiu');
                                     player.storage.d2_shizhi_damage = true;
                                 } else {
-                                    if (player.isEnhanced() && trigger.player.countCards('he')) player.gainPlayerCard('奥术天球：获得' + get.translation(trigger.player) + '一张手牌', trigger.player, 'h', true);
+                                    if (player.isEnhanced() && trigger.player.countCards('he')) player.gainPlayerCard('奥术天球：获得{0}一张手牌'.format(get.translation(trigger.player)), trigger.player, 'h', true);
                                     else player.draw();
                                     player.storage.d2_tianqiu++;
                                     player.markSkill('d2_tianqiu');
@@ -6736,6 +6750,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             },
                         },
                         d2_hengshi: {
+                            audio: "ext:Dota2:2",
                             enable: 'phaseUse',
                             usable: 2,
                             filter: function(event, player) {
@@ -7278,20 +7293,14 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             },
                             round: 2,
                             check: function(event, player) {
-                                var cards = get.discardedInPhase(player.storage.d2_huisu_before);
-                                if (!cards || cards.length < 2) return false;
-                                for (var i = 0; i < cards.length; i++) {
-                                    for (var j = 0; i < cards.length; j++) {
-                                        if (get.value(cards[j].name) > get.value(cards[j + 1].name)) {
-                                            var tmp = cards[j];
-                                            cards[j] = cards[j + 1];
-                                            cards[j + 1] = tmp;
-                                        }
+                                try{
+                                    var cards = get.discardedInPhase(player.storage.d2_huisu_before),value=0;
+                                    if (!cards || cards.length < 2) return false;
+                                    for (var i = 0; i < cards.length; i++) {
+                                        value+=get.value(cards[i].name);
                                     }
-                                }
-                                var max = get.value(cards[cards.length - 1].name) + get.value(cards[cards.length - 2].name);
-                                var min = get.value(cards[0].name) + get.value(cards[1].name);
-                                return min > 3 && max > 6;
+                                    return value/cards.length>5;
+                                } catch(e) {alert(e)}
                             },
                             filter: function(event, player) {
                                 return get.discardedInPhase(player.storage.d2_huisu_before);
@@ -9453,7 +9462,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 if (target.isHealthy()) {
                                     result.control = '伤害';
                                 } else {
-                                    player.chooseControl('回复', '伤害').set('prompt', '暗愈：令' + get.translation(target) + '回复一点体力，或对其距离1以内的一名其他角色造成一点伤害').set('ai', function(target) {
+                                    player.chooseControl('回复', '伤害').set('prompt', '暗愈：令' + get.translation(target) + '回复一点体力，或对其距离1以内的一名其他角色造成一点伤害').set('ai', function() {
                                         if (get.attitude(player, target) > 0) return '回复';
                                         return '伤害';
                                     });
@@ -9552,8 +9561,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     ai: {
                                         effect: {
                                             target: function(card, player, target) {
-                                                if (get.tag(card, 'damage') || get.tag(card, 'loseHp')) {
-                                                    if (target.hp <= target.storage.hutian2.length) return 0;
+                                                if (target.hp <= 1) {
+                                                    if (get.tag(card, 'loseHp')) return 0;
+                                                    if (get.tag(card, 'damage') && target.hujia==0) return 0;
                                                 }
                                             }
                                         }
@@ -9816,6 +9826,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 }, interval);
                                 ui.volumn.style.display = '';
                                 ui.silence.remove();
+                                delete ui.silence;
                             },
                             content: function() {
                                 var players = game.filterPlayer(function(current) {
@@ -9950,7 +9961,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 },
                                 damage: {
                                     trigger: {
-                                        player: 'damageBegin'
+                                        source: 'damageBegin'
                                     },
                                     forced: true,
                                     onremove: true,
@@ -9981,6 +9992,14 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 player: 'phaseUseBegin'
                             },
                             direct: true,
+                            check:function(event,player){
+                                var value=0,cards=player.getCards('h');
+                                for(var i=0;i<cards.length;i++){
+                                    value+=get.value(cards[i]);
+                                }
+                                if (value<6) return true;
+                                return false;
+                            },
                             content: function() {
                                 'step 0'
                                 player.chooseTarget(get.prompt('d2_shixiang'), function(card, player, target) {
@@ -10076,20 +10095,23 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             },
                         },
                         d2_modian: {
+                            derivation:['d2_anyanshu','d2_mozhaoshu','d2_zuzhoushu'],
                             audio: "ext:Dota2:2",
                             enable: 'phaseUse',
                             usable: 1,
                             filter: function(event, player) {
-                                var list = ['d2_anyanshu', 'd2_mozhaoshu', 'd2_zuzhoushu'];
-                                var used = player.storage.d2_modian;
-                                if (player.hasSkill('d2_anyanshu_effect')) list.remove('d2_anyanshu');
-                                if (player.hasSkill('d2_mozhaoshu_effect')) list.remove('d2_mozhaoshu');
-                                if (player.hasSkill('d2_zuzhoushu_clear')) list.remove('d2_zuzhoushu');
-                                for (var i = 0; i < used.length; i++) {
-                                    if (list.contains(used[i])) list.remove(used[i]);
-                                }
-                                player.d2_modian_list = list;
-                                return list.length > 0;
+                                try{
+                                    var list = ['d2_anyanshu', 'd2_mozhaoshu', 'd2_zuzhoushu'];
+                                    var used = player.storage.d2_modian;
+                                    if (player.hasSkill('d2_anyanshu_effect')) list.remove('d2_anyanshu');
+                                    if (player.hasSkill('d2_mozhaoshu_effect')) list.remove('d2_mozhaoshu');
+                                    if (player.hasSkill('d2_zuzhoushu_clear')) list.remove('d2_zuzhoushu');
+                                    for (var i = 0; i < used.length; i++) {
+                                        if (list.contains(used[i])) list.remove(used[i]);
+                                    }
+                                    player.d2_modian_list = list;
+                                    return list.length > 0;
+                                } catch(e){alert(e)}
                             },
                             content: function() {
                                 'step 0'
@@ -10167,27 +10189,30 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             filterCard: true,
                             filterTarget: true,
                             check: function(card) {
-                                var player = _status.event.player;
-                                var num = game.filterPlayer(function(current) {
-                                    return current.isDamaged() && player.getFriends(true).contains(current);
-                                }).length;
-                                if (num < 1 && get.color(card) == 'red') return 0;
-                                return 6 - get.value(card);
+                                try{
+                                    var player = _status.event.player;
+                                    var num = game.filterPlayer(function(current) {
+                                        return current.isDamaged() && player.getFriends(true).contains(current);
+                                    }).length;
+                                    if (num < 1 && get.color(card) == 'red') return 0;
+                                    return 6 - get.value(card);
+                                } catch(e) {alert(e)}
                             },
                             content: function() {
-                                var color = get.color(event.cards[0]);
-                                player.storage.d2_anyanshu_type = color;
-                                player.storage.d2_anyanshu_effect = target;
-                                player.removeSkill('d2_anyanshu');
-                                player.addSkill('d2_anyanshu_effect');
-                                player.storage.d2_modian.push('d2_anyanshu');
+                                try{
+                                    var color = get.color(event.cards[0]);
+                                    player.storage.d2_anyanshu_type = color;
+                                    player.storage.d2_anyanshu_effect = target;
+                                    player.removeSkill('d2_anyanshu');
+                                    player.addSkill('d2_anyanshu_effect');
+                                    player.storage.d2_modian.push('d2_anyanshu');
+                                } catch(e){alert(e)}
                             },
                             ai: {
-                                order: 9,
+                                order: 10,
                                 result: {
                                     target: function(player, target) {
                                         var color = get.color(ui.selected.cards[0]);
-                                        game.log(ui.selected.cards[0]);
                                         if (color == 'red') return get.recoverEffect(target, player, target);
                                         if (color == 'black') return get.damageEffect(target, player, target);
                                     }
@@ -10246,7 +10271,11 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 return true;
                             },
                             content: function() {
+                                var names=player.getNames();
+                                var source=player.name;
+                                if(player.name2=='d2_warlock') source=player.name2;
                                 var subPlayer = player.addSubPlayer({
+                                    source:source,
                                     name: 'd2_infernoGolemSmall',
                                     skills: lib.character['d2_infernoGolemSmall'][3],
                                     hp: lib.character['d2_infernoGolemSmall'][2],
@@ -10280,6 +10309,12 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         }
                                     },
                                 }
+                            },
+                            ai:{
+                                order:10,
+                                result:{
+                                    player:2,
+                                },
                             },
                         },
                         d2_zuzhoushu: {
@@ -10334,6 +10369,16 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     },
                                 },
                             },
+                            ai:{
+                                order:10,
+                                result:{
+                                    target:function(player,target){
+                                        if (ui.selected.targets.length == 1) return -1;
+                                        if (player.getEnemies().length == 1) return 1;
+                                        return -1;
+                                    }
+                                },
+                            },
                         },
                         d2_yiji: {
                             trigger: {
@@ -10367,16 +10412,19 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     game.playAudio("Dota2", "skill", "d2_yiji3");
                                 }
                                 'step 1'
+                                var names=player.getNames();
+                                var source=player.name;
+                                if(player.name2=='d2_warlock') source=player.name2;
                                 var subPlayer = player.addSubPlayer({
+                                    source:source,
                                     name: 'd2_infernoGolem',
                                     skills: lib.character['d2_infernoGolem'][3],
                                     hp: lib.character['d2_infernoGolem'][2],
                                     maxHp: lib.character['d2_infernoGolem'][2],
                                     hs: get.cards(3),
                                 });
+                                player.callSubPlayer(subPlayer);
                                 'step 2'
-                                player.callSubPlayer(player.getSubPlayers('d2_mozhaoshu').randomGet());
-                                'step 3'
                                 var list = player.getNames();
                                 for (var i = 0; i < list.length; i++) {
                                     if (list[i] && list[i].indexOf('subplayer_d2_infernoGolem_') == 0) {
@@ -10452,7 +10500,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         var check = game.hasPlayer(function(current) {
                                             return current != player && current.hasSkill('d2_jiaoke');
                                         });
-                                        return check && event.num < 0;
+                                        return check && event.num < 0 && player.isAlive();
                                     },
                                     content: function() {
                                         game.playAudio("Dota2", "skill", "d2_jiaoke" + [1, 2].randomGet());
@@ -10850,7 +10898,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     },
                                 },
                             },
-                            group: 'd2_weihe_mark',
+                            group: ['d2_weihe_mark','d2_weihe_enhance'],
                             subSkill: {
                                 mark: {
                                     trigger: {
@@ -10861,8 +10909,221 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         player.updateMarks();
                                     },
                                 },
+                                enhance:{
+                                    trigger:{
+                                        player:'phaseDrawBefore'
+                                    },
+                                    forced:true,
+                                    filter:function(event,player){
+                                        return player.isEnhanced();
+                                    },
+                                    content:function(){
+                                        trigger.num+=Math.ceil(player.getSpeed()/2);
+                                    }
+                                },
                             },
                         },
+                        d2_yuexiang:{
+                            derivation:['d2_yueguang','d2_xinyue','d2_yueshi','d2_manyue'],
+                            intro:{
+                                content:'共有#枚“月”标记'
+                            },
+                            init:function(player){
+                                player.storage.d2_yuexiang=0;
+                            },
+                            init2:function(player){
+                                game.broadcastAll(function(player){
+                                    player._d2_yuexiang_mark=player.mark('亏',{
+                                        content:'拥有技能【月光】、【新月】'
+                                    });
+                                },player);
+                                player.addAdditionalSkill('d2_yuexiang',['d2_yueguang','d2_xinyue']);
+                            },
+                            onremove:function(player){
+                                game.broadcastAll(function(player){
+                                    if(player._d2_yuexiang_mark){
+                                        player._d2_yuexiang_mark.delete();
+                                        delete player._d2_yuexiang_mark;
+                                    }
+                                },player);
+                                player.removeAdditionalSkill('d2_yuexiang');
+                                delete player.storage.d2_yuexiang;
+                            },
+                            group:'d2_yuexiang_enhance',
+                            subSkill:{
+                                enhance:{
+                                    trigger:{
+                                        player:'phaseBegin'
+                                    },
+                                    forced:true,
+                                    filter:function(event,player){
+                                        return player.isEnhanced();
+                                    },
+                                    content:function(){
+                                        player.storage.d2_yuexiang++;
+                                        player.markSkill('d2_yuexiang');
+                                    },
+                                },
+                            }
+                        },
+                        d2_yueguang:{
+                            audio: "ext:Dota2:4",
+                            enable:'phaseUse',
+                            usable:2,
+                            position:'he',
+                            filterTarget: function(card, player, target) {
+                                return player != target&&!target.hasSkill('d2_yueguang_dummy');
+                            },
+                            filterCard: function(card, player, target) {
+                                return get.suit(card);
+                            },
+                            filter:function(event,player){
+                                return player.countCards('he')>0;
+                            },
+                            check:function(card){
+                                return 8-get.value(card);
+                            },
+                            content:function(){
+                                'step 0'
+                                player.storage.d2_yuexiang++;
+                                player.markSkill('d2_yuexiang');
+                                if (player.storage.d2_yuexiang>3) {
+                                    game.broadcastAll(function(player){
+                                    if(!player._d2_yuexiang_mark) return;
+                                        player._d2_yuexiang_mark.name='盈';
+                                        player._d2_yuexiang_mark.skill='盈';
+                                        player._d2_yuexiang_mark.firstChild.innerHTML='盈';
+                                        player._d2_yuexiang_mark.info.content='拥有技能【月蚀】、【满月】';
+                                    },player);
+                                    player.addAdditionalSkill('d2_yuexiang',['d2_yueshi','d2_manyue']);
+                                    game.playAudio('Dota2', 'skill', 'd2_yuexiang' + [1,2].randomGet());
+                                }
+                                if (target.countCards('he')<=0) event.finish();
+                                'step 1'
+                                var suit=get.suit(event.cards[0]);
+                                if (target.countCards('he',{suit:suit})) {
+                                    target.chooseCard('弃置一张{0}牌，或令{1}获得你的一张牌'.format(get.translation(suit),get.translation(player)), function(card){
+                                        return get.suit(card)==suit;
+                                    }).ai = function(card) {
+                                        var val = get.value(card);
+                                        if (val < 0) return 10;
+                                        return 8-val;
+                                    };
+                                }
+                                'step 2'
+                                if (result.bool) {
+                                    target.discard(result.cards);
+                                } else {
+                                    player.gainPlayerCard('月光：获得{0}的一张牌'.format(get.translation(target)), target, true);
+                                }
+                            },
+                            subSkill:{
+                                dummy:{},
+                            },
+                            ai:{
+                                order:7,
+                                result:{
+                                    player:1,
+                                    target:function(player,target){
+                                        if (target.countCards('he')>0) return -2;
+                                        return -1;
+                                    },
+                                }
+                            },
+                        },
+                        d2_xinyue:{
+                            audio: "ext:Dota2:2",
+                            trigger:{
+                                player:'shaAfter'
+                            },
+                            usable:1,
+                            check:function(event,player){
+                                return true;
+                            },
+                            filter:function(event,player){
+                                return player.storage.d2_yuexiang>0&&player.getEnemies().length>1;
+                            },
+                            content:function(){
+                                'step 0'
+                                if(player.getEnemies().length<2) return;
+                                player.storage.d2_yuexiang--;
+                                if(player.storage.d2_yuexiang<=0) player.unmarkSkill('d2_yuexiang');
+                                'step 1'
+                                var sha=trigger.card;
+                                player.useCard(game.createCard(sha), player.getEnemies().removeArray(trigger.targets).randomGet(), false);
+                            },
+                        },
+                        d2_yueshi:{
+                            audio: "ext:Dota2:2",
+                            trigger:{
+                                player:'phaseUseBegin',
+                            },
+                            filter:function(event,player){
+                                return player.storage.d2_yuexiang>3&&player.getEnemies().length>0;
+                            },
+                            check:function(event,player){
+                                return true;
+                            },
+                            content:function(){
+                                'step 0'
+                                player.storage.d2_yuexiang-=4;
+                                if(player.storage.d2_yuexiang<=0) player.unmarkSkill('d2_yuexiang');
+                                else player.markSkill('d2_yuexiang');
+                                event.num=0;
+                                'step 1'
+                                var target=player.getEnemies(function(current){
+                                    current.addTempSkill('d2_yueshi_count');
+                                    return current.storage.d2_yueshi_count<2;
+                                }).randomGet();
+                                if (target) {
+                                    player.line(target,'thunder');
+                                    target.draw();
+                                    target.storage.d2_yueshi_count++;
+                                    event.target=target;
+                                } else {
+                                    event.goto(3);
+                                }
+                                'step 2'
+                                event.target.damage();
+                                if (++event.num<4) event.goto(1);
+                                'step 3'
+                                if (player.storage.d2_yuexiang<2) {
+                                    game.broadcastAll(function(player){
+                                    if(!player._d2_yuexiang_mark) return;
+                                        player._d2_yuexiang_mark.name='亏';
+                                        player._d2_yuexiang_mark.skill='亏';
+                                        player._d2_yuexiang_mark.firstChild.innerHTML='亏';
+                                        player._d2_yuexiang_mark.info.content='拥有技能【月光】、【新月】';
+                                    },player);
+                                    player.addAdditionalSkill('d2_yuexiang',['d2_yueguang','d2_xinyue']);
+                                    game.playAudio('Dota2', 'skill', 'd2_yuexiang' + [1,2].randomGet());
+                                }
+                            },
+                            subSkill:{
+                                count:{
+                                    init:function(player){
+                                        player.storage.d2_yueshi_count=0;
+                                    },
+                                    onremove:true,
+                                },
+                            },
+                        },
+                        d2_manyue:{
+                            audio: "ext:Dota2:2",
+                            trigger:{
+                                player:'phaseEnd'
+                            },
+                            forced:true,
+                            content:function(){
+                                'step 0'
+                                player.storage.d2_yuexiang++;
+                                player.markSkill('d2_yuexiang');
+                                player.draw();
+                                'step 1'
+                                if (player.isMinHp()) player.recover();
+                            },
+                        },
+                        d2_yueshen_qishi:{},
 
                         //skill
                         d2_visible: {
@@ -11229,7 +11490,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 }
                                 player.removeSkill(link, true);
                                 player.popup(link);
-                                _status.d2_mage_skills.remove(link);
                                 game.log(player, '失去了技能', '【', link, '】');
                                 player.recover();
                                 game.delay();
@@ -11402,6 +11662,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_bloodseeker: "血魔",
                         d2_darkSeer: "黑暗贤者",
                         d2_spiritBreaker: "裂魂人",
+                        d2_luna:"露娜",
                         //cname
 
                         _d2_firstBlood: "第一滴血",
@@ -11754,13 +12015,13 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_mozhaoshu: "魔召术",
                         d2_mozhaoshu_info: "弃置两张牌获得随从小型地狱火。",
                         d2_zuzhoushu: "诅咒术",
-                        d2_zuzhoushu_info: "依次选择两名角色，每当前者弃牌后后者弃置等量牌，然后前者弃置一张牌。",
+                        d2_zuzhoushu_info: "依次选择两名角色，直到你的下个准备阶段，每当前者弃牌后后者弃置等量牌。若如此做，前者弃置一张牌。",
                         d2_yiji: "仪祭",
                         d2_yiji_info: "觉醒技，你死亡前防止死亡，将体力回复至1，获得随从地狱火并切换至该随从（奥义：限定技，你可以在出牌阶段如此做）。",
                         d2_jiaoke: "焦渴",
-                        d2_jiaoke_info: "锁定技，①速度+X且无视上限（X为其他角色已损失体力值之和）；②体力值不大于1的角色不能闪避你的【杀】，你对其使用的普通锦囊牌不能被【无懈可击】响应。",
+                        d2_jiaoke_info: "锁定技，①你的速度+X且无视上限（X为其他角色已损失体力值之和）；②体力值不大于1的角色不能闪避你的【杀】，你对其使用的普通锦囊牌不能被【无懈可击】响应。",
                         d2_gelie: "割裂",
-                        d2_gelie_info: "每三轮限一次，出牌阶段，你可以令一名其他角色（若其未受伤则受到你造成的一点伤害）获得以下效果直到你的下个回合：使用一张牌后受到你对其造成的一点伤害（至多X+1次，X为其速度且至少为1；只在体力值大于1时生效）。",
+                        d2_gelie_info: "每三轮限一次，出牌阶段，你可以令一名（奥义：改为至多两名）其他角色（若其未受伤则受到你造成的一点伤害）获得以下效果直到你的下个回合：使用一张牌后受到你对其造成的一点伤害（至多X+1次，X为其速度且至少为1；只在体力值大于1时生效）。",
                         d2_zhenkong: "真空",
                         d2_zhenkong_info: "出牌阶段限一次，你可以弃置X张牌并指定X名其他角色，这些角色于其下个出牌阶段开始时随机使用三张手牌（无合理目标的牌除外）。",
                         d2_benteng: "奔腾",
@@ -11770,7 +12031,19 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_chongci: "冲刺",
                         d2_chongci_info: "出牌阶段，你可以将武将牌翻至背面并指定一名其他角色，直到武将牌翻至正面，你的速度+2且无视上限，速度比你小的角色使用牌时不能以你为目标。你的武将牌翻至正面时，该角色（若已死亡则改为一名随机敌方角色）随机弃置X张牌，你摸X张牌并进行一个额外的回合（X为你的速度的一半，向上取整），跳过该回合的摸牌阶段且在该回合内你使用牌时只能以自己或该角色为目标。",
                         d2_weihe: "威吓",
-                        d2_weihe_info: "锁定技，当你的武将牌背面朝上/武将牌被横置/判定区内有牌时，你的速度分别+2。",
+                        d2_weihe_info: "锁定技，当你的武将牌背面朝上/武将牌被横置/判定区内有牌时，你的速度分别+2（奥义：摸牌阶段你额外摸X张牌，X为你速度的一半，向上取整）。",
+                        d2_yuexiang:"月相",
+                        d2_yuexiang_info:"通常状态下，你拥有标记“亏”并拥有技能【月光】和【新月】。当该标记翻面为“盈”时，将该两项技能转化为【月蚀】和【满月】（奥义：准备阶段你获得一枚“月”标记）。",
+                        d2_yueguang:"月光",
+                        d2_yueguang_info:"出牌阶段限两次，你可以弃置一张牌获得一枚“月”标记（若你因此拥有四枚或更多“月”标记，将“亏”翻面），然后令一名其他角色选择一项：弃置一张与该牌花色相同的牌，或令你获得其一张牌。",
+                        d2_xinyue:"新月",
+                        d2_xinyue_info:"每回合限一次，你的【杀】结算完毕后，你可以弃置一枚“月”标记，视为你对一名除该【杀】目标外的随机敌方角色使用一张【杀】。",
+                        d2_yueshi:"月蚀",
+                        d2_yueshi_info:"出牌阶段开始时，你可以弃置四枚“月”标记（若你因此拥有少于两枚“月”标记，将“盈”翻面），然后执行以下操作四次：令一名随机敌方角色摸一张牌并受到你造成的一点伤害（每名角色至多两次）。",
+                        d2_manyue:"满月",
+                        d2_manyue_info:"锁定技，结束阶段你获得一枚“月”标记并摸一张牌，若你的体力值为全场最少（或之一），回复一点体力。",
+                        d2_yueshen_qishi:"月神",
+                        d2_yueshen_qishi_info:"联动技，觉醒技，你发动【月蚀】后令米拉娜回复四点体力（超出体力上限的部分改为摸牌）。",
                         //stranslation
 
                         d2_chaofeng: "嘲讽",
@@ -11908,37 +12181,33 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             init: function(player) {
                                 try {
                                     player.storage.d2_baiban = 0;
-                                    var skills = ['d2_chongci','d2_weihe'];
+                                    var skills = ['d2_modian','xiaoji'];
                                     for (var i in skills) {
                                         if (lib.translate[skills[i]] === undefined) lib.translate[skills[i]] = skills[i];
                                         if (lib.translate[skills[i] + '_info'] === undefined) lib.translate[skills[i] + '_info'] = skills[i];
                                     }
                                     var cards = [game.createCard('d2_aghanims', 'spade', 13)];
-                                    // for (var i = 0; i < 1; i++) {
-                                    //     cards.push(game.createCard('d2_refresherOrb', 'diamond'));
-                                    // }
+                                    for (var i = 0; i < 1; i++) {
+                                        cards.push(game.createCard('dawan', 'diamond'));
+                                        cards.push(game.createCard('dilu', 'diamond'));
+                                    }
                                     for (var i = 0; i < 2; i++) {
-                                        // cards.push(game.createCard({
-                                        //     name: 'd2_bootsOfSpeed',
-                                        // }));
-                                        cards.push(game.createCard('jiedao'));
+                                        cards.push(game.createCard({
+                                            name: 'd2_bootsOfTravel2',
+                                        }));
+                                        // cards.push(game.createCard('tiesuo'));
                                         // cards.push(game.createCard('sha'));
                                     }
                                     if (game.zhu == player) {
                                         player.addSkill(skills);
                                         player.gain(cards);
                                         _status.d2_divineRapier = -Infinity;
-                                        player.storage.d2_zhihui = [1, 2, 3, 5, 8, 13];
                                         var cards2 = [];
                                         cards2.push(game.createCard('sha'));
                                         cards2.push(game.createCard('sha'));
                                         cards2.push(game.createCard('sha'));
                                         game.players[1].gain(cards2);
-                                        // game.asyncDraw([game.players[1], game.players[2]], 4);
-                                        // game.players[1].hujia = 3;
-                                        game.players[1].addSkill('d2_benteng');
-                                        // game.players[1].hp = 1;
-                                        // game.players[1].update();
+                                        game.players[1].hp=1;
                                     } else {
                                         // player.draw();
                                     }
@@ -12321,7 +12590,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 } else if (target.countCards('h') <= 0) {
                                     result.control = '装备';
                                 } else {
-                                    player.chooseControl(['手牌', '装备']).set('prompt', '粉碎：弃置装备区内的牌，或展示手牌并弃置其中花色为最多或之一的牌').set('ai', function() {
+                                    player.chooseControl(['手牌', '装备']).set('prompt', '粉碎：弃置装备区内的牌，或展示手牌并弃置其中花色最多（或之一）的牌').set('ai', function() {
                                         var num = lib.skill.d2_fensui.process(target.getCards('h')).length;
                                         if (num > target.countCards('e')) return '装备';
                                         return '手牌';
@@ -12332,7 +12601,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     target.discard(lib.skill.d2_fensui.process(target.getCards('h')));
                                 }
                                 if (result.control == '装备') {
-                                    target.discard(target.countCards('e'));
+                                    target.discard(target.getCards('e'));
                                 }
                             },
                             ai: {
@@ -12651,7 +12920,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             selectTarget: 1,
                             type: "basic",
                             filterTarget: function(card, player, target) {
-                                return !target.hasSkill('d2_sentry');
+                                return !target.hasSkill('d2_sentry_skill');
                             },
                             content: function() {
                                 if (target.hasSkill('d2_observer_skill')) {
@@ -13000,10 +13269,14 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             content_phase: function() {
                                 var name1 = player.name1 ? player.name1 : player.name;
                                 var name2 = player.name2;
-                                var list = [];
+                                var list = [],list2=[],special_identity=['identity_zeishou','identity_dajiang','identity_junshi'];
                                 var storage = {};
                                 for (var i = 0; i < player.skills.length; i++) {
                                     var name = player.skills[i];
+                                    if (special_identity.contains(name)) {
+                                        list2.push(name);
+                                        special_identity.remove(name);
+                                    }
                                     var skill = lib.skill[name];
                                     if (skill && skill.refreshAfter) {
                                         storage[name] = player.storage[name];
@@ -13019,10 +13292,12 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                 }
                                 player.uninit();
                                 player.init(name1, name2);
-                                if (player.isZhu && game.players.concat(game.dead).length > 4) {
-                                    player.useSkill('d2_refresherOrb_zhu');
+                                if (player.isZhu) {
+                                    player.maxHp++;
+                                    player.hp=player.maxHp;
+                                    player.update();
+                                    if (list2.length) player.addSkill(list2);
                                 }
-                                // game.me.gain(game.createCard('d2_refresherOrb'));
                                 event.trigger('enterGame');
                                 for (var i = 0; i < list.length; i++) {
                                     list[i](storage, player, name);
@@ -13042,7 +13317,7 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             process: function(player, origin) {
                                 var mirror = origin + '_mirror';
                                 lib.translate[mirror] = lib.translate[origin];
-                                lib.translate[mirror + '_info'] = lib.translate[origin + '_info'];
+                                lib.translate[mirror + '_info'] = '<span style="color:red">注意：此牌只起占位作用，若要拿鞋请拿另一张！</span>';
                                 lib.card[mirror] = lib.card[mirror] || {
                                     fullimage: true,
                                     type: "equip",
@@ -13052,19 +13327,27 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                     vanish: true,
                                     onLose: function() {
                                         if (!player.getEquip(3)) return;
-                                        var origin = player.getEquip(3).name;
-                                        if (player.getEquip(origin) && lib.card[origin + '_mirror']) player.discard(player.getEquip(origin), false)._triggered = null;
+                                        var origin = player.getEquip(3);
+                                        if (origin && lib.card[origin.name + '_mirror']) {
+                                            origin.remove();
+                                            card=this.card;
+                                            card.init([card.suit, card.number, origin.name, card.nature]);
+                                        } else {
+                                            game.log(2);
+                                            // var card=this.card;
+                                            // player.discard(card, false)._triggered = null;
+                                            // game.removeDiscardedCard(card.name);
+                                        }
                                     },
                                     ai: {
                                         order: 10,
-                                        value: 8,
+                                        value: 6,
                                         useful: 8,
                                         result: {
                                             player: 1,
                                         }
                                     },
                                 }
-                                // var card = game.createCard(mirror);
                                 return game.createCard(mirror);
                             },
                             fullimage: true,
@@ -13104,13 +13387,15 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             type: "equip",
                             subtype: "equip3",
                             onEquip: function() {
-                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_arcaneBoots');
-                                card.setBackgroundImage('extension/Dota2/image/card/d2_arcaneBoots.jpg');
+                                var origin=this.card.name;
+                                var card = lib.card.d2_bootsOfSpeed.process(player, origin);
+                                card.setBackgroundImage('extension/Dota2/image/card/{0}.jpg'.format(origin));
                                 player.equip(card)._triggered = null;
                                 player.updateMarks();
                             },
                             onLose: function() {
-                                if (player.getEquip('d2_arcaneBoots_mirror')) player.discard(player.getEquip('d2_arcaneBoots_mirror'), false)._triggered = null;
+                                var mirror=player.getEquip(this.card.name+'_mirror');
+                                if(mirror) mirror.remove();
                                 player.updateMarks();
                             },
                             nopower: true,
@@ -13130,13 +13415,15 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             type: "equip",
                             subtype: "equip3",
                             onEquip: function() {
-                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_phaseBoots');
-                                card.setBackgroundImage('extension/Dota2/image/card/d2_phaseBoots.jpg');
+                                var origin=this.card.name;
+                                var card = lib.card.d2_bootsOfSpeed.process(player, origin);
+                                card.setBackgroundImage('extension/Dota2/image/card/{0}.jpg'.format(origin));
                                 player.equip(card)._triggered = null;
                                 player.updateMarks();
                             },
                             onLose: function() {
-                                if (player.getEquip('d2_phaseBoots_mirror')) player.discard(player.getEquip('d2_phaseBoots_mirror'), false)._triggered = null;
+                                var mirror=player.getEquip(this.card.name+'_mirror');
+                                if(mirror) mirror.remove();
                                 player.updateMarks();
                             },
                             nopower: true,
@@ -13156,13 +13443,15 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             type: "equip",
                             subtype: "equip3",
                             onEquip: function() {
-                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_powerTreads');
-                                card.setBackgroundImage('extension/Dota2/image/card/d2_powerTreads.jpg');
+                                var origin=this.card.name;
+                                var card = lib.card.d2_bootsOfSpeed.process(player, origin);
+                                card.setBackgroundImage('extension/Dota2/image/card/{0}.jpg'.format(origin));
                                 player.equip(card)._triggered = null;
                                 player.updateMarks();
                             },
                             onLose: function() {
-                                if (player.getEquip('d2_powerTreads_mirror')) player.discard(player.getEquip('d2_powerTreads_mirror'), false)._triggered = null;
+                                var mirror=player.getEquip(this.card.name+'_mirror');
+                                if(mirror) mirror.remove();
                                 player.updateMarks();
                             },
                             nopower: true,
@@ -13182,13 +13471,15 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             type: "equip",
                             subtype: "equip3",
                             onEquip: function() {
-                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_tranquilBoots');
-                                card.setBackgroundImage('extension/Dota2/image/card/d2_tranquilBoots.jpg');
+                                var origin=this.card.name;
+                                var card = lib.card.d2_bootsOfSpeed.process(player, origin);
+                                card.setBackgroundImage('extension/Dota2/image/card/{0}.jpg'.format(origin));
                                 player.equip(card)._triggered = null;
                                 player.updateMarks();
                             },
                             onLose: function() {
-                                if (player.getEquip('d2_tranquilBoots_mirror')) player.discard(player.getEquip('d2_tranquilBoots_mirror'), false)._triggered = null;
+                                var mirror=player.getEquip(this.card.name+'_mirror');
+                                if(mirror) mirror.remove();
                                 player.updateMarks();
                             },
                             nopower: true,
@@ -13208,13 +13499,15 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             type: "equip",
                             subtype: "equip3",
                             onEquip: function() {
-                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_bootsOfTravel');
-                                card.setBackgroundImage('extension/Dota2/image/card/d2_bootsOfTravel.jpg');
+                                var origin=this.card.name;
+                                var card = lib.card.d2_bootsOfSpeed.process(player, origin);
+                                card.setBackgroundImage('extension/Dota2/image/card/{0}.jpg'.format(origin));
                                 player.equip(card)._triggered = null;
                                 player.updateMarks();
                             },
                             onLose: function() {
-                                if (player.getEquip('d2_bootsOfTravel_mirror')) player.discard(player.getEquip('d2_bootsOfTravel_mirror'), false)._triggered = null;
+                                var mirror=player.getEquip(this.card.name+'_mirror');
+                                if(mirror) mirror.remove();
                                 player.updateMarks();
                             },
                             nopower: true,
@@ -13234,13 +13527,15 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             type: "equip",
                             subtype: "equip3",
                             onEquip: function() {
-                                var card = lib.card.d2_bootsOfSpeed.process(player, 'd2_bootsOfTravel2');
-                                card.setBackgroundImage('extension/Dota2/image/card/d2_bootsOfTravel2.jpg');
+                                var origin=this.card.name;
+                                var card = lib.card.d2_bootsOfSpeed.process(player, origin);
+                                card.setBackgroundImage('extension/Dota2/image/card/{0}.jpg'.format(origin));
                                 player.equip(card)._triggered = null;
                                 player.updateMarks();
                             },
                             onLose: function() {
-                                if (player.getEquip('d2_bootsOfTravel2_mirror')) player.discard(player.getEquip('d2_bootsOfTravel2_mirror'), false)._triggered = null;
+                                var mirror=player.getEquip(this.card.name+'_mirror');
+                                if(mirror) mirror.remove();
                                 player.updateMarks();
                             },
                             nopower: true,
@@ -13723,16 +14018,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             },
                             speed: [1, 1],
                         },
-                        d2_refresherOrb_zhu: {
-                            silent: true,
-                            content: function() {
-                                'step 0'
-                                player.gainMaxHp();
-                                'step 1'
-                                player.hp = player.maxHp;
-                                player.update();
-                            }
-                        },
                         d2_arcaneBoots_skill: {
                             enable: 'phaseUse',
                             usable: 1,
@@ -13764,6 +14049,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                             },
                             enable: 'phaseUse',
                             usable: 1,
+                            filterCard:function(card){
+                                return true;
+                            },
                             content: function() {
                                 player.addTempSkill('d2_phaseBoots_skill_effect', {
                                     player: 'phaseBegin'
@@ -13939,7 +14227,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         return target.hasSkill('d2_bootsOfTravel_skill');
                                     },
                                     filter: function(event, player) {
-                                        return !player.hasSkill('d2_bootsOfTravel_skill');
+                                        return !player.hasSkill('d2_bootsOfTravel_skill')&&!player.hasSkill('d2_bootsOfTravel2_skill')&&game.hasPlayer(function(current){
+                                            return current.hasSkill('d2_bootsOfTravel_skill');
+                                        });
                                     },
                                     check: function(card) {
                                         var player = get.owner(card);
@@ -14019,21 +14309,23 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                                         return player.getEquip('d2_bootsOfTravel');
                                     },
                                     content: function() {
-                                        var card1 = player.getEquip('d2_bootsOfTravel'),
-                                            card2 = player.getEquip('d2_bootsOfTravel_mirror');
-                                        var mirror = lib.card.d2_bootsOfSpeed.process(player, 'd2_bootsOfTravel2');
-                                        if (card1 && card2) {
-                                            card1.init([card1.suit, card1.number, 'd2_bootsOfTravel2', card1.nature]);
-                                            card2.init(mirror);
-                                            card2.setBackgroundImage('extension/Dota2/image/card/d2_bootsOfTravel2.jpg');
-                                        }
+                                        try{
+                                            var card1 = player.getEquip('d2_bootsOfTravel'),
+                                                card2 = player.getEquip('d2_bootsOfTravel_mirror');
+                                            var mirror = lib.card.d2_bootsOfSpeed.process(player, 'd2_bootsOfTravel2');
+                                            if (card1 && card2) {
+                                                card1.init([card1.suit, card1.number, 'd2_bootsOfTravel2', card1.nature]);
+                                                card2.init(mirror);
+                                                card2.setBackgroundImage('extension/Dota2/image/card/d2_bootsOfTravel2.jpg');
+                                            }
+                                        }catch(e){alert(e)}
                                     }
                                 },
                             },
                         },
                         d2_bootsOfTravel2_skill: {
                             speed: [1, 2],
-                            group: 'd2_bootsOfTravel_skill',
+                            global: 'd2_bootsOfTravel_skill_take',
                             enable: 'phaseUse',
                             usable: 1,
                             selectCard: [1, 2],
@@ -14167,9 +14459,9 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                         d2_arcaneBoots_skill: "秘法",
                         d2_arcaneBoots_skill_info: "出牌阶段限一次，你可以令至多三名手牌数小于体力值的角色摸一张牌。",
                         d2_phaseBoots: "相位鞋",
-                        d2_phaseBoots_info: "①锁定技，速度+1；②出牌阶段限一次，你可以获得以下效果直到你的下个回合：速度+1，并防止你受到的下一次伤害。",
+                        d2_phaseBoots_info: "①锁定技，速度+1；②出牌阶段限一次，你可以弃置一张牌获得以下效果直到你的下个回合：速度+1，你受到的下一次伤害-1。",
                         d2_phaseBoots_skill: "相位",
-                        d2_phaseBoots_skill_info: "出牌阶段限一次，你可以获得以下效果直到你的下个回合：速度+1，你受到的下一次伤害-1。",
+                        d2_phaseBoots_skill_info: "出牌阶段限一次，你可以弃置一张牌获得以下效果直到你的下个回合：速度+1，你受到的下一次伤害-1。",
                         d2_powerTreads: "动力鞋",
                         d2_powerTreads_info: "①锁定技，速度+1；②出牌阶段限一次，你可以选择一项：获得一张【杀】；或此阶段内出【杀】次数+1；或摸一张牌并占卜+1直到你的下个出牌阶段。",
                         d2_powerTreads_skill: "动力",
@@ -14262,7 +14554,6 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
             }
             lib.translate['Dota2_card_config'] = 'Dota2';
 
-            //function
             get.linkFrom = function(skill) {
                 return lib.skill[skill].linkCharacters[0];
             };
@@ -14547,6 +14838,18 @@ game.import("extension", function(lib, game, ui, get, ai, _status) {
                 }
                 return scry;
             };
+            game.removeDiscardedCard = function(name) {
+                var list = [];
+                for (var i = 0; i < ui.discardPile.childElementCount; i++) {
+                    if (ui.discardPile.childNodes[i].name == name) {
+                        list.push(ui.discardPile.childNodes[i]);
+                    }
+                }
+                for (var i = 0; i < list.length; i++) {
+                    list[i].remove();
+                }
+            };
+            //function
         },
         help: {
             Dota2: "<ul><li><font color='#87CEFF'>阿哈利姆神杖</font><br>拥有神杖的英雄将领悟技能的奥义，技能描述中<font color='#87CEFF'>（奥义：...）</font>的字段仅在装备神杖时生效。" +
